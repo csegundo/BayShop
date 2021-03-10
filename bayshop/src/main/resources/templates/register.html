@@ -28,7 +28,7 @@
     <!-- CSS stylesheets -->
     <link rel="stylesheet" th:href="@{/css/login.css}">
 
-    <title>BayShop - Iniciar sesión</title>
+    <title>BayShop - Crear cuenta</title>
 </head>
 <body>
     <div class="row main-div">
@@ -37,16 +37,25 @@
             <img th:src="@{/img/bay_128.png}" alt="web logo">
         </div>
         <div class="col-xs-12 col-md-8 form">
-            <form method="POST" action="/login/session">
+            <form method="POST" action="/register/create">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Correo electrónico</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="user@email.es">
+                    <label for="email">Correo electrónico *</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="user@email.es">
+                    <small id="emailHelp" class="form-text text-muted">Debe ser una dirección de email válida.</small>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Contraseña</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña...">
+                    <label for="password1">Contraseña *</label>
+                    <input type="password" class="form-control" id="password1" placeholder="Contraseña...">
                 </div>
-                <button type="submit" class="btn btn-primary">Iniciar sesión <i class="fa fa-sign-in"></i></button>
+                <div class="form-group">
+                    <label for="password2">Repetir contraseña *</label>
+                    <input type="password" class="form-control" id="password2" placeholder="Contraseña...">
+                </div>
+                <div class="form-group">
+                    <label for="date">Fecha de nacimiento</label>
+                    <input type="date" class="form-control" id="date">
+                </div>
+                <button type="submit" class="btn btn-primary">Crear cuenta <i class="fa fa-plus"></i></button>
             </form>
         </div>
     </div>
