@@ -1,0 +1,53 @@
+/* Poner el background color del body al index.css o utils.css */
+html,
+body{
+    width: 100%;
+    height: 100%;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+.main-div{
+    margin-top: 20px;
+}
+
+.main-div .info{
+    display: flex;
+    flex-direction: column;
+}
+.main-div .info .title{
+    margin-bottom: 20px;
+}
+.main-div .info .item{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    align-items: center;
+    align-content: center;
+}
+.main-div .info .item input[data-key="baypoints_selector"]{
+    width: 100px;
+}
+.main-div .info .separator{
+    border-bottom: 1px solid #ccc;
+    margin: 10px 0;
+}
+.main-div .product{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.main-div .product .product-img{
+    padding: 10px 0;
+}
+
+@media (max-width: 767px){
+    .main-div .all-info{
+        display: flex;
+    }
+    .info{ order: 2; }
+    .none{ order: 1; }
+    .product{ order: 0; }
+}

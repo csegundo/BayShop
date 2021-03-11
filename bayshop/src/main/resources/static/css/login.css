@@ -25,7 +25,7 @@ body{
     background-color: #f3f3f3;
 }
 .main-div form{
-    margin-top: 10px;
+    margin: 10px 0;
 }
 .main-div .web-logo{
     display: flex;
