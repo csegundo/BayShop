@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -24,26 +23,37 @@
 
     <!-- Icon -->
     <!--div>Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></!--div-->
-    <link rel="icon" href="/static/img/bay_32.png">
+    <link rel="icon" th:href="@{/img/bay_32.png}">
 
-    <title>BayShop</title>
+    <!-- CSS stylesheets -->
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+
+    <title>BayShop - Producto</title>
 </head>
-
 <body>
-    <header>
-        <nav th:replace="frags/header.html"></nav>
-    </header>
-
-
-
-
-
-
-
-
+    <div class="row main-div p-5">
+        <div class="col-md-6">
+            <!-- <div>Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div> -->
+            <img class="img-fluid" th:src="@{/img/bay_512.png}" alt="Imagen Producto">
+        </div>
+        <div class="col-md-6 p-4">
+            <h1 th:text="${p.nombre}"></h1>
+            <p th:text="'Marca: ' + ${p.marca}"></p>
+            <p th:text="'Color: ' + ${p.color}"></p>
+            <p th:text="'Talla: ' + ${p.talla}"></p>
+            <p th:text="'Estado: ' + ${p.estado}"></p>
+            <p th:text="'Descripción: ' + ${p.descripcion}"></p>
+            <h3 class="p-4"th:text="'Precio: ' + ${p.precio} + ' €'"></h3>
+            <!-- <p>Fecha</p> -->
     
-    
-
+            <div th:if="${user eq 'comprador'}">
+                <a th:href="@{http://localhost:8081/compra}" class="btn btn-primary">Comprar <i class="fa fa-shopping-cart"></i></a>
+            </div>
+            <div th:if="${user eq 'revisor'}">
+                <a th:href="@{http://localhost:8081/validar}" class="btn btn-primary">Validar <i class="fa fa-check"></i></a>
+                <a th:href="@{http://localhost:8081/rechazar}" class="btn btn-primary">Rechazar <i class="fa fa-times"></i></a>
+            </div>
+        </div>
+    </div>
 </body>
-
 </html>
