@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -24,16 +23,75 @@
 
     <!-- Icon -->
     <!--div>Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></!--div-->
-    <link rel="icon" href="/static/img/bay_32.png">
+    <link rel="icon" th:href="@{/img/bay_32.png}">
 
-    <title>BayShop</title>
+    <!-- CSS stylesheets -->
+    <link rel="stylesheet" th:href="@{/css/compra.css}">
+
+    <!-- JS scripts -->
+    <script th:src="@{/js/compra.js}"></script>
+
+    <title>BayShop - Resumen de compra</title>
 </head>
-
 <body>
     <header>
         <nav th:replace="frags/header.html"></nav>
     </header>
-</body>
-ssss
 
+    <div class="container main-div">
+        <div class="row all-info">
+            <div class="col-xs-12 col-md-6 info">
+                <h2 class="title">Realizar compra</h2>
+                <h5>Producto a comprar:</h5>
+                <div class="item product">
+                    <span class="info-item">Sudadera roja con capucha</span>
+                    <span class="description"><span class="product-price">25</span> €</span>
+                </div>
+
+                <div class="separator"></div>
+
+                <h5>Mis puntos:</h5>
+                <div class="item actual">
+                    <span class="info-item">Tienes:</span>
+                    <input type="hidden" data-key="baypoints" value="1650"> <!-- max user points-->
+                    <span class="description"><span class="baypoints">1650</span> BayPoints</span>
+                </div>
+                <div class="item purchase">
+                    <span class="info-item">En esta compra quiero gastar:</span>
+                    <input type="number" min="0" max="1650" class="form-control input-sm" value="0" data-key="baypoints_selector"> <!-- max user points-->
+                </div>
+                <div class="item final">
+                    <span class="info-item">Mis puntos restantes:</span>
+                    <span class="description"><span class="baypoints">1650</span> BayPoints</span> <!-- final user points-->
+                </div>
+
+                <div class="separator"></div>
+
+                <h5>Descuento:</h5>
+                <div class="item discount">
+                    <span class="info-item">Con <span class="baypoints_">0</span> BayPoints ahorras</span>
+                    <span class="description"><span class="discount-price">0</span> €</span>
+                </div>
+
+                <div class="separator"></div>
+
+                <h5>Total:</h5>
+                <div class="item total">
+                    <span class="info-item">Total de la compra</span>
+                    <span class="description"><span class="total_price">25</span> €</span>
+                </div>
+
+                <div class="separator"></div>
+
+                <button class="btn btn-primary btn-sm">Comprar <i class="fa fa-shopping-cart"></i></button>
+            </div>
+            <div class="col-xs-12 col-md-1 none"></div>
+            <div class="col-xs-12 col-md-5 product">
+                <div class="product-img">
+                    <img src="https://i.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" alt="product_image" class="img-fluid img-thumbnail">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
