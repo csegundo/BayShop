@@ -23,16 +23,242 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
     <!-- Icon -->
-    <!--div>Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></!--div-->
-    <link rel="icon" href="/static/img/bay_32.png">
+    <link rel="icon" th:href="@{/img/bay_32.png}">
+    <link rel="stylesheet" th:href="@{/css/mensajes.css}">
 
-    <title>BayShop</title>
+    <title>BayShop - Mensajes</title>
 </head>
 
 <body>
     <header>
         <nav th:replace="frags/header.html"></nav>
     </header>
+    <div class ="contenedor">
+
+        <div class="fa-border fondo">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Correo <span class="caret"></span>
+                </button>
+            
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Recibidos</a></li>
+                    <li><a href="#">Enviados</a></li>
+                    <li><a href="#">Eliminados</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="fa-border">
+            <div class="row justify-content-center">
+                <div class="col justify-content-center margin">
+                    <div class="row justify-content-center">
+                        <label for="text">Titulo del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <label for="text">Asunto del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="">Autor del mensaje</a>
+                    </div>
+                </div>
+                <div class="col fondo">
+                    <p>
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex, harum. Labore voluptatibus consequuntur obcaecati delectus qui, asperiores molestiae, impedit minus hic vitae cum cumque voluptate aut harum quo ipsum tempore?
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti quisquam mollitia ullam, voluptatem veniam fuga omnis. Libero laborum beatae numquam nobis quia excepturi dolorem corrupti repellendus quisquam error. Ratione, veritatis.
+                    </p>    
+                </div>
+                <div class="col justify-content-center">
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-primary margin">Responder</button>
+                    </div>
+                    <div class="row justify-content-center margin">
+                        <button type="submit" class="btn btn-primary">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fa-border">
+            <div class="row justify-content-center">
+                <div class="col justify-content-center margin">
+                    <div class="row justify-content-center">
+                        <label for="text">Titulo del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <label for="text">Asunto del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="">Autor del mensaje</a>
+                    </div>
+                </div>
+                <div class="col fondo">
+                    <p>
+                        uam mollitia ullam, voluptatem veniam fuga omnis. Libero laborum beatae numquam nobis quia excepturi dolorem corrupti repellendus quisquam error. Ratione, veritatis.
+                    </p>    
+                </div>
+                <div class="col justify-content-center">
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-primary margin">Responder</button>
+                    </div>
+                    <div class="row justify-content-center margin">
+                        <button type="submit" class="btn btn-primary">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fa-border">
+            <div class="row justify-content-center">
+                <div class="col justify-content-center margin">
+                    <div class="row justify-content-center">
+                        <label for="text">Titulo del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <label for="text">Asunto del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="">Autor del mensaje</a>
+                    </div>
+                </div>
+                <div class="col fondo">
+                    <p>
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex, harum. Labore voluptatibus consequuntur obcaecati delectus qui, asperiores molestiae, impedit minus hic vitae cum cumque voluptate aut harum quo ipsum tempore?
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti quisquam mollitia ullam, voluptatem veniam fuga omnis. Libero laborum beatae numquam nobis quia excepturi dolorem corrupti repellendus quisquam error. Ratione, veritatis.
+                    </p>    
+                </div>
+                <div class="col justify-content-center">
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-primary margin">Responder</button>
+                    </div>
+                    <div class="row justify-content-center margin">
+                        <button type="submit" class="btn btn-primary">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fa-border">
+            <div class="row justify-content-center">
+                <div class="col justify-content-center margin">
+                    <div class="row justify-content-center">
+                        <label for="text">Titulo del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <label for="text">Asunto del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="">Autor del mensaje</a>
+                    </div>
+                </div>
+                <div class="col fondo">
+                    <p>
+                        Lorem, ipsum odshnfosd saondfv adsufi?
+                    </p>    
+                </div>
+                <div class="col justify-content-center">
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-primary margin">Responder</button>
+                    </div>
+                    <div class="row justify-content-center margin">
+                        <button type="submit" class="btn btn-primary">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fa-border">
+            <div class="row justify-content-center">
+                <div class="col justify-content-center margin">
+                    <div class="row justify-content-center">
+                        <label for="text">Titulo del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <label for="text">Asunto del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="">Autor del mensaje</a>
+                    </div>
+                </div>
+                <div class="col fondo">
+                    <p>
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex, harum. Labore voluptatibus consequuntur obcaecati delectus qui, asperiores molestiae, impedit minus hic vitae cum cumque voluptate aut harum quo ipsum tempore?
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti quisquam mollitia ullam, voluptatem veniam fuga omnis. Libero laborum beatae numquam nobis quia excepturi dolorem corrupti repellendus quisquam error. Ratione, veritatis.
+                    </p>    
+                </div>
+                <div class="col justify-content-center">
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-primary margin">Responder</button>
+                    </div>
+                    <div class="row justify-content-center margin">
+                        <button type="submit" class="btn btn-primary">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fa-border">
+            <div class="row justify-content-center">
+                <div class="col justify-content-center margin">
+                    <div class="row justify-content-center">
+                        <label for="text">Titulo del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <label for="text">Asunto del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="">Autor del mensaje</a>
+                    </div>
+                </div>
+                <div class="col fondo">
+                    <p>
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex, harum. Labore voluptatibus consequuntur obcaecati delectus qui, asperiores molestiae, impedit minus hic vitae cum cumque voluptate aut harum quo ipsum tempore?
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia exercitationem commodi autem explicabo placeat. Quo facere omnis officiis voluptate eligendi quos vitae, in voluptas rem ullam impedit nesciunt adipisci nisi?
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti quisquam mollitia ullam, voluptatem veniam fuga omnis. Libero laborum beatae numquam nobis quia excepturi dolorem corrupti repellendus quisquam error. Ratione, veritatis.
+                    </p>    
+                </div>
+                <div class="col justify-content-center">
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-primary margin">Responder</button>
+                    </div>
+                    <div class="row justify-content-center margin">
+                        <button type="submit" class="btn btn-primary">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fa-border">
+            <div class="row justify-content-center">
+                <div class="col justify-content-center margin">
+                    <div class="row justify-content-center">
+                        <label for="text">Titulo del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <label for="text">Asunto del mensaje</label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="">Autor del mensaje</a>
+                    </div>
+                </div>
+                <div class="col fondo">
+                    <p>
+                        Lquam mollitia ga omnis. Libero laborum beatae numquam nobis quia excepturi dolorem corrupti repellendus quisquam error. Ratione, veritatis.
+                    </p>    
+                </div>
+                <div class="col justify-content-center">
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-primary margin">Responder</button>
+                    </div>
+                    <div class="row justify-content-center margin">
+                        <button type="submit" class="btn btn-primary">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
 </body>
 
 </html>
