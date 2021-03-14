@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head th:replace="frags/libs.html">
+    <!-- Resto de recursos especificos de cada pagina -->
+</head>
+
+<body>
+    <header>
+        <nav th:replace="frags/header.html"></nav>
+    </header>
+
+    <div class="row main-div">
+        <div class="col-xs-12 col-md-8 form">
+            <form method="POST" action="/crear_producto/enviar">
+                <div class="form-group">
+                    <label for="exampleInputImagen">Imagen</label>
+                    <input type="file" class="form-control-file" id="exampleInputImage" placeholder="Image">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputTitle">Título</label>
+                    <input type="text" class="form-control" id="exampleInputTitle" placeholder="Título...">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputDescription">Descripción</label>
+                    <input type="text" class="form-control" id="exampleInputDescription" placeholder="Descripción...">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputType">Tipo de prenda</label>
+                    <select id="rows0.variety" name="rows[0].variety">
+                        <option selected="selected" value="1">Thymus vulgaris</option>
+                        <option value="2">Thymus x citriodorus</option>
+                        <option value="3">Thymus herba-barona</option>
+                        <option value="4">Thymus pseudolaginosus</option>
+                        <option value="5">Thymus serpyllum</option>
+                      </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputBrand">Marca</label>
+                    <input type="text" class="form-control" id="exampleInputBrand" placeholder="Marca...">
+                </div>
+                <button type="submit" class="btn btn-primary">Subir<i class="fa fa-sign-in"></i></button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

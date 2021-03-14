@@ -66,6 +66,7 @@ public class RootController {
     public String index(HttpSession session, Model model, @RequestParam(required = false) Integer entero){
 
         model.addAttribute("prod", prod);
+        model.addAttribute("title", "BayShop | Todos los productos");
         return "index";
     }
 
@@ -92,7 +93,7 @@ public class RootController {
     @GetMapping("/producto/id")
     public String product_id(Model model) {
         
-        model.addAttribute("user", "comprador");
+        model.addAttribute("user", "validador");
 
         Producto p = new Producto("Camiseta chula", "Adidas", "Rojo", "XL", 23.45, "Nueva", "La vendo porque me queda grande");
         model.addAttribute("p", p);

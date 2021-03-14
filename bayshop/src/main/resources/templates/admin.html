@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head th:replace="frags/libs.html">
+    <!-- Resto de recursos especificos de cada pagina -->
+</head>
+
+<body>
+    <header>
+        <nav th:replace="frags/header.html"></nav>
+    </header>
+
+    <h1>Administrador</h1>
+
+    <div class="row main-div">
+        <div class="col-xs-12 col-md-4 web-logo">
+            <form method="POST" action="/usuarios/eliminar">
+                <table>
+                    <h2>Usuarios</h2>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputImagen">Nombre Usuario 1</label>
+                            </div>
+                        </td>
+                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputImagen">Nombre Usuario 2</label>
+                            </div>
+                        </td>
+                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputImagen">Nombre Usuario 3</label>
+                            </div>
+                        </td>
+                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputImagen">Nombre Usuario 4</label>
+                            </div>
+                        </td>
+                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputImagen">Nombre Usuario 5</label>
+                            </div>
+                        </td>
+                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
+                    </tr>
+
+                </table>
+            </form>
+        </div>
+        <div class="col-xs-12 col-md-8 form">
+            <form method="POST" action="/producto/eliminar">
+                <table>
+                    <h2>Productos</h2>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputTitle">Título 1</label>
+                                <link rel="icon" th:href="@{/img/bay_32.png}">
+                            </div>
+                        </td>
+                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputTitle">Título 2</label>
+                                <link rel="icon" th:href="@{/img/bay_32.png}">
+                            </div>
+                        </td>
+                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputTitle">Título 3</label>
+                                <link rel="icon" th:href="@{/img/bay_32.png}">
+                            </div>
+                        </td>
+                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputTitle">Título 4</label>
+                                <link rel="icon" th:href="@{/img/bay_32.png}">
+                            </div>
+                        </td>
+                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputTitle">Título 5</label>
+                                <link rel="icon" th:href="@{/img/bay_32.png}">
+                            </div>
+                        </td>
+                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
