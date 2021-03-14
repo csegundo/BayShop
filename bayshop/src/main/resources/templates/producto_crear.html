@@ -26,13 +26,14 @@
     <!--div>Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></!--div-->
     <link rel="icon" th:href="@{/img/bay_32.png}">
 
-    <!-- CSS stylesheets -->
-    <link rel="stylesheet" th:href="@{/css/login.css}">
-
     <title>BayShop - Subir producto</title>
 </head>
 
 <body>
+    <header>
+        <nav th:replace="frags/header.html"></nav>
+    </header>
+
     <div class="row main-div">
         <div class="col-xs-12 col-md-8 form">
             <form method="POST" action="/crear_producto/enviar">
