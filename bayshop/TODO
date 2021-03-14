@@ -1,0 +1,2 @@
+- th:block para head y header
+- Ver como meter js/css especificos de cada pagina con el th:block/th:replace

@@ -66,6 +66,7 @@ public class RootController {
     public String index(HttpSession session, Model model, @RequestParam(required = false) Integer entero){
 
         model.addAttribute("prod", prod);
+        model.addAttribute("title", "BayShop | Todos los productos");
         return "index";
     }
 
