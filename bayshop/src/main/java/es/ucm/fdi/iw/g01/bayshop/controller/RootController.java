@@ -62,7 +62,7 @@ public class RootController {
     };
 
 
-    @GetMapping("/") 
+    @GetMapping(value = { "/", "", "/home", "/index" }) 
     public String index(HttpSession session, Model model, @RequestParam(required = false) Integer entero){
 
         model.addAttribute("prod", prod);
@@ -85,7 +85,7 @@ public class RootController {
         return "admin";
     }
 
-    @GetMapping("/revisor/")
+    @GetMapping(value = { "/revisor/", "/revisor" })
     public String revisor() {
         return "revisor";
     }
@@ -102,7 +102,7 @@ public class RootController {
         return "producto";
     }
 
-    @GetMapping("/producto/crear")
+    @GetMapping(value = { "/producto/crear", "/producto/crear/" })
     public String productCreate() {
         return "producto_crear";
     }
@@ -112,7 +112,7 @@ public class RootController {
         return "perfil";
     }
 
-    @GetMapping("/mensajes/")
+    @GetMapping(value = { "/mensajes/", "/mensajes" })
     public String allMessages() {
         return "mensajes";
     }
@@ -122,7 +122,7 @@ public class RootController {
         return "mensaje";
     }
 
-    @GetMapping("/compra/")
+    @GetMapping(value = { "/compra/", "/compra" })
     public String buy() {
         return "compra";
     }
