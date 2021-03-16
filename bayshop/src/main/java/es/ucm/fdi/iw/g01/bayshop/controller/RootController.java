@@ -17,15 +17,15 @@ public class RootController {
 
     public static class Producto {
         
-        private String nombre;
-        private String marca;
-        private String color;
-        private String talla;
-        private Double precio;
-        private String estado;
-        private String descripcion;
-        private Date fecha;
-        private String vendedor;
+        private String nombre;//
+        private String marca;//
+        private String color;//
+        private String talla;//
+        private Double precio;//
+        private String estado;//
+        private String descripcion;//
+        private Date fecha;//
+        private String vendedor;//
 
 
         public Producto(String nombre,String marca, String color, String talla, Double precio, String estado, String descripcion) {
