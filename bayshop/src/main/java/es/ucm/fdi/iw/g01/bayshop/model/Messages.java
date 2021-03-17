@@ -13,15 +13,15 @@ import javax.persistence.OneToMany;
 
 // @Entity
 // @Data
-public class User {
+public class Messages {
     // @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String email;
-    private String password;
-    private Product_images image;
-    private String username;
-    private int baypoints;
-    private String rol;    
+    private String body;
+    private Date timestamp;
+    private long id_emisor; 
+    private long id_receptor;
+
 
 }
+    
