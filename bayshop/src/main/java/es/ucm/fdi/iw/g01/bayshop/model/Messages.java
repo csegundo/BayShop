@@ -8,20 +8,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-// @Entity
-// @Data
+@Entity
+@Data
 public class Messages {
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public static enum MessageStatus{
+        DELETED,
+        READ,
+        UNREAD
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String body;
     private Date timestamp;
-    private long id_emisor; 
-    private long id_receptor;
+    private MessageStatus status;
 
+    @ManyToOne
+    // @JoinColumn(name = "emisor_id")
+    private User user_emisor;
 
+    @ManyToOne
+    // @JoinColumn(name = "receiver_id")
+    private User user_receiver;
 }
     
