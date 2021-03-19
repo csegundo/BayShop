@@ -39,4 +39,8 @@ public class User {
 
     @ManyToMany(mappedBy = "userWish")
     private List<Product> productWish = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name = "user_sales_id")
+    private List<Sales> sales = new ArrayList<>();
 }

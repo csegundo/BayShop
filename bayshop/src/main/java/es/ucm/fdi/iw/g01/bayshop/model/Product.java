@@ -58,5 +58,6 @@ public class Product {
     private List<User> userWish = new ArrayList<>();
 
     @ManyToOne
+    @JoinColumn(name = "sales_id")
     private Sales sales;
 }
