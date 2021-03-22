@@ -33,3 +33,7 @@ body{
     align-content: center;
     justify-content: center;
 }
+
+.main-div form .change{
+    cursor: pointer;
+}
