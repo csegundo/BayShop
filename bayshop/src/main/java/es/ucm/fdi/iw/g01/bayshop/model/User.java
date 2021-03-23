@@ -35,12 +35,12 @@ public class User {
 
     @OneToMany
     @JoinColumn(name = "user_message_id")
-    private List<Messages> messages = new ArrayList<>();
+    private List<Message> messages = new ArrayList<>();
 
     @ManyToMany(mappedBy = "userWish")
     private List<Product> productWish = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "user_sales_id")
-    private List<Sales> sales = new ArrayList<>();
+    private List<Sale> sales = new ArrayList<>();
 }

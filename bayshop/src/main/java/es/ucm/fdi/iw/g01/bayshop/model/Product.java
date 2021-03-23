@@ -44,7 +44,7 @@ public class Product {
     private Date date;
     @OneToMany
     @JoinColumn(name = "product_id")
-    private List<Product_images> images = new ArrayList<>();
+    private List<ProductImage> images = new ArrayList<>();
     private Float price;
     private String size;
     private String brand;
@@ -59,5 +59,5 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "sales_id")
-    private Sales sales;
+    private Sale sales;
 }

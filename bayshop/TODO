@@ -2,3 +2,7 @@
 - Ver como meter js/css especificos de cada pagina con el th:block/th:replace
 - ¿Quitar la carpeta .vscode de la raiz del proyecto? No deberia haberse subido, esta en el .gitignore
 - Edicion de mensajes?
+
+- Para las imagenes de un producto
+    * crear un directorio por ejemplo -> /static/iwbase/product/<ID>/ y ahi meter todas las imagenes del producto con id=<ID>
+    * igual para user (?)

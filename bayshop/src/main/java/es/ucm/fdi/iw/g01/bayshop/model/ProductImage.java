@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Product_images {
+public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
