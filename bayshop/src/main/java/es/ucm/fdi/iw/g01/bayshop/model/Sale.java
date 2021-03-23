@@ -1,5 +1,6 @@
 package es.ucm.fdi.iw.g01.bayshop.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,14 +23,16 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private LocalDateTime timestamp;
+
     // @OneToMany
     // @JoinColumn(name = "sales_id")
     @OneToMany(mappedBy = "sales")
     private List<Product> product = new ArrayList<>();
 
     @ManyToOne
-    private User user_buyer;
+    private User userBuyer;
 
     @ManyToOne
-    private User user_seller;
+    private User userSeller;
 }

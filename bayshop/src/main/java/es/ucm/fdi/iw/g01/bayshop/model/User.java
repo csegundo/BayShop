@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Entity
 @Data
 public class User {
@@ -23,9 +25,10 @@ public class User {
     private long id;
     private String email;
     private String password;
+
+    @Value("true")
     private Boolean enabled;
-    // Ruta del fichero donde esta la imagen de perfil, no hace falta guardarlo en una tabla user_images pues solo va a tener una
-    private String image;
+    
     private String username;
     private int baypoints;
     private String rol;
@@ -34,14 +37,20 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Product> products = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "user_message_id")
-    private List<Message> messages = new ArrayList<>();
-
     @ManyToMany(mappedBy = "userWish")
     private List<Product> productWish = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "user_sales_id")
     private List<Sale> sales = new ArrayList<>();
+
+
+	@OneToMany
+	@JoinColumn(name = "sender_id")
+	private List<Message> sent = new ArrayList<>();
+	@OneToMany
+	@JoinColumn(name = "recipient_id")	
+	private List<Message> received = new ArrayList<>();	
+
+
 }

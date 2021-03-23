@@ -1,5 +1,6 @@
 package es.ucm.fdi.iw.g01.bayshop.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,29 +28,17 @@ public class Product {
         DELETED
     }
 
-    public static enum Category{
-        SHIRT,
-        HOODIE,
-        JEANS,
-        SHOES,
-        OTHER
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String description;
-    
     private Date date;
-    @OneToMany
-    @JoinColumn(name = "product_id")
-    private List<ProductImage> images = new ArrayList<>();
-    private Float price;
+    private BigDecimal price;
     private String size;
     private String brand;
     private ProductStatus status;
-    private Category category;
+    private String category;
 
     @ManyToOne
     private User user;

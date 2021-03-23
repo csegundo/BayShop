@@ -28,11 +28,9 @@ public class Message {
     private MessageStatus status;
 
     @ManyToOne
-    // @JoinColumn(name = "emisor_id")
-    private User user_emisor;
+    private User userSender;
 
     @ManyToOne
-    // @JoinColumn(name = "receiver_id")
-    private User user_receiver;
+    private User userReceiver;
 }
     
