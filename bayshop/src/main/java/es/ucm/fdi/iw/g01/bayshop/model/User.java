@@ -23,6 +23,7 @@ public class User {
     private long id;
     private String email;
     private String password;
+    private Boolean enabled;
     // Ruta del fichero donde esta la imagen de perfil, no hace falta guardarlo en una tabla user_images pues solo va a tener una
     private String image;
     private String username;
