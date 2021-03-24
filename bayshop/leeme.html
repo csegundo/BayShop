@@ -59,6 +59,25 @@
             <li>Vista detallada del resumen de tu compra: <a href="http://localhost:8080/compra/">aquí</a></li>
         </ul>
 
+<pre>
+
+    Puntos por iros animando a usar seguridad, tener el leeme.html en su sitio, y tener todo funcionando como se pedía en el enunciado.
+
+    Veo que habéis optado por Bootstrap (todavía podeis cambiar de idea)
+    
+    - La vista del revisor parece estar vacía
+    - Yo convertiría la vista de "cambiar contraseña" / "editar producto" / "escribir mensaje" a sendos diálogos emergentes (modales, en parlanza Bootstrap)
+    - Echo en falta poder ver qué mensajes son nuevos, y con qué interlocutor, en la vista de correo
+    
+    - Os pediré que paseis todos los recursos a internos (= en lugar de que se busquen fuera, que la página se pueda ver completa sin hacer acceso alguno fuera del servidor)
+    
+    - Hay mucho script (js) / link (css) duplicado en cabeceras, del que podeis sacar factor común para un fragmento. Entiendo que bastaría con usar "frag libs" desde más sitios. Podeis sacar el `<title>` de ahí, o parametrizarlo vía `$` para que cada página tenga un título con sentido.
+    - Hay bastante copia-pega en los documentos (`mensajes.html`, por ejemplo). Sacad factor común de cachos repetidos - `th:foreach` es mucho más mantenible.
+
+
+</pre>
+
+
         <h1>Base de datos</h1>
         <p>Hemos usado <a href="https://app.sqldbm.com/">SqlDBM</a> para general el siguiente esquema:</p>
         <img src="src/main/resources/static/img/bayshop_schema_db.png" style="margin-bottom: 10px;" alt="schema_img">

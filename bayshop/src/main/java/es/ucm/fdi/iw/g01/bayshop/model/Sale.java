@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import lombok.Data;
 
@@ -25,14 +23,13 @@ public class Sale {
 
     private LocalDateTime timestamp;
 
-    // @OneToMany
-    // @JoinColumn(name = "sales_id")
-    @OneToMany(mappedBy = "sales")
-    private List<Product> product = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "sale_id")
+    private List<Product> products = new ArrayList<>();
 
     @ManyToOne
-    private User userBuyer;
+    private User buyer;
 
     @ManyToOne
-    private User userSeller;
+    private User seller;
 }

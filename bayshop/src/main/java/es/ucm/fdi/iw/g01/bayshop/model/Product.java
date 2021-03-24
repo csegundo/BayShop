@@ -2,7 +2,7 @@ package es.ucm.fdi.iw.g01.bayshop.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import lombok.Data;
 import javax.persistence.Entity;
@@ -13,8 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -24,8 +25,7 @@ public class Product {
         ACCEPTED,
         PENDING,
         REJECT,
-        SOLD,
-        DELETED
+        SOLD
     }
 
     @Id
@@ -33,12 +33,13 @@ public class Product {
     private long id;
     private String name;
     private String description;
-    private Date date;
+    private LocalDateTime creationDate;
     private BigDecimal price;
     private String size;
     private String brand;
     private ProductStatus status;
-    private String category;
+    private String categories;
+    private Boolean enabled;
 
     @ManyToOne
     private User user;
@@ -47,6 +48,5 @@ public class Product {
     private List<User> userWish = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "sales_id")
-    private Sale sales;
+    private Sale sale;
 }
