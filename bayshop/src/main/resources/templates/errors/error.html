@@ -1,36 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
-<head th:replace="frags/libs.html">
+<head th:replace="frags/head.html">
     <!-- Resto de recursos especificos de cada pagina -->
 </head>
 <body>
-    <header>
-        <nav th:replace="frags/header.html"></nav>
-    </header>
-
-    <!-- TEMPORAL: ponerlo en utils.css -->
-    <style>
-        body,
-        html{
-            width: 100%;
-            height: 100%;
-        }
-        .main-error{
-            text-align: center;
-            margin-top: 10%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-        .main-error img{
-            margin-bottom: 10px;
-        }
-        .main-error a.btn{
-            margin-top: 10px;
-        }
-    </style>
+    <header  th:replace="frags/header.html"></header>
 
     <div class="main-error">
         <img class="img-fluid" th:src="@{/img/bay_128.png}" alt="">

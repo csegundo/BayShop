@@ -41,24 +41,17 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @NamedQueries({
-        @NamedQuery(name="User.byUsername",
-                query="SELECT u FROM User u "
-                        + "WHERE u.username = :username AND u.enabled = 1"),
-        @NamedQuery(name="User.hasUsername",
-                query="SELECT COUNT(u) "
-                        + "FROM User u "
-                        + "WHERE u.username = :username")
+        @NamedQuery(name="User.byUsername", query="SELECT u FROM User u WHERE u.username = :username AND u.enabled = 1"),
+        @NamedQuery(name="User.hasUsername", query="SELECT COUNT(u) FROM User u WHERE u.username = :username")
 })
 public class User implements Transferable<User.Transfer> {
-
 
 	private static Logger log = LogManager.getLogger(User.class);	
 
 	public enum Role {
 		USER,			// used for logged-in, non-priviledged users
 		ADMIN,			// used for maximum priviledged users
-		
-		MODERATOR,		// remove or add roles as needed
+		MODERATOR,		// content reviewer
 	}
 	
 	// do not change these fields

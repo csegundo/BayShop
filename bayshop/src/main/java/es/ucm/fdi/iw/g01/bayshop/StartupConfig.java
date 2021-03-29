@@ -38,7 +38,6 @@ public class StartupConfig {
 		
 		// see http://www.ecma-international.org/ecma-262/5.1/#sec-15.9.1.15
 		// and https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html
-		context.setAttribute("dateFormatter", 
-				new SimpleDateFormat("YYYY-MM-DD'T'HH:mm:ss.sssZ"));
+		context.setAttribute("dateFormatter", new SimpleDateFormat("YYYY-MM-DD'T'HH:mm:ss.sssZ"));
 	}
 }

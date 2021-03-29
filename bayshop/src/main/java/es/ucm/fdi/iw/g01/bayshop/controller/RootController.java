@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+// Vistas principales de nuestra aplicacion
 @Controller
 public class RootController {
     private static Logger logger = LogManager.getLogger(RootController.class);
@@ -62,7 +63,7 @@ public class RootController {
     };
 
 
-    @GetMapping(value = { "/", "", "/home", "/index" }) 
+    @GetMapping(value = { "/", "", "/home", "/index" })
     public String index(HttpSession session, Model model, @RequestParam(required = false) Integer entero){
 
         model.addAttribute("prod", prod);
@@ -71,28 +72,32 @@ public class RootController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+        model.addAttribute("title", "BayShop | Iniciar sesión");
         return "login";
     }
 
     @GetMapping("/register")
-    public String register() {
+    public String register(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+        model.addAttribute("title", "BayShop | Crear cuenta");
         return "register";
     }
 
-    @GetMapping("/admin/")
-    public String admin() {
+    @GetMapping(value = { "/admin/", "/admin" })
+    public String admin(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+        model.addAttribute("title", "BayShop | ADMINISTRADOR");
         return "admin";
     }
 
     @GetMapping(value = { "/revisor/", "/revisor" })
-    public String revisor() {
+    public String revisor(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+        model.addAttribute("title", "BayShop | REVISOR");
         return "revisor";
     }
 
     @GetMapping("/producto/id")
-    public String product_id(Model model) {
-        
+    public String product_id(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+        model.addAttribute("title", "BayShop | Producto <ID>");
         model.addAttribute("user", "validador");
 
         Producto p = new Producto("Camiseta chula", "Adidas", "Rojo", "XL", 23.45, "Nueva", "La vendo porque me queda grande");
@@ -103,27 +108,32 @@ public class RootController {
     }
 
     @GetMapping(value = { "/producto/crear", "/producto/crear/" })
-    public String productCreate() {
-        return "producto_crear";
+    public String productCreate(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+        model.addAttribute("title", "BayShop | Crear producto");
+        return "productoCrear";
     }
 
     @GetMapping("/perfil/id")
-    public String profile() {
+    public String profile(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+        model.addAttribute("title", "BayShop | Mi perfil");
         return "perfil";
     }
 
     @GetMapping(value = { "/mensajes/", "/mensajes" })
-    public String allMessages() {
+    public String allMessages(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+        model.addAttribute("title", "BayShop | Mis mensajes");
         return "mensajes";
     }
 
     @GetMapping("/mensajes/idU/idP")
-    public String message() {
+    public String message(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+        model.addAttribute("title", "BayShop | Mensaje <ID>");
         return "mensaje";
     }
 
     @GetMapping(value = { "/compra/", "/compra" })
-    public String buy() {
+    public String buy(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+        model.addAttribute("title", "BayShop | Resumen de compra");
         return "compra";
     }
 }

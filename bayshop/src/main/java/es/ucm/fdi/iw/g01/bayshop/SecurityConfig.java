@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		String debugProperty = env.getProperty("es.ucm.fdi.debug");
 		if (debugProperty != null && Boolean.parseBoolean(debugProperty.toLowerCase())) {
 			// allows access to h2 console if, and only if, 
-			//   application.properties says that es.ucm.fdi.debug = true
+			// application.properties says that es.ucm.fdi.debug = true
 			web.ignoring().antMatchers("/h2/**");
 		}
     }
@@ -54,8 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 	    http
 	        .authorizeRequests()
-	            .antMatchers("/css/**", "/js/**", "/img/**", "/", "/error").permitAll()
-	            .antMatchers("/admin/**").hasRole("ADMIN")		  // <-- administration
+				.antMatchers("/**", "/error").permitAll() // TEMPORAL SOLO PARA MONTAR LAS VISTAS
+	            // .antMatchers("/css/**", "/js/**", "/img/**", "/", "/error", "/register").permitAll()
+	            // .antMatchers("/admin/**").hasRole("ADMIN")		  	// administration
+				// .antMatchers("/admin/**").hasRole("MODERATOR")		// reviewers
 	            .anyRequest().authenticated()
 	            .and()
 			.formLogin()
@@ -91,12 +93,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 
 	 *  This can be used to auto-login into the site after creating new users, for example.
 	 */
-	 @Bean
-	 @Override
-	 public AuthenticationManager authenticationManagerBean() throws Exception {
-	     return super.authenticationManagerBean();
-	 }
-	 
-	 @Autowired
-	 private LoginSuccessHandler loginSuccessHandler;
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+	
+	@Autowired
+	private LoginSuccessHandler loginSuccessHandler;
 }

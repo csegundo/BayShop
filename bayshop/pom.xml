@@ -20,7 +20,7 @@
 	<artifactId>bayshop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>bayshop</name>
-	<description>Tu tienda fácil</description>
+	<description>BayShop. Tu tienda de confianza.</description>
 	<packaging>jar</packaging>
 	<properties>
 		<java.version>1.8</java.version>
