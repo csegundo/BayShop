@@ -63,6 +63,8 @@ public class User implements Transferable<User.Transfer> {
 	@Column(nullable = false, unique = true)
 	private String username;
 	/** encoded password; use setPassword(SecurityConfig.encode(plaintextPassword)) to encode it  */
+	@Column(nullable = false, unique = true)
+	private String email;
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
