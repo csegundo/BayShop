@@ -1,20 +1,31 @@
 package es.ucm.fdi.iw.g01.bayshop.controller;
 
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.persistence.EntityManager;
 
+import org.apache.commons.logging.Log;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.annotations.common.util.impl.Log_.logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.ucm.fdi.iw.g01.bayshop.model.Product;
+
 // Vistas principales de nuestra aplicacion
 @Controller
 public class RootController {
     private static Logger logger = LogManager.getLogger(RootController.class);
+
+    @Autowired
+    private EntityManager entityManager;
 
     public static class Producto {
         
@@ -65,9 +76,11 @@ public class RootController {
 
     @GetMapping(value = { "/", "", "/home", "/index" })
     public String index(HttpSession session, Model model, @RequestParam(required = false) Integer entero){
+        List<Product> prod = entityManager.createQuery("select p from Product p").getResultList();
 
         model.addAttribute("prod", prod);
         model.addAttribute("title", "BayShop | Todos los productos");
+       
         return "index";
     }
 
