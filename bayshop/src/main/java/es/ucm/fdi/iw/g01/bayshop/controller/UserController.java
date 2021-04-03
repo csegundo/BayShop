@@ -13,15 +13,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-// import es.ucm.fdi.iw.g01.bayshop.model.User;
+import es.ucm.fdi.iw.g01.bayshop.LocalData;
+import es.ucm.fdi.iw.g01.bayshop.model.User;
 
-// import es.ucm.fdi.iw.g01.bayshop.LocalData;
-
-@Controller
+@Controller()
 @RequestMapping("/user")
 public class UserController {
     private static Logger logger = LogManager.getLogger(UserController.class);
@@ -29,8 +29,8 @@ public class UserController {
     @Autowired 
 	private EntityManager entityManager;
 	
-	// @Autowired
-	// private LocalData localData;
+	@Autowired
+	private LocalData localData;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -62,9 +62,9 @@ public class UserController {
     // Metodos de los <form> que son mas especificos de cada Controller
     @PostMapping("/create")
     @Transactional
-    public String create(HttpServletResponse response){
-        logger.debug("LLEGO AL CREATEEEEEEEEEEE", response);
+    public String create(HttpServletResponse response, @ModelAttribute User newUser, @RequestParam(required=false) String pass2, Model model, HttpSession session){
+        logger.info("LLEGO AL CREATEEEEEEEEEEE", response);
 
-        return "";
+        return "user";
     }
 }

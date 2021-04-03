@@ -103,8 +103,7 @@ public class User implements Transferable<User.Transfer> {
 	 */
 	public boolean hasRole(Role role) {
 		String roleName = role.name();
-		return Arrays.stream(roles.split(","))
-				.anyMatch(r -> r.equals(roleName));
+		return Arrays.stream(roles.split(",")).anyMatch(r -> r.equals(roleName));
 	}
 
     @Getter
