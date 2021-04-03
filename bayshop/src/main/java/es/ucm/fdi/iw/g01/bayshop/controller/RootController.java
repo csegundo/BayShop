@@ -129,6 +129,13 @@ public class RootController {
     @GetMapping("/perfil/id")
     public String profile(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
         model.addAttribute("title", "BayShop | Mi perfil");
+
+        List<Product> userProd = entityManager.createQuery("select p from Product p").getResultList();
+        model.addAttribute("userProd", userProd);
+
+        List<Product> userCompras = entityManager.createQuery("select p from Product p").getResultList();
+        model.addAttribute("userCompras", userCompras);
+
         return "perfil";
     }
 

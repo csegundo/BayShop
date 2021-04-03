@@ -56,7 +56,7 @@
             <div class="card-body">
                 <h5 class="card-title"><u>Tus compras</u></h5>
                 <div class="d-flex align-items-start flex-column">
-                    <div>
+                    <div th:each="uC: ${userCompras}">
                         <div class="p-2">
                             <div class="card">
                                 <a href="/producto/id"><img th:src="@{/img/bay_32.png}" width="130" height="160"></a>
@@ -65,10 +65,10 @@
                         <div class="p-2">
                             <div class="card">
                                 <div>
-                                    Descripción del producto
+                                    <p th:text="${uC.description}"></p>
                                 </div>
                                 <div>
-                                    30€
+                                    <p th:text="${uC.price}"></p>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
             <div class="card-body">
                 <h5 class="card-title"><u>Tus productos</u></h5>
                 <div class="d-flex align-items-start flex-column">
-                    <div>
+                    <div th:each="uP: ${userProd}">
                         <div class="p-2">
                             <div class="card">
                                 <a href="/producto/id"><img th:src="@{/img/bay_32.png}" width="130" height="160"></a>
@@ -91,10 +91,10 @@
                         <div class="p-2">
                             <div class="card">
                                 <div>
-                                    Descripción del producto
+                                    <p th:text="${uP.description}"></p>
                                 </div>
                                 <div>
-                                    30€
+                                    <p th:text="${uP.price}"></p>
                                 </div>
                             </div>
                         </div>
