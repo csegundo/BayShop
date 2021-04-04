@@ -54,10 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 	    http
 	        .authorizeRequests()
-				.antMatchers("/**", "/error").permitAll() // TEMPORAL SOLO PARA MONTAR LAS VISTAS
-	            // .antMatchers("/css/**", "/js/**", "/img/**", "/", "/error", "/register").permitAll()
-	            // .antMatchers("/admin/**").hasRole("ADMIN")		  	// administration
-				// .antMatchers("/admin/**").hasRole("MODERATOR")		// reviewers
+				// .antMatchers("/**", "/error").permitAll() // TEMPORAL SOLO PARA MONTAR LAS VISTAS
+	            .antMatchers("/css/**", "/js/**", "/img/**", "/", "/error", "/register").permitAll()
+	            .antMatchers("/admin/**").hasRole("ADMIN")		  	// administration
+				// .antMatchers("/revisor/**").hasRole("MODERATOR")		// reviewers
 	            .anyRequest().authenticated()
 	            .and()
 			.formLogin()

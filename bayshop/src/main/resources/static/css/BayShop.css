@@ -46,6 +46,15 @@ body.auth{
 .main-div-auth form .change{
     cursor: pointer;
 }
+.main-div-auth form .form-group{
+    margin-bottom: 5px !important;
+}
+.main-div-auth form .form-group>label{
+    margin-bottom: 3px !important;
+}
+.main-div-auth form button{
+    margin-top: 5px;
+}
 
 
 /* ERROR PAGES */
