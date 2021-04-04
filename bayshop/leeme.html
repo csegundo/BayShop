@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" />
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Icon -->
+    <!--div>Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></!--div-->
+    <link rel="icon" href="src/main/resources/static/img/bay_32.png">
+
+    <style>
+        a {
+            text-decoration: none !important;
+        }
+    </style>
+
+    <title>BayShop - Leeme</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Descripción</h1>
+        <p>Desde BayShop entendemos la necesidad de tener que deshacerte de ropa que ya no usas y que está en buen estado. Además, ¡da un giro a tu imaginación subiendo tus propios diseños de ropa y saca provecho de ello! Por eso te damos la oportunidad
+            de que obtengas dinero por venderla dándole una segunda vida a tus prendas y que las reutilice otra persona. También, puedes hacer de comprador y obtener prendas geniales a un precio ridículo. El sistema posee un sistema de puntos que se pueden
+            ganar cuando compres productos en la plataforma. Estos puntos se podrán canjear en el carrito de la compra descontando dinero equivalente del precio total de la compra (hay un límite de cantidad de puntos que un usuario puede acumular).</p>
+
+        <h1>Repositorio</h1>
+        <p><a href="https://github.com/csegundo/BayShop">BayShop</a></p>
+        
+        <h1>Vistas disponibles en la aplicación:</h1>
+        <ul>
+            <li>Vista login y register: <a href="http://localhost:8081/login">aquí</a> y <a href="http://localhost:8081/register">aquí</a> respectivamente</li>
+            <li>Vista principal de todos los productos: <a href="http://localhost:8081/">aquí</a></li>
+            <li>Vista detallada de un producto: <a href="http://localhost:8081/producto/id">aquí</a></li>
+            <li>Vista del revisor de contenido: <a href="http://localhost:8081/revisor/">aquí</a></li>
+            <li>Vista del administrador: <a href="http://localhost:8081/admin/">aquí</a></li>
+            <li>Vista para crear un producto: <a href="http://localhost:8081/producto/crear">aquí</a></li>
+            <li>Vista perfil de un usuario: <a href="http://localhost:8081/perfil/id">aquí</a></li>
+            <li>Vista principal de todos los mensajes: <a href="http://localhost:8081/mensajes/">aquí</a></li>
+            <li>Vista detallada de un mensaje: <a href="http://localhost:8081/mensajes/idU/">aquí</a></li>
+            <li>Vista detallada del resumen de tu compra: <a href="http://localhost:8081/compra/">aquí</a></li>
+        </ul>
+
+<pre>
+
+    Puntos por iros animando a usar seguridad, tener el leeme.html en su sitio, y tener todo funcionando como se pedía en el enunciado.
+
+    Veo que habéis optado por Bootstrap (todavía podeis cambiar de idea)
+    
+    - La vista del revisor parece estar vacía
+    - Yo convertiría la vista de "cambiar contraseña" / "editar producto" / "escribir mensaje" a sendos diálogos emergentes (modales, en parlanza Bootstrap)
+    - Echo en falta poder ver qué mensajes son nuevos, y con qué interlocutor, en la vista de correo
+    
+    - Os pediré que paseis todos los recursos a internos (= en lugar de que se busquen fuera, que la página se pueda ver completa sin hacer acceso alguno fuera del servidor)
+    
+    - Hay mucho script (js) / link (css) duplicado en cabeceras, del que podeis sacar factor común para un fragmento. Entiendo que bastaría con usar "frag libs" desde más sitios. Podeis sacar el `<title>` de ahí, o parametrizarlo vía `$` para que cada página tenga un título con sentido.
+    - Hay bastante copia-pega en los documentos (`mensajes.html`, por ejemplo). Sacad factor común de cachos repetidos - `th:foreach` es mucho más mantenible.
+
+
+</pre>
+
+
+        <h1>Base de datos</h1>
+        <p>Hemos usado <a href="https://app.sqldbm.com/">SqlDBM</a> para general el siguiente esquema:</p>
+        <img src="src/main/resources/static/img/bayshop_schema_db.png" style="margin-bottom: 10px;" alt="schema_img">
+
+        <h1>Recursos usados</h1>
+        <ul>
+            <li>
+                Logo de la aplicación: el logo lo hemos descargado de <a href="https://www.flaticon.es/">flaticon</a>, pudiendo usarlo en nuestra aplicación siempre que se atribuya el logo al autor, como <a href="https://support.flaticon.com/hc/en-us/articles/207248209-How-I-must-insert-the-attribution-">nombra</a>                en su propia web (logo en cuestión: <a href="https://www.flaticon.es/icono-gratis/bahia_1788595?term=bahia&page=1&position=9&page=1&position=9&related_id=1788595&origin=search">aquí</a>).
+            </li>
+            <li>
+                jQuery 3.2.1 (<a href="https://code.jquery.com/">download</a>)
+            </li>
+            <li>
+                Bootstrap 4.0.0 (<a href="https://getbootstrap.com/docs/4.0/getting-started/introduction/">download</a>)
+            </li>
+            <li>
+                Font Awesome 4.7.0 (<a href="https://fontawesome.com/v4.7.0/get-started/">download</a>)
+            </li>
+            <li>
+                Fuente de la web (<a href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">download</a>)
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

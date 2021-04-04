@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="frags/head.html">
+    <!-- Resto de recursos especificos de cada pagina -->
+</head>
+<body>
+    <header th:replace="frags/header.html"></header>
+
+    <div class="main-error">
+        <img class="img-fluid" th:src="@{/img/bay_128.png}" alt="">
+        <h1>¡Vaya! Parece que la página que buscas no existe...</h1>
+        <h3>Comprueba que la URL es correcta.</h3>
+        <a href="/" class="btn btn-primary btn-md"><i class="fa fa-home"></i> Página principal</a>
+    </div>
+</body>
+</html>

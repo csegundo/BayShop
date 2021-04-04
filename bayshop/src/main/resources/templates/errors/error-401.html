@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="frags/head.html">
+    <!-- Resto de recursos especificos de cada pagina -->
+</head>
+<body>
+    <header th:replace="frags/header.html"></header>
+
+    <div class="main-error">
+        <img class="img-fluid" th:src="@{/img/bay_128.png}" alt="">
+        <h1>¡Oopss! Parece que no tienes permiso para realizar esta acción...</h1>
+        <h3>Ponte en contacto con uno de los administradores de la página.</h3>
+        <a href="/" class="btn btn-primary btn-md"><i class="fa fa-home"></i> Página principal</a>
+    </div>
+</body>
+</html>

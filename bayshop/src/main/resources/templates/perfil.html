@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="frags/head.html">
+    <!-- Resto de recursos especificos de cada pagina -->
+</head>
+<body>
+    <header th:replace="frags/header.html"></header>
+
+    <div class="d-flex justify-content-center" id="Titulo">
+        <h3><u>Tu perfil</u></h3>
+    </div>
+
+    <div class="d-flex justify-content-around">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><u>Cambiar nombre de usuario</u></h5>
+                <form method="POST">
+                    <div class="form-group">
+                        <input #required type="text" class="form-control" placeholder="Introduce tu nuevo nombre de usuario">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><u>Cambiar contraseña</u></h5>
+                <form method="POST">
+                    <div class="form-group">
+                        <label>Introduce tu contraseña actual</label>
+                        <input #required type="password" class="form-control" placeholder="Contraseña actual">
+                        <label>Introduce tu nueva contraseña</label>
+                        <input #required type="password" class="form-control" placeholder="Contraseña nueva">
+                        <label>Confirma tu nueva contraseña</label>
+                        <input #required type="password" class="form-control" placeholder="Confirmar contraseña">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cambiar contraseña</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><u>Borrar cuenta</u></h5>
+                <form method="POST">
+                    <button type="submit" class="btn btn-primary">Borrar cuenta</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="d-flex justify-content-around">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><u>Tus compras</u></h5>
+                <div class="d-flex align-items-start flex-column">
+                    <div>
+                        <div class="p-2">
+                            <div class="card">
+                                <a href="/producto/id"><img th:src="@{/img/bay_32.png}" width="130" height="160"></a>
+                            </div>
+                        </div>
+                        <div class="p-2">
+                            <div class="card">
+                                <div>
+                                    Descripción del producto
+                                </div>
+                                <div>
+                                    30€
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><u>Tus productos</u></h5>
+                <div class="d-flex align-items-start flex-column">
+                    <div>
+                        <div class="p-2">
+                            <div class="card">
+                                <a href="/producto/id"><img th:src="@{/img/bay_32.png}" width="130" height="160"></a>
+                            </div>
+                        </div>
+                        <div class="p-2">
+                            <div class="card">
+                                <div>
+                                    Descripción del producto
+                                </div>
+                                <div>
+                                    30€
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

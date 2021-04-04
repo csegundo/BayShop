@@ -1,0 +1,151 @@
+/* Este archivo contiene los estilos de las páginas de BayShop */
+
+/* BASIC */
+html,
+body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+
+/* LOGIN Y REGISTER */
+body.auth{
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.main-div-auth{
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f3f3f3;
+}
+.main-div-auth form{
+    margin: 10px 0;
+}
+.main-div-auth .web-logo{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.main-div-auth form .change{
+    cursor: pointer;
+}
+.main-div-auth form .form-group{
+    margin-bottom: 5px !important;
+}
+.main-div-auth form .form-group>label{
+    margin-bottom: 3px !important;
+}
+.main-div-auth form button{
+    margin-top: 5px;
+}
+
+
+/* ERROR PAGES */
+.main-error{
+    text-align: center;
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.main-error img{
+    margin-bottom: 10px;
+}
+.main-error a.btn{
+    margin-top: 10px;
+}
+
+
+/* COMRPA - RESUMEN DE COMPRA */
+.main-div{
+    margin-top: 20px;
+}
+
+.main-div .info{
+    display: flex;
+    flex-direction: column;
+}
+.main-div .info .title{
+    margin-bottom: 20px;
+}
+.main-div .info .item{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    align-items: center;
+    align-content: center;
+}
+.main-div .info .item input[data-key="baypoints_selector"]{
+    width: 100px;
+}
+.main-div .info .separator{
+    border-bottom: 1px solid #ccc;
+    margin: 10px 0;
+}
+.main-div .product{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.main-div .product .product-img{
+    padding: 10px 0;
+}
+
+@media (max-width: 767px){
+    .main-div .all-info{
+        display: flex;
+    }
+    .info{ order: 2; }
+    .none{ order: 1; }
+    .product{ order: 0; }
+}
+
+
+/* MENSAJES */
+.contenedor{
+    width: 90%;
+    margin: 30px auto;
+    border: 2px solid rgb(138, 138, 138);
+    padding: 30px;
+}
+
+.containerMessage{
+    width: 80%;
+    margin: 30px auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    border-radius: 5px;
+    border: 2px solid rgb(138, 138, 138);
+    padding: 30px;
+    background-color: #facc00ab;
+}
+
+.fondo{
+    background-color: #b8b8b8ab;
+}
+
+.margin{
+    margin: 5px;
+}

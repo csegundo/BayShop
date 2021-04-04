@@ -1,43 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" />
-
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    <!-- Font -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-
-    <!-- Icon -->
-    <!--div>Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></!--div-->
-    <link rel="icon" href="/static/img/bay_32.png">
-
-    <!-- CSS stylesheets -->
-    <link rel="stylesheet" href="/static/css/index.css">
-
-    <title>BayShop</title>
+<head th:replace="frags/head.html">
+    <!-- Resto de recursos especificos de cada pagina -->
 </head>
 
 <body>
-    <header>
-        <nav th:replace="frags/header.html"></nav>
-    </header>
+    <header th:replace="frags/header.html"></header>
 
-    <div class="container">
+    <div class="row main-div p-5">
+        <div class="col-xs-12 col-md-12 form text-center">
+            <form method="GET" action="/">
+                <div class="form-group">
+                    <input type="" class="" placeholder="Buscar porductos">
+                    <button type="submit" class="btn btn-primary">Buscar <i class="fa fa-sign-in"></i></button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-sm-4 col-lg-3 p-4 text-center" th:each="p: ${prod}">
+            <img class="img-fluid my-3" th:src="@{/img/bay_512.png}" alt="Imagen Producto">
+            <h3 th:text="${p.precio} + ' €'"></h3>
+            <p th:text="${p.nombre}"></p>
+            <a th:href="@{http://localhost:8080/producto/id}" class="btn btn-primary">Ver Producto <i class="fa fa-eye"></i></a>
+        </div>
+    </div>
+
 
     </div>
 </body>
