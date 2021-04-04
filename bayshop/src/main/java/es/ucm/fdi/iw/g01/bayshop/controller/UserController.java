@@ -67,4 +67,41 @@ public class UserController {
 
         return "";
     }
+
+	@PostMapping("/userNameChange/{id}")
+	public string changeUserName(
+		@PathVariable long id,
+		@ModelAttribute User edited
+	){
+		
+		User target = entityManager.find(User.class, id);
+		
+		// Hacer update
+
+		return "perfil";
+	}
+
+	@PostMapping("/passChange/{id}")
+	public string changeUserPass(
+		@PathVariable long id,
+		@ModelAttribute User edited
+	){
+		User target = entityManager.find(User.class, id);
+
+		// Hacer update
+
+		return "perfil";
+	}
+
+	@PostMapping("/deleteAccount/{id}")
+	public string deleteAccount(
+		@PathVariable long id,
+		@ModelAttribute User edited
+	){
+		User target = entityManager.find(User.class, id);
+
+		// Hacer delete
+
+		return "index";
+	}
 }

@@ -10,11 +10,11 @@
         <h3><u>Tu perfil</u></h3>
     </div>
 
-    <div class="d-flex justify-content-around">
+    <div class="d-flex justify-content-around" th:if="(${session.u.id} eq ${user.id})">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title"><u>Cambiar nombre de usuario</u></h5>
-                <form method="POST">
+                <form th:action="@{/user/userNameChange/{id}(id=${user.id})}" method="POST">
                     <div class="form-group">
                         <input #required type="text" class="form-control" placeholder="Introduce tu nuevo nombre de usuario">
                     </div>
@@ -23,10 +23,10 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" th:if="(${session.u.id} eq ${user.id})">
             <div class="card-body">
                 <h5 class="card-title"><u>Cambiar contraseña</u></h5>
-                <form method="POST">
+                <form th:action="@{/user/passChange/{id}(id=${user.id})}" method="POST">
                     <div class="form-group">
                         <label>Introduce tu contraseña actual</label>
                         <input #required type="password" class="form-control" placeholder="Contraseña actual">
@@ -40,10 +40,10 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" th:if="(${session.u.id} eq ${user.id})">
             <div class="card-body">
                 <h5 class="card-title"><u>Borrar cuenta</u></h5>
-                <form method="POST">
+                <form th:action="@{/user/deleteAccount/{id}(id=${user.id})}" method="POST">
                     <button type="submit" class="btn btn-primary">Borrar cuenta</button>
                 </form>
             </div>
@@ -51,7 +51,7 @@
 
     </div>
 
-    <div class="d-flex justify-content-around">
+    <div class="d-flex justify-content-around" th:if="(${session.u.id} eq ${user.id})">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title"><u>Tus compras</u></h5>
@@ -80,7 +80,8 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title"><u>Tus productos</u></h5>
+                <h5 class="card-title" th:if="(${session.u.id} eq ${user.id})"><u>Tus productos</u></h5>
+                <h5 class="card-title" th:unless="(${session.u.id} eq ${user.id})"><u>Productos del usuario</u></h5>
                 <div class="d-flex align-items-start flex-column">
                     <div th:each="uP: ${userProd}">
                         <div class="p-2">
