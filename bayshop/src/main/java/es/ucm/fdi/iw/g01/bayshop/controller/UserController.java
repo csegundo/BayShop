@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,4 +68,32 @@ public class UserController {
 
         return "user";
     }
+
+	@PostMapping("/userNameChange/{id}")
+	public String changeUserName(@PathVariable long id, @ModelAttribute User edited){
+		
+		User target = entityManager.find(User.class, id);
+		
+		// Hacer update
+
+		return "perfil";
+	}
+
+	@PostMapping("/passChange/{id}")
+	public String changeUserPass(@PathVariable long id, @ModelAttribute User edited){
+		User target = entityManager.find(User.class, id);
+
+		// Hacer update
+
+		return "perfil";
+	}
+
+	@PostMapping("/deleteAccount/{id}")
+	public String deleteAccount(@PathVariable long id, @ModelAttribute User edited){
+		User target = entityManager.find(User.class, id);
+
+		// Hacer delete
+
+		return "index";
+	}
 }

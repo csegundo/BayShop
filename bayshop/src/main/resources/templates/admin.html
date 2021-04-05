@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head th:replace="frags/head.html">
     <!-- Resto de recursos especificos de cada pagina -->
 </head>
+
 <body>
     <header th:replace="frags/header.html"></header>
 
@@ -13,47 +15,14 @@
             <form method="POST" action="/usuarios/eliminar">
                 <table>
                     <h2>Usuarios</h2>
-                    <tr>
+                    <tr th:each="u: ${users}">
                         <td>
-                            <div class="form-group">
-                                <label for="exampleInputImagen">Nombre Usuario 1</label>
-                            </div>
+                            <p th:text="${u.email}"></p>
                         </td>
-                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
-                    </tr>
-                    <tr>
                         <td>
-                            <div class="form-group">
-                                <label for="exampleInputImagen">Nombre Usuario 2</label>
-                            </div>
+                            <a th:href="@{}" class="btn btn-primary">Eliminar<i class="fa fa-eye"></i></a>
                         </td>
-                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
                     </tr>
-                    <tr>
-                        <td>
-                            <div class="form-group">
-                                <label for="exampleInputImagen">Nombre Usuario 3</label>
-                            </div>
-                        </td>
-                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="form-group">
-                                <label for="exampleInputImagen">Nombre Usuario 4</label>
-                            </div>
-                        </td>
-                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="form-group">
-                                <label for="exampleInputImagen">Nombre Usuario 5</label>
-                            </div>
-                        </td>
-                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
-                    </tr>
-
                 </table>
             </form>
         </div>
@@ -61,50 +30,13 @@
             <form method="POST" action="/producto/eliminar">
                 <table>
                     <h2>Productos</h2>
-                    <tr>
+                    <tr th:each="p: ${products}">
                         <td>
-                            <div class="form-group">
-                                <label for="exampleInputTitle">Título 1</label>
-                                <link rel="icon" th:href="@{/img/bay_32.png}">
-                            </div>
+                            <p th:text="${p.name}"></p>
                         </td>
-                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
-                    </tr>
-                    <tr>
                         <td>
-                            <div class="form-group">
-                                <label for="exampleInputTitle">Título 2</label>
-                                <link rel="icon" th:href="@{/img/bay_32.png}">
-                            </div>
+                            <a th:href="@{}" class="btn btn-primary">Eliminar<i class="fa fa-eye"></i></a>
                         </td>
-                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="form-group">
-                                <label for="exampleInputTitle">Título 3</label>
-                                <link rel="icon" th:href="@{/img/bay_32.png}">
-                            </div>
-                        </td>
-                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="form-group">
-                                <label for="exampleInputTitle">Título 4</label>
-                                <link rel="icon" th:href="@{/img/bay_32.png}">
-                            </div>
-                        </td>
-                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="form-group">
-                                <label for="exampleInputTitle">Título 5</label>
-                                <link rel="icon" th:href="@{/img/bay_32.png}">
-                            </div>
-                        </td>
-                        <td> <button type="submit" class="btn btn-primary">Eliminar<i class="fa fa-sign-in"></i></button></td>
                     </tr>
                 </table>
             </form>

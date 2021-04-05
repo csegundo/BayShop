@@ -1,4 +1,2 @@
-- th:block para head y header
-- Ver como meter js/css especificos de cada pagina con el th:block/th:replace
 - ¿Quitar la carpeta .vscode de la raiz del proyecto? No deberia haberse subido, esta en el .gitignore
 - Edicion de mensajes?

@@ -1,0 +1,66 @@
+package es.ucm.fdi.iw.g01.bayshop.controller;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import es.ucm.fdi.iw.g01.bayshop.LocalData;
+import es.ucm.fdi.iw.g01.bayshop.model.Product;
+import es.ucm.fdi.iw.g01.bayshop.model.User;
+
+@Controller
+@RequestMapping("/producto")
+public class ProductController {
+    private static Logger logger = LogManager.getLogger(ProductController.class);
+
+    @Autowired
+	private EntityManager entityManager;
+	
+	@Autowired
+	private LocalData localData;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+    // @PostMapping("/create")
+    // @Transactional
+    // public String createProduct(HttpServletResponse response, @ModelAttribute User newProduct, Model model, HttpSession session){
+    //     logger.debug("NUEVO PRODUCTO");
+    //     return "index";
+    // }
+
+    
+    // TODO: Falla
+    @GetMapping("/{id}")
+    public String product_id(HttpSession session, @PathVariable long id, Model model, @RequestParam(required = false) Integer entero) {
+        model.addAttribute("title", "BayShop | Producto <ID>");
+        
+        long i = 1; 
+        Product p = entityManager.find(Product.class, i);
+        logger.info("PROOOOOOOOOOOOOOOOOOOODUUUUUUUUUUUUUUUUUCTOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        logger.info(p);
+        List<Product> prod = entityManager.createQuery("select e from Product e").getResultList();
+    
+        model.addAttribute("p", p);
+        model.addAttribute("prod", prod);
+
+        return "producto";
+    }
+
+}

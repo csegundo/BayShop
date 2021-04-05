@@ -36,5 +36,11 @@ INSERT INTO MESSAGE VALUES(5,NULL,'2020-03-23 10:48:22.926000','probando 5',1,1)
 
 
 --Productos de ejemplo
-INSERT INTO PRODUCT (name, description, creation_date, price, size, brand, status, categories, enabled)
-VALUES ( 'Camiseta chula', 'camiseta roja, me queda grande', '2012-09-17 18:47:52.69', 21.3, 'XL', 'NIKE', 0, 'SHIRT', '1');
+INSERT INTO PRODUCT (enabled, user_id, name, description, creation_date, price, size, brand, status, categories) VALUES 
+	(1, 2, 'Camiseta chula', 'La vendo porque me queda grande', '2020-03-23 10:48:22.926000', 23.45, 'XL', 'Adidas', 1, 'Camiseta'),
+	(1, 2, 'Camiseta corta', 'La vendo porque me queda grande', '2020-03-24 10:48:22.926000', 15.25, 'XL', 'Reebok', 1, 'Camiseta'),
+	(1, 2, 'Camiseta fina', 'La vendo porque me queda pequeña', '2020-03-25 10:48:22.926000', 18.25, 'XS', 'Adidas', 1, 'Camiseta'),
+	(1, 2, 'Albornoz azul', 'Lo vendo porque me queda grande', '2020-03-26 10:48:22.926000', 24.50, 'XL', 'Adidas', 1, 'Albornoz'),
+	(1, 2, 'Abrigo Calentito', 'Lo vendo porque me queda grande', '2020-03-27 10:48:22.926000', 48.50, 'XL', 'Nike', 1, 'Abrigo'),
+	(1, 2, 'Chandal gris', 'Lo vendo porque me queda grande', '2020-03-29 10:48:22.926000', 34.50, 'XL', 'Adidas', 1, 'Chandal'),
+	(1, 2, 'Gorra plana', 'La vendo porque me queda pequeña', '2020-03-29 10:48:22.926000', 14.50, 'XL', 'P&B', 1, 'Gorra');
