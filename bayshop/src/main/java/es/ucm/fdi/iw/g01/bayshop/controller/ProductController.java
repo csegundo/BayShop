@@ -25,7 +25,7 @@ import es.ucm.fdi.iw.g01.bayshop.model.Product;
 import es.ucm.fdi.iw.g01.bayshop.model.User;
 
 @Controller
-@RequestMapping("/producto")
+@RequestMapping("producto")
 public class ProductController {
     private static Logger logger = LogManager.getLogger(ProductController.class);
 
@@ -45,16 +45,32 @@ public class ProductController {
     //     return "index";
     // }
 
-    
-    // TODO: Falla
+
+    @Transactional
+    @PostMapping("/create")
+    public String createProduct(@ModelAttribute Product newProduct, Model model, HttpSession session){
+        logger.warn("NUEVO PRODUCTO");
+        
+        // entityManager.persist(newProduct);
+
+        return "redirect:/index";
+    }
+
+    @GetMapping(value = { "/crear", "/crear/" })
+    public String productCreate(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+        model.addAttribute("title", "BayShop | Crear producto");
+        return "productoCrear";
+    }
+
+
+
+
+    @Transactional
     @GetMapping("/{id}")
     public String product_id(HttpSession session, @PathVariable long id, Model model, @RequestParam(required = false) Integer entero) {
         model.addAttribute("title", "BayShop | Producto <ID>");
         
-        long i = 1; 
-        Product p = entityManager.find(Product.class, i);
-        logger.info("PROOOOOOOOOOOOOOOOOOOODUUUUUUUUUUUUUUUUUCTOOOOOOOOOOOOOOOOOOOOOOOOOO");
-        logger.info(p);
+        Product p = entityManager.find(Product.class, id);
         List<Product> prod = entityManager.createQuery("select e from Product e").getResultList();
     
         model.addAttribute("p", p);

@@ -19,13 +19,12 @@
         </div>
 
         <div class="col-sm-4 col-lg-3 p-4 text-center" th:each="p: ${prod}">
-            <!-- <a th:href="@{/producto/(id=${p.id})}">  -->
-            <a th:href="@{/producto/id}">
+            <a th:href="@{/producto/{id}(id=${p.id})}">
                 <img class="img-fluid my-3" th:src="@{/img/bay_512.png}" alt="Imagen Producto">
             </a>
             <h3 th:text="${p.price} + ' €'"></h3>
             <p th:text="${p.name}"></p>
-            <a th:href="@{/producto/id}" class="btn btn-primary">Ver Producto <i class="fa fa-eye"></i></a>
+            <a th:href="@{/producto/{id}(id=${p.id})}" class="btn btn-primary">Ver Producto <i class="fa fa-eye"></i></a>
         </div>
     </div>
 

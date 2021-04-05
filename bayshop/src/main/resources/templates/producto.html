@@ -15,10 +15,10 @@
         </div>
         <div class="col-md-6 p-4">
             <h1 th:text="${p.name}"></h1>
-            <p th:text="'Vendedor: ' + ${p.user_id}"></p>
+            <p th:text="'Vendedor: ' + ${p.user.getFirstName()}"></p>
             <p th:text="'Marca: ' + ${p.brand}"></p>
             <p th:text="'Talla: ' + ${p.size}"></p>
-            <p th:text="'Fecha de subida: ' + ${p.creation_date}"></p>
+            <p th:text="'Fecha de subida: ' + ${p.creationDate}"></p>
             <p th:text="'Descripción: ' + ${p.description}"></p>
             <h3 class="mb-4" th:text="'Precio: ' + ${p.price} + ' €'"></h3>
             <!-- <p>Fecha</p> -->
@@ -26,7 +26,7 @@
             <div th:if="${session.u.hasRole('USER')}">
                 <a th:href="@{/compra/}" class="btn btn-primary">Comprar <i class="fa fa-shopping-cart"></i></a>
             </div>
-            <div th:if="${session.u.hasRole('MODERATOR')}">
+            <div th:if="${session.u.hasRole('MODERATOR')} or ${session.u.hasRole('ADMIN')}">
                 <a th:href="@{/validar}" class="btn btn-success">Validar <i class="fa fa-check"></i></a>
                 <a th:href="@{/rechazar}" class="btn btn-danger">Rechazar <i class="fa fa-times"></i></a>
             </div>
@@ -36,18 +36,18 @@
         <div class="col text-center mt-4" th:if="${session.u.hasRole('USER')}">
             <h4>Otros Productos sugeridos</h4>
         </div>
-        <div class="col text-center mt-4" th:if="${session.u.hasRole('MODERATOR')}">
+        <div class="col text-center mt-4" th:if="${session.u.hasRole('MODERATOR')} or ${session.u.hasRole('ADMIN')}">
             <h4>Otros Productos del Vendedor</h4>
         </div>
 
         <div class="row m-5">
             <div class="col-sm-3 col-lg-2 m-2 text-center" th:each="p: ${prod}">
-                <a th:href="@{/producto/id}">
+                <a th:href="@{/producto/{id}(id=${p.id})}">
                     <img class="img-fluid my-3" th:src="@{/img/bay_512.png}" alt="Imagen Producto">
                 </a>
                 <h3 th:text="${p.price} + ' €'"></h3>
                 <p th:text="${p.name}"></p>
-                <a th:href="@{/producto/id}" class="btn btn-primary">Ver Producto <i class="fa fa-eye"></i></a>
+                <a th:href="@{/producto/{id}(id=${p.id})}" class="btn btn-primary">Ver Producto <i class="fa fa-eye"></i></a>
             </div>
         </div>
     </div>

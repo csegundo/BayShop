@@ -23,7 +23,7 @@ INSERT INTO user(enabled,username,password,roles,first_name,last_name, email, ba
 INSERT INTO user (enabled,username,password,roles,first_name,last_name, email, baypoints) VALUES (
 	1,'ElPerico', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
-	'USER',
+	'MODERATOR',
 	'Pedro', 'Garcia', 'pericoLoko@hotmail.com', 3
 );
 

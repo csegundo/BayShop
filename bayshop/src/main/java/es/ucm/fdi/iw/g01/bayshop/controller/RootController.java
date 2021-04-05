@@ -64,27 +64,14 @@ public class RootController {
         return "admin";
     }
 
-    @PostMapping("/producto/create")
-    @Transactional
-    public String createProduct(HttpServletResponse response, @ModelAttribute Product newProduct, Model model, HttpSession session){
-        logger.debug("NUEVO PRODUCTO");
-        
-        // entityManager.persist(newProduct);
 
-        return "index";
-    }
-
+    
     @GetMapping(value = { "/revisor/", "/revisor" })
     public String revisor(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
         model.addAttribute("title", "BayShop | REVISOR");
         return "revisor";
     }
 
-    @GetMapping(value = { "/producto/crear", "/producto/crear/" })
-    public String productCreate(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
-        model.addAttribute("title", "BayShop | Crear producto");
-        return "productoCrear";
-    }
 
     @GetMapping("/perfil/id")
     public String profile(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
