@@ -63,10 +63,22 @@ public class UserController {
     // Metodos de los <form> que son mas especificos de cada Controller
     @PostMapping("/create")
     @Transactional
-    public String create(HttpServletResponse response, @ModelAttribute User newUser, @RequestParam(required=false) String pass2, Model model, HttpSession session){
-        logger.info("LLEGO AL CREATEEEEEEEEEEE", response);
+    public String create(@ModelAttribute User newUser, @RequestParam(required=false) String pass2, Model model, HttpSession session){
+        logger.warn("LLEGO AL CREATEEEEEEEEEEE", newUser);
 
-        return "user";
+		if(!newUser.getPassword().equals(pass2)){
+			return "register";
+		}
+
+		newUser.setPassword(this.encodePassword(newUser.getPassword()));
+		newUser.setEnabled((byte)1);
+		newUser.setRoles("USER");
+		newUser.setBaypoints(0);
+
+		entityManager.persist(newUser);
+		entityManager.flush();
+
+        return "login";
     }
 
 	@PostMapping("/userNameChange/{id}")

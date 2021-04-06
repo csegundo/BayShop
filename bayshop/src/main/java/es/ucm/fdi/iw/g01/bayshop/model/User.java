@@ -48,7 +48,7 @@ public class User implements Transferable<User.Transfer> {
 
 	private static Logger log = LogManager.getLogger(User.class);	
 
-	public enum Role {
+	public static enum Role {
 		USER,			// used for logged-in, non-priviledged users
 		ADMIN,			// used for maximum priviledged users
 		MODERATOR,		// content reviewer

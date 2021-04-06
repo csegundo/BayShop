@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    http
 	        .authorizeRequests()
 				// .antMatchers("/**", "/error").permitAll() // TEMPORAL SOLO PARA MONTAR LAS VISTAS
-	            .antMatchers("/css/**", "/js/**", "/img/**", "/", "/error", "/register").permitAll()
+	            .antMatchers("/css/**", "/js/**", "/img/**", "/", "/error", "/register", "/user/create").permitAll()
 	            .antMatchers("/admin/**").hasRole("ADMIN")		  	// administration
 				// .antMatchers("/revisor/**").hasRole("MODERATOR")		// reviewers
 	            .anyRequest().authenticated()
