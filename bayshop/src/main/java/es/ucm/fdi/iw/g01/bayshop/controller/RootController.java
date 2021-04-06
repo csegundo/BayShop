@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -63,8 +64,6 @@ public class RootController {
         model.addAttribute("title", "BayShop | Administrador");
         return "admin";
     }
-
-
     
     @GetMapping(value = { "/revisor/", "/revisor" })
     public String revisor(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
@@ -72,16 +71,12 @@ public class RootController {
         return "revisor";
     }
 
+    @GetMapping("/perfil/{id}")
+    public String profile(HttpSession session, Model model, @PathVariable long id) {
+		User actual = entityManager.find(User.class, id);
 
-    @GetMapping("/perfil/id")
-    public String profile(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
-        model.addAttribute("title", "BayShop | Mi perfil");
-        // Falta el where para indicar que son los productos del usuario
-        List<Product> userProd = entityManager.createQuery("select p from Product p").getResultList();
-        model.addAttribute("userProd", userProd);  
-        // Falta el where para indicar que son las compras del usuario
-        List<Product> userCompras = entityManager.createQuery("select p from Product p").getResultList();
-        model.addAttribute("userCompras", userCompras);
+		model.addAttribute("title", "BayShop | Mi perfil");
+		model.addAttribute("user", actual);
 
         return "perfil";
     }
@@ -98,9 +93,13 @@ public class RootController {
         return "mensaje";
     }
 
-    @GetMapping(value = { "/compra/", "/compra" })
-    public String buy(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+    @GetMapping("/compra/{id}")
+    public String buy(HttpSession session, Model model, @PathVariable long id) {
+        Product p = entityManager.find(Product.class, id);
+
         model.addAttribute("title", "BayShop | Resumen de compra");
+        model.addAttribute("p", p);
+
         return "compra";
     }
 }

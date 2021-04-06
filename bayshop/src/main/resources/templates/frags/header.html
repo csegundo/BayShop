@@ -9,7 +9,7 @@
 
         <div class="collapse navbar-collapse" id="navbarsExample04">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item active" th:unless="${session.id}">
                     <a class="nav-link" th:href="@{/login}">Login<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
@@ -27,7 +27,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mi perfil</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="#">Mis datos</a>
+                        <a class="dropdown-item" th:href="@{/perfil/{id}(id=${session.u.id})}">Mis datos</a>
                         <a class="dropdown-item" href="#">Cerrar sesión</a>
                     </div>
                 </li>

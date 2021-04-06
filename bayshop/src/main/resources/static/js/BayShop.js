@@ -38,8 +38,13 @@ $(function(){
 
         $('.discount .baypoints_').html($(this).val());
 
-        var product_price = parseDouble($('.info .product .product-price').html()),
-            discount_price = parseDouble($('.dicount .dicount-price').html());
+        var product_price = parseFloat($('.info .product .product-price').html()),
+            discount_price = parseFloat($('.discount .discount-price').html());
+        
         $('.total .total_price').html(product_price - discount_price);
+
+        var spend = $(this).val();
+        // Por cada 3 BayPoints es 1€ de descuento ==> CAMBIAR
+        $('.discount .discount-price').html(spend);
     });
 });

@@ -24,7 +24,7 @@
             <!-- <p>Fecha</p> -->
 
             <div th:if="${session.u.hasRole('USER')}">
-                <a th:href="@{/compra/}" class="btn btn-primary">Comprar <i class="fa fa-shopping-cart"></i></a>
+                <a th:href="@{/compra/{id}(id=${p.id})}" class="btn btn-primary">Comprar <i class="fa fa-shopping-cart"></i></a>
             </div>
             <div th:if="${session.u.hasRole('MODERATOR')} or ${session.u.hasRole('ADMIN')}">
                 <a th:href="@{/validar}" class="btn btn-success">Validar <i class="fa fa-check"></i></a>

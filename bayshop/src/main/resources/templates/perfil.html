@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head th:replace="frags/head.html">
     <!-- Resto de recursos especificos de cada pagina -->
 </head>
-
-<body>
+<body class="profile">
     <header th:replace="frags/header.html"></header>
 
-    <div class="d-flex justify-content-center" id="Titulo">
-        <h3><u>Tu perfil</u></h3>
+    <div class="d-flex justify-content-center mt-3 mb-2" id="Titulo">
+        <h3>Perfil de <span th:text=${user.username}></span></h3>
     </div>
 
-    <div class="d-flex justify-content-around" th:if="(${session.u.id} eq ${user.id})">
+    <div class="d-flex justify-content-around mb-2" th:if="(${session.u.id} eq ${user.id})">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title"><u>Cambiar nombre de usuario</u></h5>
+                <h5 class="card-title">Cambiar nombre de usuario</h5>
                 <form th:action="@{/user/userNameChange/{id}(id=${user.id})}" method="POST">
                     <div class="form-group">
                         <input #required type="text" class="form-control" placeholder="Introduce tu nuevo nombre de usuario">
@@ -53,7 +51,7 @@
 
     </div>
 
-    <div class="d-flex justify-content-around" th:if="(${session.u.id} eq ${user.id})">
+    <div class="d-flex justify-content-around mb-2" th:if="(${session.u.id} eq ${user.id})">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title"><u>Tus compras</u></h5>
@@ -107,7 +105,5 @@
 
         </div>
     </div>
-
 </body>
-
 </html>
