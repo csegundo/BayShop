@@ -64,21 +64,19 @@ public class UserController {
     @PostMapping("/create")
     @Transactional
     public String create(@ModelAttribute User newUser, @RequestParam(required=false) String pass2, Model model, HttpSession session){
-        logger.warn("LLEGO AL CREATEEEEEEEEEEE", newUser);
-
 		if(!newUser.getPassword().equals(pass2)){
-			return "register";
+			return "redirect:/register";
 		}
 
 		newUser.setPassword(this.encodePassword(newUser.getPassword()));
 		newUser.setEnabled((byte)1);
-		newUser.setRoles("USER");
+		newUser.setRoles("USER"); // register normal solo USER normales
 		newUser.setBaypoints(0);
 
 		entityManager.persist(newUser);
 		entityManager.flush();
 
-        return "login";
+        return "redirect:/login";
     }
 
 	@PostMapping("/userNameChange/{id}")
