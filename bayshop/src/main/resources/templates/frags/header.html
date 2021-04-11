@@ -9,23 +9,17 @@
 
         <div class="collapse navbar-collapse" id="navbarsExample04">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active" th:unless="${session.id}">
-                    <a class="nav-link" th:href="@{/login}">Login<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/producto/crear}">Nuevo Producto<span class="sr-only">(current)</span></a>
+                <li class="nav-item" th:unless="${session.u}">
+                    <a class="nav-link" th:href="@{/login}">Login<span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
+                <li class="nav-item" th:if="${session.u}">
+                    <a class="nav-link" th:href="@{/producto/crear}">Nuevo Producto<span class="sr-only"></span></a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mi perfil</a>
+                <li class="nav-item dropdown" th:if="${session.u}">
+                    <a class="nav-link dropdown-toggle" th:href="@{/perfil/{id}(id=${session.u.id})}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mi perfil</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         <a class="dropdown-item" th:href="@{/perfil/{id}(id=${session.u.id})}">Mis datos</a>
                         <a class="dropdown-item" href="#">Cerrar sesión</a>
@@ -34,7 +28,7 @@
             </ul>
         </div>
         <div th:if="${session.u.hasRole('MODERATOR')} or ${session.u.hasRole('ADMIN')}">
-            <a th:href="@{/revisor/}" class="btn btn-success">Validar</i></a>
+            <a th:href="@{/revisor/}" class="btn btn-info btn-sm">Validar productos</i></a>
         </div>
     </nav>
 </header>

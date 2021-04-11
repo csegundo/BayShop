@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.ucm.fdi.iw.g01.bayshop.model.Product;
+import es.ucm.fdi.iw.g01.bayshop.model.Sale;
 import es.ucm.fdi.iw.g01.bayshop.model.User;
 
 // Vistas principales de nuestra aplicacion
@@ -97,5 +98,26 @@ public class RootController {
         model.addAttribute("p", p);
 
         return "compra";
+    }
+
+    @PostMapping("/compra/{idP}/{idS}/{idB}")
+    @Transactional
+    public String buyProduct(HttpSession session, Model model, @PathVariable("idP") long idP, @PathVariable("idS") long idS, @PathVariable("idB") long idB){
+        logger.warn("ID PRODUCTO", idP);
+        logger.warn("ID BUYER", idB);
+        logger.warn("ID SELLER", idS);
+
+        // User buyer  = entityManager.find(User.class, idB);
+        // User seller = entityManager.find(User.class, idS);
+        // Sale sale   = new Sale();
+
+        // Product product = entityManager.find(Product.class, idP);
+
+        // sale.setBuyer(buyer);
+        // sale.setSeller(seller);
+
+
+        // return "redirect:/";
+        return "redirect:/compra/3"; // solo de prueba con propositos de debuguear
     }
 }

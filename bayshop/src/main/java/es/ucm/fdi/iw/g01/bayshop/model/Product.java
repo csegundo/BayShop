@@ -24,10 +24,10 @@ import java.time.LocalDateTime;
 public class Product {
     
     public static enum ProductStatus{
-        ACCEPTED,
-        PENDING,
-        REJECT,
-        SOLD
+        ACCEPTED,   // 0
+        PENDING,    // 1
+        REJECT,     // 2
+        SOLD        // 3
     }
 
     @Id

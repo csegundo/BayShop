@@ -51,7 +51,14 @@
 
                 <div class="separator"></div>
 
-                <button class="btn btn-primary btn-sm">Comprar <i class="fa fa-shopping-cart"></i></button>
+                <form th:action="@{/compra/{idP}/{idS}/{idB}(idP=${p.id},idS=${p.user.id},idB=${session.u.id})}" method="POST">
+                    <!-- inputs de prueba -->
+                    <input type="hidden" name="seller" th:value="${p.user.id}">
+                    <input type="hidden" name="buyer" th:value="${session.u.id}">
+                    <input type="hidden" name="product" th:value="${p.id}">
+                    <!---->
+                    <button type="submit" class="btn btn-primary btn-sm">Comprar <i class="fa fa-shopping-cart"></i></button>
+                </form>
             </div>
             <div class="col-xs-12 col-md-1 none"></div>
             <div class="col-xs-12 col-md-5 product">
