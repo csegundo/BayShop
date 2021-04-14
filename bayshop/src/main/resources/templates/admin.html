@@ -15,13 +15,13 @@
             <form method="POST" action="/usuarios/eliminar">
                 <table>
                     <h2>Usuarios</h2>
-                    <tr th:each="u: ${users}">
+                    <tr th:each="u: ${user}">
                         <td>
-                            <p th:text="${u.email}"></p>
+                            <p th:text="${u.username}"></p>
                         </td>
-                        <td>
+                        <!-- <td>
                             <a th:href="@{}" class="btn btn-primary">Eliminar<i class="fa fa-eye"></i></a>
-                        </td>
+                        </td>-->
                     </tr>
                 </table>
             </form>
@@ -30,18 +30,19 @@
             <form method="POST" action="/producto/eliminar">
                 <table>
                     <h2>Productos</h2>
-                    <tr th:each="p: ${products}">
+                    <tr th:each="p: ${prod}">
                         <td>
                             <p th:text="${p.name}"></p>
                         </td>
-                        <td>
+                        <!-- <td>
                             <a th:href="@{}" class="btn btn-primary">Eliminar<i class="fa fa-eye"></i></a>
-                        </td>
+                        </td>-->
                     </tr>
                 </table>
             </form>
         </div>
     </div>
 </body>
+
 
 </html>
