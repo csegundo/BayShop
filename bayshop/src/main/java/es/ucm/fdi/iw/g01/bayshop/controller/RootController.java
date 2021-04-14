@@ -71,7 +71,7 @@ public class RootController {
     @GetMapping("/perfil/{id}")
     public String profile(HttpSession session, Model model, @PathVariable long id) {
 		User actual = entityManager.find(User.class, id);
-
+        
 		model.addAttribute("title", "BayShop | Mi perfil");
 		model.addAttribute("user", actual);
 

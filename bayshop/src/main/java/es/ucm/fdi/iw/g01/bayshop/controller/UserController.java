@@ -70,7 +70,7 @@ public class UserController {
 		if(!newUser.getPassword().equals(pass2)){
 			return "redirect:/register";
 		}
-
+		
 		newUser.setPassword(this.encodePassword(newUser.getPassword()));
 		newUser.setEnabled((byte)1);
 		newUser.setRoles("USER"); // register normal solo USER normales
@@ -83,22 +83,31 @@ public class UserController {
     }
 
 	@PostMapping("/userNameChange/{id}")
-	public String changeUserName(@PathVariable long id, @ModelAttribute User edited){
-		
-		User target = entityManager.find(User.class, id);
-		
-		// Hacer update
+	public String changeUserName(@PathVariable long id, @ModelAttribute User edited, @RequestParam(required=false) String newName){
+		edited.setUsername(newName);
 
-		return "perfil";
+		entityManager.persist(edited);
+		entityManager.flush();
+
+		return "redirect:/perfil/{id}";
 	}
 
 	@PostMapping("/passChange/{id}")
-	public String changeUserPass(@PathVariable long id, @ModelAttribute User edited){
-		User target = entityManager.find(User.class, id);
+	public String changeUserPass(@PathVariable long id, @ModelAttribute User edited,
+	@RequestParam(required=false) String oldPass,
+	@RequestParam(required=false) String newPass,
+	@RequestParam(required=false) String newPass2){
+		if((!edited.getPassword().equals(this.encodePassword(oldPass))) ||
+		(!newPass.equals(newPass2))){
+			return "redirect:/perfil/{id}";
+		}
 
-		// Hacer update
+		edited.setPassword(this.encodePassword(newPass));
 
-		return "perfil";
+		entityManager.persist(edited);
+		entityManager.flush();
+
+		return "redirect:/perfil/{id}";
 	}
 
 	@PostMapping("/deleteAccount/{id}")
@@ -107,6 +116,6 @@ public class UserController {
 
 		// Hacer delete
 
-		return "index";
+		return "redirect:/";
 	}
 }
