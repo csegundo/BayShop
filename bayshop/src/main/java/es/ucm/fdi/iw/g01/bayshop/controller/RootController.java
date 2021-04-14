@@ -59,11 +59,13 @@ public class RootController {
 
     @GetMapping(value = { "/admin/", "/admin" })
     public String admin(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
-        List<Product> users = entityManager.createQuery("select u from Users u").getResultList();
-        List<Product> products = entityManager.createQuery("select p from Product p where p.productstatus=:1").getResultList();
-        model.addAttribute("users", users);
-        model.addAttribute("products", products);
+       List<Product> user = entityManager.createQuery("select u from User u").getResultList();
+       List<Product> prod = entityManager.createQuery("select p from Product p where status = 0").getResultList();
+        model.addAttribute("user", user);
+        //logger.info("usuairoo-------------------------------------------------");
+        model.addAttribute("prod", prod);
         model.addAttribute("title", "BayShop | Administrador");
+       
         return "admin";
     }
     
