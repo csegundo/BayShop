@@ -73,10 +73,19 @@ public class RootController {
     @GetMapping("/perfil/{id}")
     public String profile(HttpSession session, Model model, @PathVariable long id) {
 		User actual = entityManager.find(User.class, id);
+        long idSession = ((User)session.getAttribute("u")).getId();
+        // Faltarían los where para coger los del usuario concreto
+        List<Product> userProd = entityManager.createQuery("select p from Product p where status = 0").getResultList();
+        List<Product> userCompras = entityManager.createQuery("select p from Product p where status = 0").getResultList();
         
-		model.addAttribute("title", "BayShop | Mi perfil");
+        if(id == idSession){
+            model.addAttribute("title", "BayShop | Mi perfil");
+        }else{
+            model.addAttribute("title", "BayShop | Perfil de " + (String)actual.getUsername());
+        }
 		model.addAttribute("user", actual);
-
+        model.addAttribute("userProd", userProd);
+        model.addAttribute("userCompras", userCompras);
         return "perfil";
     }
 

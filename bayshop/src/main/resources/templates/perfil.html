@@ -51,12 +51,13 @@
 
     </div>
 
-    <div class="d-flex justify-content-around mb-2" th:if="(${session.u.id} eq ${user.id})">
-        <div class="card">
+    <div class="d-flex justify-content-around mb-2">
+        <div class="card" th:if="(${session.u.id} eq ${user.id})">
             <div class="card-body">
                 <h5 class="card-title"><u>Tus compras</u></h5>
                 <div class="d-flex align-items-start flex-column">
-                    <div th:each="uC: ${userCompras}">
+                    <div th:if="${userCompras == null or userCompras.isEmpty()}">Sin compras</div>
+                    <div th:unless="${userCompras == null or userCompras.isEmpty()}" th:each="uC: ${userCompras}">
                         <div class="p-2">
                             <div class="card">
                                 <a href="/producto/id"><img th:src="@{/img/bay_32.png}" width="130" height="160"></a>
@@ -81,9 +82,10 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title" th:if="(${session.u.id} eq ${user.id})"><u>Tus productos</u></h5>
-                <h5 class="card-title" th:unless="(${session.u.id} eq ${user.id})"><u>Productos del usuario</u></h5>
+                <h5 class="card-title" th:unless="(${session.u.id} eq ${user.id})"><u>Productos de <div th:text="${user.username}"></div></u></h5>
                 <div class="d-flex align-items-start flex-column">
-                    <div th:each="uP: ${userProd}">
+                    <div th:if="${userProd == null or userProd.isEmpty()}">Sin productos</div>
+                    <div th:unless="${userProd == null or userProd.isEmpty()}" th:each="uP: ${userProd}">
                         <div class="p-2">
                             <div class="card">
                                 <a href="/producto/id"><img th:src="@{/img/bay_32.png}" width="130" height="160"></a>
