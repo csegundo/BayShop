@@ -24,7 +24,7 @@
             </a>
             <h3 th:text="${p.price} + ' €'"></h3>
             <h5 class="p-2" th:text="${p.name}"></h5>
-            <a th:href="@{/producto/{id}(id=${p.id})}" class="btn btn-primary mb-2">Ver Producto <i class="fa fa-eye"></i></a>
+            <a th:href="@{/producto/{id}(id=${p.id})}" class="btn btn-primary mb-2 bayshop-product">Ver Producto <i class="fa fa-eye"></i></a>
             <div th:if="(${session.rolemoderator} or ${session.roleadmin}) and ${revisar} eq true">
                 <a th:href="@{/revisor/validar/{id}(id=${p.id})}" class="btn btn-success" style="width: 70px;"><i class="fa fa-check"></i></a>
                 <a th:href="@{/revisor/rechazar/{id}(id=${p.id})}" class="btn btn-danger" style="width: 70px;"><i class="fa fa-times"></i></a>

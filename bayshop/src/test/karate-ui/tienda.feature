@@ -9,17 +9,21 @@ Scenario: login and buy a product
     * input('#username', 'b')
     * input('#password', 'aa')
     * submit().click("button[type=submit]")
-    * match html('title') contains 'BayShop' # se comprueba que la pagina redirigida sea la correcta
+    # se comprueba que la pagina redirigida sea la correcta
+    * match html('title') contains 'BayShop | Todos los productos'
     * driver.screenshot()
 
-    # click en un producto para ir a su vista detalle (producto 3)
-    #* click("a[href=/producto/3]")
-    #* match html('title') contains 'Producto 3'
+    # click en un producto para ir a su vista detalle
+    * click("a.bayshop-product")
+    * match html('title') contains 'BayShop | Producto '
+    * driver.screenshot()
 
     # click al boton de comprar producto
-    #* click("a.buy-product")
-    #* match html('title') contains 'BayShop | Resumen de compra'
+    * click("a.buy-product")
+    * match html('title') contains 'BayShop | Resumen de compra'
+    * driver.screenshot()
 
     # dentro de la pagina de resumen de compra se le da a comprar
-    #* submit().click("button[type=submit]")
-
+    * submit().click("button[type=submit]")
+    * driver.screenshot()
+    * delay(1500)
