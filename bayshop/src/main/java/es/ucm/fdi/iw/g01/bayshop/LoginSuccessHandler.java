@@ -62,6 +62,11 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 				.replaceFirst("[^:]*", "ws")		// http[s]://... => ws://...
 				.replaceFirst("/[^/]*$", "/ws"));	// .../foo		 => .../ws
 		
+		// Para propositos de plantillas que no den problemas (en las vistas sin permiso se hacia
+		// "session.u.hasRole(ADMIN)" y daba error)
+		session.setAttribute("roleadmin", u.hasRole(User.Role.ADMIN));
+		session.setAttribute("rolemoderator", u.hasRole(User.Role.MODERATOR));
+		
 		// redirects to 'admin' or 'user/{id}', depending on the user
 		response.sendRedirect(u.hasRole(User.Role.ADMIN) ? 
 				"admin/" :

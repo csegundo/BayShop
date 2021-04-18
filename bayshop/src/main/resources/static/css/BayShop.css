@@ -12,6 +12,10 @@ body{
     font-family: 'Poppins', sans-serif;
 }
 
+header div.actions a{
+    font-size: 12px
+}
+
 
 /* LOGIN Y REGISTER */
 body.auth{

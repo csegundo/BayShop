@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.g01.bayshop.model.Product;
 import es.ucm.fdi.iw.g01.bayshop.model.Sale;
@@ -111,12 +114,19 @@ public class RootController {
         return "compra";
     }
 
-    @PostMapping("/compra/{idP}/{idS}/{idB}")
+    @PostMapping("/compra")
     @Transactional
-    public String buyProduct(HttpSession session, Model model, @PathVariable("idP") long idP, @PathVariable("idS") long idS, @PathVariable("idB") long idB){
-        logger.warn("ID PRODUCTO", idP);
-        logger.warn("ID BUYER", idB);
-        logger.warn("ID SELLER", idS);
+    public String buyProduct(HttpSession session, Model model,
+        @RequestParam(value="buyer", required=true) long buyer,
+        @RequestParam(value="seller", required=true) long seller,
+        @RequestParam(value="product", required=true) long product
+    ){
+        logger.warn("ID PRODUCTO");
+        logger.warn(product);
+        logger.warn("ID BUYER");
+        logger.warn(buyer);
+        logger.warn("ID SELLER");
+        logger.warn(seller);
 
         // User buyer  = entityManager.find(User.class, idB);
         // User seller = entityManager.find(User.class, idS);
@@ -126,7 +136,10 @@ public class RootController {
 
         // sale.setBuyer(buyer);
         // sale.setSeller(seller);
+        // guardar el producto
+        // persist
 
+        // en product guardar el ID de la compra
 
         // return "redirect:/";
         return "redirect:/compra/3"; // solo de prueba con propositos de debuguear

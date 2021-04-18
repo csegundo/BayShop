@@ -23,12 +23,10 @@
             <h3 class="mb-4" th:text="'Precio: ' + ${p.price} + ' €'"></h3>
             <!-- <p>Fecha</p> -->
 
-            <div th:if="${session.u.hasRole('USER')}">
-                <a th:href="@{/compra/{id}(id=${p.id})}" class="btn btn-primary">Comprar <i class="fa fa-shopping-cart"></i></a>
-            </div>
-            <div th:if="${session.u.hasRole('MODERATOR')} or ${session.u.hasRole('ADMIN')}">
-                <a th:href="@{/revisor/validar/{id}(id=${p.id})}" class="btn btn-success">Validar <i class="fa fa-check"></i></a>
-                <a th:href="@{/revisor/rechazar/{id}(id=${p.id})}" class="btn btn-danger">Rechazar <i class="fa fa-times"></i></a>
+            <div>
+                <a th:href="@{/compra/{id}(id=${p.id})}" class="btn btn-primary buy-product">Comprar <i class="fa fa-shopping-cart"></i></a>
+                <a th:if="${session.roleadmin} or ${session.rolemoderator}" th:href="@{/revisor/validar/{id}(id=${p.id})}" class="btn btn-success">Validar <i class="fa fa-check"></i></a>
+                <a th:if="${session.roleadmin} or ${session.rolemoderator}" th:href="@{/revisor/rechazar/{id}(id=${p.id})}" class="btn btn-danger">Rechazar <i class="fa fa-times"></i></a>
             </div>
         </div>
     </div>

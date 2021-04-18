@@ -68,13 +68,13 @@ public class ProductController {
     @Transactional
     @GetMapping("/{id}")
     public String product_id(HttpSession session, @PathVariable long id, Model model, @RequestParam(required = false) Integer entero) {
-        model.addAttribute("title", "BayShop | Producto " + id);
-        
         Product p = entityManager.find(Product.class, id);
         List<Product> prod = entityManager.createQuery("select e from Product e").getResultList();
     
         model.addAttribute("p", p);
         model.addAttribute("prod", prod);
+        // model.addAttribute("title", "BayShop | " + p.getName());
+        model.addAttribute("title", "BayShop | Producto " + p.getId());
 
         return "producto";
     }

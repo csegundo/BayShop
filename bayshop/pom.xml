@@ -101,12 +101,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.13.1</version>
-			<scope>test</scope>
-		</dependency>
+		
 		<!-- 
 			para generar mockups (falsos objetos que simulan ser objetos reales)
 			en tus pruebas unitarias
@@ -223,7 +218,7 @@
 					<arguments>
 						<!-- mete aqui una linea para cada feature a probar 
 						<argument>src/test/karate-ui/login.feature</argument> -->
-						<argument>src/test/karate-ui/message.feature</argument>						
+						<argument>src/test/karate-ui/tienda.feature</argument>
 					</arguments>
 				</configuration>
 			</plugin>
