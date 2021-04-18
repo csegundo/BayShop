@@ -3,18 +3,12 @@ Feature: browser login
 Background:
   * configure driver = { type: 'chrome', showDriverLog: true }
   
-Scenario: try to login to github
-    and then do a google search
+Scenario: login en nuestra app
 
-  Given driver 'https://github.com/login'
-  And input('#login_field', 'dummy')
-  And input('#password', 'world')
-  When submit().click("input[name=commit]")
-  Then match html('#js-flash-container') contains 'Incorrect username or password.'
-  
-  Given driver 'https://google.com'
-  And input("input[name=q]", 'karate dsl')
-  When submit().click("input[name=btnI]")
-  Then waitForUrl('https://github.com/intuit/karate')
-  And match html('title') contains 'Automation Made Simple'
-  * driver.screenshot()
+	Given driver 'http://localhost:8080/login'
+	* input('#username', 'b')
+    * input('#password', 'aa')
+    * submit().click("button[type=submit]")
+	# se comprueba que la pagina redirigida sea la correcta
+    * match html('title') contains 'BayShop | Todos los productos'
+    * driver.screenshot()
