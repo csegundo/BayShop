@@ -6,10 +6,10 @@ Background:
 Scenario: login and buy a product
 
     # import del login.feature
-    call read('login.feature')
+    * call read('login.feature')
 
     # click en un producto para ir a su vista detalle
-    * click("a[data-type=product]")
+    * click("a.bayshop-product")
     * match html('title') contains 'BayShop | Producto '
     * driver.screenshot()
 
