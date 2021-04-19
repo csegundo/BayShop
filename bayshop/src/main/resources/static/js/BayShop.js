@@ -47,4 +47,16 @@ $(function(){
         // Por cada 3 BayPoints es 1€ de descuento ==> CAMBIAR
         $('.discount .discount-price').html(spend);
     });
+
+    // POPUPS de vista previa de perfil cuando se hace click a un usuario
+    $('.product-details p.seller').click(function(){
+        BayShopAPI.template('profilePopup', function(tmpl){
+            var popup = CPOPUP.create('Vista previa de perfil');
+            popup.html(tmpl);
+
+            popup.find('.bt-close').click(function(){
+                popup.close();
+            });
+        });
+    });
 });

@@ -1,0 +1,6 @@
+/**
+ * ResponsivePopup by csegundo
+ * cpopup.min.css
+ * Copyright (c) 2021 [Carlos](https://github.com/csegundo/ResponsivePopup)
+ */
+.cpopup{z-index:9999;position:fixed;background-color:rgba(0,0,0,.5);top:0;left:0;height:100%;width:100%;display:flex;align-items:center;justify-content:center;color:#000}.cpopup .popup-content{max-width:650px;background-color:#f5f5f5;border-radius:5px;border:1px solid #ccc;position:fixed;top:100px;margin:0 10px}.cpopup .popup-content .popup-header{border-bottom:1px solid #ccc;padding:10px;display:flex;justify-content:space-between;align-items:center}.cpopup .popup-content .popup-header .title{font-size:15px}.cpopup .popup-content .popup-header .popup-close{text-align:right;cursor:pointer}.cpopup .popup-content .popup-body{padding:10px}.cpopup .popup-content .popup-actions{padding:10px;border-top:1px solid #ccc;display:flex;flex-direction:row-reverse}.cpopup .popup-content .popup-actions button{margin:0 3px}

@@ -1,7 +1,7 @@
 Feature: login, acceder a un producto mediante un click y comprar
 
 Background:
-    * configure driver = { type: 'chrome', showDriverLog: true }
+    * configure driver = { type: 'chrome', showDriverLog: true, executable: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' }
 
 Scenario: login and buy a product
 

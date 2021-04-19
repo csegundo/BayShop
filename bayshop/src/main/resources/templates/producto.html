@@ -8,14 +8,14 @@
 <body>
     <header th:replace="frags/header.html"></header>
 
-    <div class="row main-div p-5">
+    <div class="row main-div p-5 product-details">
         <div class="col-md-6">
             <!-- <div>Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div> -->
             <img class="img-fluid" th:src="@{/img/bay_512.png}" alt="Imagen Producto">
         </div>
         <div class="col-md-6 p-4">
             <h1 th:text="${p.name}"></h1>
-            <p th:text="'Vendedor: ' + ${p.user.getFirstName()}"></p>
+            <p class="seller" th:text="'Vendedor: ' + ${p.user.getFirstName()}"></p>
             <p th:text="'Marca: ' + ${p.brand}"></p>
             <p th:text="'Talla: ' + ${p.size}"></p>
             <p th:text="'Fecha de subida: ' + ${p.creationDate}"></p>

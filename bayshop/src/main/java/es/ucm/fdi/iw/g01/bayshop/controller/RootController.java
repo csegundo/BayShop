@@ -37,6 +37,12 @@ public class RootController {
     @Autowired
     private EntityManager entityManager;
 
+    @GetMapping(value = { "/templates/", "/templates" })
+    public String requestTemplate(HttpSession session, Model model, @RequestParam String name){
+        // {name} es el nombre de la plantilla que se está solicitando
+        return name + ".html";
+    }
+
     @GetMapping(value = { "/", "", "/home", "/index" })
     public String index(HttpSession session, Model model, @RequestParam(required = false) Integer entero){
         List<Product> prod = entityManager.createQuery("select p from Product p where status = 0").getResultList();
