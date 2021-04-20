@@ -20,15 +20,15 @@ window.BayShopAPI = {
      * @param {function} callback que devuelve el contenido de la peticion
      * @returns 
      */
-    template : function(name, callback){
-        return this._request('VIEW', name, false, callback);
+    template : function(name, data, callback){
+        return this._request('VIEW', name, data, callback);
     },
 
     _request : function(method, endpoint, data, onSuccess, onError){
         var url         = BayShopAPI._base_url + endpoint,
             isTemplate  = method === 'VIEW';
 
-        url = isTemplate ? (BayShopAPI._base_url + 'templates/?name=' + endpoint) : url;
+        url = isTemplate ? (BayShopAPI._base_url + 'templates/?name=' + endpoint + '&params=' + encodeURIComponent(JSON.stringify(data))) : url;
 
         let ajaxCfg = {
             "url"           : url,
@@ -49,6 +49,7 @@ window.BayShopAPI = {
                 'Content-Type': 'text/html; charset=utf-8'
             };
             ajaxCfg.mimeType = 'text/html';
+            delete ajaxCfg.data;
         }
 
         if(onSuccess && typeof onSuccess === 'function'){

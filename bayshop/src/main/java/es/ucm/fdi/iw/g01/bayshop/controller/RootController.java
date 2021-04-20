@@ -1,6 +1,7 @@
 package es.ucm.fdi.iw.g01.bayshop.controller;
 
 import java.util.Date;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.persistence.EntityManager;
 import org.apache.commons.logging.Log;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+// import org.hibernate.annotations.common.util.impl.Log_.logger;
 // import org.hibernate.annotations.common.util.impl.Log.logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.g01.bayshop.model.Product;
 import es.ucm.fdi.iw.g01.bayshop.model.Sale;
+import es.ucm.fdi.iw.g01.bayshop.model.TemplateParams;
 import es.ucm.fdi.iw.g01.bayshop.model.User;
 
 // Vistas principales de nuestra aplicacion
@@ -37,10 +40,18 @@ public class RootController {
     @Autowired
     private EntityManager entityManager;
 
+    // {name} es el nombre de la plantilla que se está solicitando
     @GetMapping(value = { "/templates/", "/templates" })
-    public String requestTemplate(HttpSession session, Model model, @RequestParam String name){
-        // {name} es el nombre de la plantilla que se está solicitando
-        return name + ".html";
+    // @ResponseBody // devuelve lo del return tal cual (bien para depurar o por rapidez)
+    public String requestTemplate(HttpSession session, Model model, @RequestParam String name, @RequestParam String params){
+        try {
+            logger.warn("DECODE");
+            logger.warn(URLDecoder.decode(params, "UTF-8").toString());
+            TemplateParams data = new TemplateParams(URLDecoder.decode(params, "utf-8").toString());
+            model.addAttribute("data", data);
+        } catch (Exception e) {}
+
+        return name;
     }
 
     @GetMapping(value = { "/", "", "/home", "/index" })
@@ -123,25 +134,18 @@ public class RootController {
     @PostMapping("/compra")
     @Transactional
     public String buyProduct(HttpSession session, Model model,
-        @RequestParam(value="buyer", required=true) long buyer,
-        @RequestParam(value="seller", required=true) long seller,
-        @RequestParam(value="product", required=true) long product
+        @RequestParam(value="buyer", required=true) long b,
+        @RequestParam(value="seller", required=true) long s,
+        @RequestParam(value="product", required=true) long p
     ){
-        logger.warn("ID PRODUCTO");
-        logger.warn(product);
-        logger.warn("ID BUYER");
-        logger.warn(buyer);
-        logger.warn("ID SELLER");
-        logger.warn(seller);
+        User buyer  = entityManager.find(User.class, b);
+        User seller = entityManager.find(User.class, s);
+        Sale sale   = new Sale();
 
-        // User buyer  = entityManager.find(User.class, idB);
-        // User seller = entityManager.find(User.class, idS);
-        // Sale sale   = new Sale();
+        Product product = entityManager.find(Product.class, p);
 
-        // Product product = entityManager.find(Product.class, idP);
-
-        // sale.setBuyer(buyer);
-        // sale.setSeller(seller);
+        sale.setBuyer(buyer);
+        sale.setSeller(seller);
         // guardar el producto
         // persist
 

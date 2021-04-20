@@ -50,7 +50,7 @@ $(function(){
 
     // POPUPS de vista previa de perfil cuando se hace click a un usuario
     $('.product-details p.seller').click(function(){
-        BayShopAPI.template('profilePopup', function(tmpl){
+        BayShopAPI.template('profilePopup', { 'key' : 'value' }, function(tmpl){
             var popup = CPOPUP.create('Vista previa de perfil');
             popup.html(tmpl);
 
