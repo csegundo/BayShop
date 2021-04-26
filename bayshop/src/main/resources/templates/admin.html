@@ -1,48 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head th:replace="frags/head.html">
     <!-- Resto de recursos especificos de cada pagina -->
 </head>
-
-<body>
+<body class="admin">
     <header th:replace="frags/header.html"></header>
 
-    <h1>Administrador</h1>
+    <div class="container mt-5">
+        <h2>Todos los usuarios</h2>
+        <table class="table table-striped all-users">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">e-mail</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Roles</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="u: ${users}">
+                    <td th:text="${u.id}"></td>
+                    <td th:text="${u.username}"></td>
+                    <td th:text="${u.email}"></td>
+                    <td th:text="${u.firstName} + ' ' + ${u.lastName}"></td>
+                    <td th:text="${u.roles}"></td>
+                    <td th:data-id="${u.id}">
+                        <button class="btn btn-primary btn-sm bt-editUser">Editar <i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-danger btn-sm bt-removeUser">Eliminar <i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <div class="row main-div">
-        <div class="col-xs-12 col-md-4 web-logo">
-            <form method="POST" action="/usuarios/eliminar">
-                <table>
-                    <h2>Usuarios</h2>
-                    <tr th:each="u: ${user}">
-                        <td>
-                            <p th:text="${u.username}"></p>
-                        </td>
-                        <!-- <td>
-                            <a th:href="@{}" class="btn btn-primary">Eliminar<i class="fa fa-eye"></i></a>
-                        </td>-->
-                    </tr>
-                </table>
-            </form>
-        </div>
-        <div class="col-xs-12 col-md-8 form">
-            <form method="POST" action="/producto/eliminar">
-                <table>
-                    <h2>Productos</h2>
-                    <tr th:each="p: ${prod}">
-                        <td>
-                            <p th:text="${p.name}"></p>
-                        </td>
-                        <!-- <td>
-                            <a th:href="@{}" class="btn btn-primary">Eliminar<i class="fa fa-eye"></i></a>
-                        </td>-->
-                    </tr>
-                </table>
-            </form>
-        </div>
+        <h2>Todos los productos</h2>
+        <table class="table table-striped all-products">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Activado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p: ${products}">
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.name}"></td>
+                    <td th:text="${p.price} + '€'"></td>
+                    <td th:text="${p.status}"></td>
+                    <td th:text="${p.enabled} ? 'Si' : 'No'"></td>
+                    <td th:data-id="${p.id}">
+                        <button class="btn btn-primary btn-sm bt-editProduct">Editar <i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-warning btn-sm bt-disableProduct">Desactivar <i class="fa fa-exclamation"></i></button>
+                        <button class="btn btn-success btn-sm bt-enableProduct">Activar <i class="fa fa-check"></i></button>
+                        <button class="btn btn-danger btn-sm bt-deleteProduct">Eliminar <i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
-
-
 </html>

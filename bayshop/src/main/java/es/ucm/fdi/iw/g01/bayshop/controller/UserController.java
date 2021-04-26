@@ -110,12 +110,4 @@ public class UserController {
 		return "redirect:/perfil/{id}";
 	}
 
-	@PostMapping("/deleteAccount/{id}")
-	public String deleteAccount(@PathVariable long id, @ModelAttribute User edited){
-		User target = entityManager.find(User.class, id);
-
-		// Hacer delete
-
-		return "redirect:/";
-	}
 }

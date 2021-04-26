@@ -48,15 +48,17 @@ $(function(){
         $('.discount .discount-price').html(spend);
     });
 
-    // POPUPS de vista previa de perfil cuando se hace click a un usuario
-    $('.product-details p.seller').click(function(){
-        BayShopAPI.template('profilePopup', { 'key' : 'value' }, function(tmpl){
-            var popup = CPOPUP.create('Vista previa de perfil');
-            popup.html(tmpl);
 
-            popup.find('.bt-close').click(function(){
-                popup.close();
+    // Acciones sobre usuarios y productos en la vista de admin
+    $('body.admin table.all-users .bt-removeUser').click(function(){
+        var _id = $(this).parent().data().id;
+
+        if(confirm(`Seguro que quieres borrar el usuario con ID: ${_id}`)){
+            BayShopAPI.post("admin/deleteAccount/" + _id, { "idparam" : _id }, function(response){
+                alert(response);
+            }, function(error){
+                console.error(error);
             });
-        });
+        }
     });
 });

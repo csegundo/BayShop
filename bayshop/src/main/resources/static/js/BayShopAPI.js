@@ -15,18 +15,18 @@ window.BayShopAPI = {
         return this._request('DELETE', endpoint, data, onSuccess, onError);
     },
 
-    _request : function(method, endpoint, data, onSuccess, onError){
+    _request : function(method, endpoint, data = {}, onSuccess, onError){
         var url = BayShopAPI._base_url + endpoint;
 
         let ajaxCfg = {
             "url"           : url,
-            "async"         : data.async || true,
             "type"          : method,
             "data"          : JSON.stringify(data),
             "dataType"      : "json",
             "headers"       : {
                 'Content-Type': 'application/json; charset=utf-8'
             },
+            "contentType"   : "application/json; charset=utf-8",
             "mimeType"      : "application/json",
         };
 
