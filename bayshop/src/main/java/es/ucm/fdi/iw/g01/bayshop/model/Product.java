@@ -12,12 +12,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NamedQueries({
+	@NamedQuery(name="Product.searchQuery", query="SELECT p FROM Product p WHERE p.name LIKE :query")
+})
 public class Product {
     
     public static enum ProductStatus{

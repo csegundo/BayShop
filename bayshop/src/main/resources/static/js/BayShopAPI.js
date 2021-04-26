@@ -14,26 +14,14 @@ window.BayShopAPI = {
     delete : function(endpoint, data, onSuccess, onError){
         return this._request('DELETE', endpoint, data, onSuccess, onError);
     },
-    /**
-     * Exclusivamente para solicitar plantillas para los popups
-     * @param {string} name nombre del template (.html) ya que Spring devolverá el nombre de la plantilla
-     * @param {function} callback que devuelve el contenido de la peticion
-     * @returns 
-     */
-    template : function(name, data, callback){
-        return this._request('VIEW', name, data, callback);
-    },
 
     _request : function(method, endpoint, data, onSuccess, onError){
-        var url         = BayShopAPI._base_url + endpoint,
-            isTemplate  = method === 'VIEW';
-
-        url = isTemplate ? (BayShopAPI._base_url + 'templates/?name=' + endpoint + '&params=' + encodeURIComponent(JSON.stringify(data))) : url;
+        var url = BayShopAPI._base_url + endpoint;
 
         let ajaxCfg = {
             "url"           : url,
             "async"         : data.async || true,
-            "type"          : isTemplate ? 'GET' : method,
+            "type"          : method,
             "data"          : JSON.stringify(data),
             "dataType"      : "json",
             "headers"       : {
@@ -41,16 +29,6 @@ window.BayShopAPI = {
             },
             "mimeType"      : "application/json",
         };
-
-        // Cambiamos algunos campos para solicitar la plantilla
-        if(isTemplate){
-            ajaxCfg.dataType = "html";
-            ajaxCfg.headers = {
-                'Content-Type': 'text/html; charset=utf-8'
-            };
-            ajaxCfg.mimeType = 'text/html';
-            delete ajaxCfg.data;
-        }
 
         if(onSuccess && typeof onSuccess === 'function'){
             ajaxCfg.success = onSuccess;

@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.g01.bayshop.model.Product;
 import es.ucm.fdi.iw.g01.bayshop.model.Sale;
-import es.ucm.fdi.iw.g01.bayshop.model.TemplateParams;
 import es.ucm.fdi.iw.g01.bayshop.model.User;
 import es.ucm.fdi.iw.g01.bayshop.model.Product.ProductStatus;
 
@@ -42,20 +41,6 @@ public class RootController {
     @Autowired
     private EntityManager entityManager;
 
-    // {name} es el nombre de la plantilla que se está solicitando
-    @GetMapping(value = { "/templates/", "/templates" })
-    // @ResponseBody // devuelve lo del return tal cual (bien para depurar o por rapidez)
-    public String requestTemplate(HttpSession session, Model model, @RequestParam String name, @RequestParam String params){
-        try {
-            logger.warn("DECODE");
-            logger.warn(URLDecoder.decode(params, "UTF-8").toString());
-            TemplateParams data = new TemplateParams(URLDecoder.decode(params, "utf-8").toString());
-            model.addAttribute("data", data);
-        } catch (Exception e) {}
-
-        return name;
-    }
-
     @GetMapping(value = { "/", "", "/home", "/index" })
     public String index(HttpSession session, Model model, @RequestParam(required = false) Integer entero){
         List<Product> prod = entityManager.createQuery("select p from Product p where status = 0").getResultList();
@@ -64,6 +49,17 @@ public class RootController {
         model.addAttribute("revisar", false);
         model.addAttribute("title", "BayShop | Todos los productos");
        
+        return "index";
+    }
+
+    @GetMapping(value = { "/buscar", "/buscar/" })
+    public String search(HttpSession session, Model model, @RequestParam String query){
+        List<Product> prod = entityManager.createNamedQuery("Product.searchQuery").setParameter("query", "%" + query + "%").getResultList();
+
+        model.addAttribute("prod", prod);
+        model.addAttribute("revisar", false);
+        model.addAttribute("title", "BayShop | Todos los productos");
+
         return "index";
     }
 
@@ -159,7 +155,7 @@ public class RootController {
         product.setStatus(ProductStatus.SOLD);
         entityManager.persist(product);
 
-        // return "redirect:/";
-        return "redirect:/compra/3"; // solo de prueba con propositos de debuguear
+        return "redirect:/";
+        // return "redirect:/compra/3"; // solo de prueba con propositos de debuguear
     }
 }
