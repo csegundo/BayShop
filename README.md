@@ -13,7 +13,7 @@ Mira **Deployment** para conocer como desplegar el proyecto.
 _Se necesita:_
 * [Spring Tool Suite](https://spring.io/tools) - Nosotros usamos Visual Studio Code
 * [Java 11](https://jdk.java.net/) - Java 11 JDK
-* [Maven](https://maven.apache.org/download.cgi) - Maven
+* [Maven](https://maven.apache.org/download.cgi) - Apache Maven 3.6.3
 * [VSCode extensions](#) - Java Extension Pack 0.13.0, Spring Initializr Java Support 0.6.1 y Spring Boot Dashboard 0.2.0
 
 _Para comprobar que está todo bien instalado escribir en la consola:_
