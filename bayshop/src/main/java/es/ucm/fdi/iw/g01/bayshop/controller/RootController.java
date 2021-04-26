@@ -2,6 +2,7 @@ package es.ucm.fdi.iw.g01.bayshop.controller;
 
 import java.util.Date;
 import java.net.URLDecoder;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ import es.ucm.fdi.iw.g01.bayshop.model.Product;
 import es.ucm.fdi.iw.g01.bayshop.model.Sale;
 import es.ucm.fdi.iw.g01.bayshop.model.TemplateParams;
 import es.ucm.fdi.iw.g01.bayshop.model.User;
+import es.ucm.fdi.iw.g01.bayshop.model.Product.ProductStatus;
 
 // Vistas principales de nuestra aplicacion
 @Controller
@@ -142,14 +144,20 @@ public class RootController {
         User seller = entityManager.find(User.class, s);
         Sale sale   = new Sale();
 
+        List<Product> list = new ArrayList<>();
         Product product = entityManager.find(Product.class, p);
+        list.add(product);
 
         sale.setBuyer(buyer);
         sale.setSeller(seller);
-        // guardar el producto
+        sale.setProducts(list);
+        sale.setTimestamp(LocalDateTime.now());
         // persist
+        entityManager.persist(sale);
+        entityManager.flush();
 
-        // en product guardar el ID de la compra
+        product.setStatus(ProductStatus.SOLD);
+        entityManager.persist(product);
 
         // return "redirect:/";
         return "redirect:/compra/3"; // solo de prueba con propositos de debuguear
