@@ -45,10 +45,10 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping("/deleteAccount/{id}")
+    @PostMapping("/deleteAccount")
 	@ResponseBody
 	@Transactional
-	public String deleteAccount(HttpSession session, Model model, @PathVariable String id, @RequestParam long idparam){
+	public String deleteAccount(HttpSession session, Model model, @RequestParam long id){
 		try{
 			User userSess = (User) session.getAttribute("u");
 
@@ -58,12 +58,10 @@ public class AdminController {
 			}
 			logger.warn("IDDDDDDDDDDDDD");
 			logger.warn(id);
-			logger.warn(idparam);
+			// logger.warn(idparam);
 		} catch(Exception e){
 			logger.warn(e);
 		}
-		
-
 
 		return "" + id;
 	}
