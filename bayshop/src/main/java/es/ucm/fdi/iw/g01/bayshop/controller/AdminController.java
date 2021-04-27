@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.g01.bayshop.model.Product;
 import es.ucm.fdi.iw.g01.bayshop.model.User;
+import es.ucm.fdi.iw.g01.bayshop.model.User.Role;
 
 @Controller
 @RequestMapping("/admin")
@@ -47,13 +48,22 @@ public class AdminController {
     @PostMapping("/deleteAccount/{id}")
 	@ResponseBody
 	@Transactional
-	public String deleteAccount(Model model, @PathVariable String id, @RequestParam long idparam){
-		logger.warn("IDDDDDDDDDDDDD");
-		logger.warn(id);
-		logger.warn(idparam);
+	public String deleteAccount(HttpSession session, Model model, @PathVariable String id, @RequestParam long idparam){
+		try{
+			User userSess = (User) session.getAttribute("u");
 
-		// User target = entityManager.find(User.class, id);
-		// Hacer delete
+			if(userSess.hasRole(Role.ADMIN)){
+				// User target = entityManager.find(User.class, id);
+				// Hacer delete
+			}
+			logger.warn("IDDDDDDDDDDDDD");
+			logger.warn(id);
+			logger.warn(idparam);
+		} catch(Exception e){
+			logger.warn(e);
+		}
+		
+
 
 		return "" + id;
 	}

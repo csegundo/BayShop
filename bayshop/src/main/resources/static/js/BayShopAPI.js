@@ -30,6 +30,10 @@ window.BayShopAPI = {
             "mimeType"      : "application/json",
         };
 
+        if(method != 'GET'){
+            ajaxCfg.headers["X-CSRF-TOKEN"] = config.csrf.value;
+        }
+
         if(onSuccess && typeof onSuccess === 'function'){
             ajaxCfg.success = onSuccess;
         }

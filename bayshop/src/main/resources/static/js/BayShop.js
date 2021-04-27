@@ -55,7 +55,8 @@ $(function(){
 
         if(confirm(`Seguro que quieres borrar el usuario con ID: ${_id}`)){
             BayShopAPI.post("admin/deleteAccount/" + _id, { "idparam" : _id }, function(response){
-                alert(response);
+                console.debug('response ajax', response);
+                $(this).parents('tr').remove();
             }, function(error){
                 console.error(error);
             });
