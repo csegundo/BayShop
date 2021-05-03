@@ -1,29 +1,35 @@
-<!DOCTYPE html>
-<html lang="es">
-<head th:replace="frags/head.html">
-    <!-- Resto de recursos especificos de cada pagina -->
-</head>
-<body>
-    <header th:replace="frags/header.html"></header>
+<div class="popup-body">
+    <style>
+        .popup-body .label{
+            font-weight: bold;
+        }
+        .popup-body .item{
+            margin-bottom: 10px;
+        }
+    </style>
+    <div class="item">
+        <span class="label">Emisor:</span>
+        <span th:text="${msg.sender.firstName} + ' (' + ${msg.sender.username} + ')'"></span>
+    </div>
+    <div class="item">
+        <span class="label">Recpetor:</span>
+        <span th:text="${msg.recipient.firstName} + ' (' + ${msg.recipient.username} + ')'"></span>
+    </div>
+    <div class="item">
+        <span class="label">Fecha de envío:</span>
+        <span th:text="${msg.dateSent}"></span>
+    </div>
+    <div class="item">
+        <span class="label">Leído:</span>
+        <span th:text="${msg.dateRead} ? 'Si' : 'No'"></span>
+    </div>
+    <div class="item">
+        <span class="label" style="display: block;">Mensaje:</span>
+        <span th:text="${msg.text}"></span>
+    </div>
+</div>
 
-    <div class="row containerMessage">
-    <div class="col-xs-12 col-md-8 ">
-        <form method="POST" action="/mensajes/formularMensaje">
-                <div class="form-group">
-                    <label for="text">Título del mensaje: </label>
-                    <input type="text" class="form-control" id="tituloMensaje" placeholder="Título del mensaje" required>
-                </div>
-                <div class="form-group">
-                    <label for="text">Asunto: </label>
-                    <input type="text" class="form-control" id="asuntoMensaje" placeholder="Asunto del mensaje" required>
-                </div>
-                <div class="form-group">
-                    <textarea name="cuerpoMensaje" rows="10" cols="100" class="cuerpo" required>...</textarea>    
-                </div>
-                <button class="btn btn-primary" type="submit">Envía tu mensaje</button>
-            </div>
-        </form>  
-    </div>
-    </div>
-</body>
-</html>
+<!-- footer optional -->
+<div class="popup-actions">
+    <button class="btn btn-primary bt-close">Cerrar <i class="fa fa-times"></i></button>
+</div>

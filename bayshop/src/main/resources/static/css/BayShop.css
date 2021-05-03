@@ -133,6 +133,16 @@ body.auth{
 
 
 /* MENSAJES */
+body.messages .m-actions{
+    background-color: #efefef;
+    text-align: right;
+    padding: 10px;
+    border-radius: 5px;
+}
+body.messages .view-message{
+    border-radius: 50%;
+    padding: 3px 6px;
+}
 .contenedor{
     width: 90%;
     margin: 30px auto;
@@ -159,4 +169,25 @@ body.auth{
 
 .margin{
     margin: 5px;
+}
+
+.to-ellipsis{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+textarea.form-field{
+    width: 100%;
+    display: block;
+    height: 20px;
+    margin-bottom: 10px;
+    padding: 2px 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: inherit;
+}
+textarea.form-field{
+    height: 150px;
+    resize: vertical;
 }

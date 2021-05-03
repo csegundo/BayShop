@@ -108,17 +108,11 @@ public class RootController {
         return "perfil";
     }
 
-    @GetMapping(value = { "/mensajes/", "/mensajes" })
-    public String allMessages(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
-        model.addAttribute("title", "BayShop | Mis mensajes");
-        return "mensajes";
-    }
-
-    @GetMapping("/mensajes/idU/idP")
-    public String message(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
-        model.addAttribute("title", "BayShop | Mensaje <ID>");
-        return "mensaje";
-    }
+    // @GetMapping("/mensajes/idU/idP")
+    // public String message(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
+    //     model.addAttribute("title", "BayShop | Mensaje <ID>");
+    //     return "mensaje";
+    // }
 
     @GetMapping("/compra/{id}")
     public String buy(HttpSession session, Model model, @PathVariable long id) {

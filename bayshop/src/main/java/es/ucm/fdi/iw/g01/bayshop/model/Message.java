@@ -25,9 +25,10 @@ import lombok.AllArgsConstructor;
  */
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Message.countUnread",
-	query="SELECT COUNT(m) FROM Message m "
-			+ "WHERE m.recipient.id = :userId AND m.dateRead = null")
+	@NamedQuery(name="Message.all", query="SELECT m FROM Message m WHERE m.recipient.id = :uid OR m.sender.id = :uid"), // enviados y recibidos
+	@NamedQuery(name="Message.send", query="SELECT m FROM Message m WHERE m.sender.id = :uid"), // enviados
+	@NamedQuery(name="Message.inbox", query="SELECT m FROM Message m WHERE m.recipient.id = :uid"), // recibidos
+	@NamedQuery(name="Message.countUnread", query="SELECT COUNT(m) FROM Message m WHERE m.recipient.id = :userId AND m.dateRead = null")
 })
 @Data
 public class Message implements Transferable<Message.Transfer> {
