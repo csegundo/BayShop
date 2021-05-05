@@ -21,7 +21,7 @@
     </div>
     <div class="item">
         <span class="label">Leído:</span>
-        <span th:text="${msg.dateRead} ? 'Si' : 'No'"></span>
+        <span th:text="${msg.dateRead} ?: 'No'"></span>
     </div>
     <div class="item">
         <span class="label" style="display: block;">Mensaje:</span>

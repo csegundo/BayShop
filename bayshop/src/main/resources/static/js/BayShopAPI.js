@@ -24,7 +24,7 @@ window.BayShopAPI = {
         let ajaxCfg = {
             "url"           : url,
             "type"          : method,
-            "data"          : data,//JSON.stringify(data),
+            "data"          : data,
             "dataType"      : "json",
             "headers"       : {
                 'Content-Type': 'application/json; charset=utf-8'
@@ -41,6 +41,7 @@ window.BayShopAPI = {
         }
 
         if(method != 'GET'){
+            ajaxCfg.data = JSON.stringify(ajaxCfg.data);
             ajaxCfg.headers["X-CSRF-TOKEN"] = config.csrf.value;
         }
 

@@ -16,6 +16,7 @@
                     <th scope="col">e-mail</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Roles</th>
+                    <th scope="col">Activo</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -26,8 +27,11 @@
                     <td th:text="${u.email}"></td>
                     <td th:text="${u.firstName} + ' ' + ${u.lastName}"></td>
                     <td th:text="${u.roles}"></td>
+                    <td th:text="${u.enabled} ? 'Si' : 'No'"></td>
                     <td th:data-id="${u.id}">
                         <button class="btn btn-primary btn-sm bt-editUser">Editar <i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-warning btn-sm bt-disableUser" data-enable="0">Desactivar <i class="fa fa-exclamation"></i></button>
+                        <button class="btn btn-success btn-sm bt-enableUser" data-enable="1">Activar <i class="fa fa-check"></i></button>
                         <button class="btn btn-danger btn-sm bt-removeUser">Eliminar <i class="fa fa-trash-o"></i></button>
                     </td>
                 </tr>

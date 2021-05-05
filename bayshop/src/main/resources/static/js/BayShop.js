@@ -49,20 +49,6 @@ $(function(){
     });
 
 
-    // Acciones sobre usuarios y productos en la vista de admin
-    $('body.admin table.all-users .bt-removeUser').click(function(){
-        var _id = $(this).parent().data().id;
-
-        if(confirm(`Seguro que quieres borrar el usuario con ID: ${_id}`)){
-            BayShopAPI.post("admin/deleteAccount", { "id" : _id }, function(response){
-                console.debug('response ajax', response);
-                $(this).parents('tr').remove();
-            }, function(error){
-                console.error(error);
-            });
-        }
-    });
-
     // Ver mensaje en el popup
     $('body.messages .view-message').on('click', function(){
         var _id = $(this).parents('tr').data().id;
@@ -93,5 +79,40 @@ $(function(){
             case "all":
             default: parent.find('.msg').show(); break;
         }
+    });
+
+    // Borrar mensajes recibidos
+    $('body.messages .delete-message').on('click', function(){
+        if(confirm('¿Seguro que deseas borrar el mensaje?')){
+            var _row = $(this).parents('tr'), _id = _row.data().id;
+            BayShopAPI.delete("mensajes/api/delete/" + _id, { 'id' : _id }, function(response){
+                _row.remove();
+                console.debug('DELETE MESSAGE success', response);
+            }, function(error){console.error('DELETE MESSAGE error', error);});
+        }
+    });
+
+    // Acciones sobre usuarios y productos en la vista de admin
+    $('body.admin table.all-users .bt-removeUser').click(function(){
+        var _id = $(this).parent().data().id, _row = $(this).parents('tr');
+
+        if(confirm(`¿Seguro que quieres borrar el usuario con ID: ${_id}?`)){
+            BayShopAPI.delete("admin/api/deleteAccount/" + _id, { "id" : _id }, function(response){
+                console.debug('response ajax', response);
+                _row.remove();
+            }, function(error){
+                console.error(error);
+            });
+        }
+    });
+    $('body.admin table.all-users').on('click', '.bt-disableUser, .enableUser', function(){
+        var _id = $(this).parent().data().id, _row = $(this).parents('tr'), _enable = $(this).data().enable == 1;
+
+        BayShopAPI.post("admin/api/toggleUserStatus", { "enable" : _enable, "id" : _id }, function(response){
+            console.debug('response ajax', response);
+            _row.remove();
+        }, function(error){
+            console.error(error);
+        });
     });
 });

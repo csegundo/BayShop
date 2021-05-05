@@ -12,11 +12,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.g01.bayshop.model.Message;
 import es.ucm.fdi.iw.g01.bayshop.model.User;
@@ -43,12 +45,26 @@ public class MessageController {
     }
 
     @GetMapping(value = { "/ver", "/ver/" })
+    @Transactional
     public String viewMessage(HttpSession session, Model model, @RequestParam long id) {
+        long userSess = ((User) session.getAttribute("u")).getId();
         logger.warn("ENTROOOOOOOOOOOOO");
         logger.warn(id);
+
+        // El usuario es el que envia o recibe
         Message message = entityManager.find(Message.class, id);
-        model.addAttribute("msg", message);
-        return "mensaje";
+        if(message != null && (message.getSender().getId() == userSess || message.getRecipient().getId() == userSess)){
+            // Si no tiene fecha de lectura entonces se le pone SOLO si es el que recibe
+            if(message.getDateRead() == null && message.getRecipient().getId() == userSess){
+                message.setDateRead(LocalDateTime.now());
+                entityManager.persist(message);
+            }
+
+            model.addAttribute("msg", message);
+            return "mensaje";
+        } else{
+            return "redirect:errors/401";
+        }
     }
 
     @GetMapping(value = { "/nuevo", "/nuevo/" })
@@ -77,5 +93,24 @@ public class MessageController {
         entityManager.persist(message);
 
         return "redirect:/mensajes";
+    }
+
+    @DeleteMapping("/api/delete/{id}")
+    @Transactional
+    @ResponseBody
+    public String deleteMessage(HttpSession session, Model model, @PathVariable long id){
+        logger.warn("ENTROOOOOOOOOOOOO");
+        logger.warn(id);
+        long userSess = ((User) session.getAttribute("u")).getId();
+        Message message = entityManager.find(Message.class, id);
+
+        // Solo puede borrar el mensaje si es quien lo recibe
+        if(message != null && message.getRecipient().getId() == userSess){
+            entityManager.remove(message);
+            
+            return "{\"success\":true}";
+        } else{
+            return "{\"success\":false}";
+        }
     }
 }

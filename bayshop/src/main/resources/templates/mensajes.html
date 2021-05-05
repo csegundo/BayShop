@@ -11,8 +11,8 @@
             <a class="btn btn-primary" th:href="@{/mensajes/nuevo}">Nuevo mensaje <i class="fa fa-envelope-o"></i></a>
             <select class="form-control" style="width:auto;display:inline-block;" name="type">
                 <option value="all">Todos</option>
-                <option value="inbox">Enviados</option>
-                <option value="send">Recibidos</option>
+                <option value="inbox">Recibidos</option>
+                <option value="send">Enviados</option>
             </select>
         </div>
         <table class="table table-striped">
@@ -23,7 +23,7 @@
                     <th>Fecha</th>
                     <th>Leído</th>
                     <th>Mensaje</th>
-                    <th>Ver</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,7 +33,10 @@
                     <td th:text="${m.dateSent}"></td>
                     <td th:text="${m.dateRead} ? 'Si' : 'No'"></td>
                     <td th:text="${m.text}"></td>
-                    <td><div class="btn btn-light view-message"><i class="fa fa-eye"></i></div></td>
+                    <td>
+                        <div class="btn btn-light view-message"><i class="fa fa-eye"></i></div>
+                        <div class="btn btn-light delete-message"><i class="fa fa-trash"></i></div>
+                    </td>
                 </tr>
                 <tr class="msg" th:data-id="${m.id}" th:each="m : ${send}" data-type="send">
                     <td th:text="${m.sender.firstName}"></td>

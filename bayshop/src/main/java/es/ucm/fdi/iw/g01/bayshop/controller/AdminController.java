@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,24 +46,34 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping("/deleteAccount")
+    @DeleteMapping("/api/deleteAccount/{id}")
 	@ResponseBody
 	@Transactional
-	public String deleteAccount(HttpSession session, Model model, @RequestParam long id){
+	public String deleteAccount(HttpSession session, Model model, @PathVariable long id){
 		try{
 			User userSess = (User) session.getAttribute("u");
 
-			if(userSess.hasRole(Role.ADMIN)){
-				// User target = entityManager.find(User.class, id);
-				// Hacer delete
+			if(userSess.hasRole(Role.ADMIN) && id != userSess.getId()){
+				User target = entityManager.find(User.class, id);
+				entityManager.remove(target);
 			}
 			logger.warn("IDDDDDDDDDDDDD");
 			logger.warn(id);
-			// logger.warn(idparam);
-		} catch(Exception e){
-			logger.warn(e);
-		}
 
-		return "" + id;
+			return "{\"success\":true}";
+		} catch(Exception e){
+			return "{\"success\":false}";
+		}
+	}
+
+	@PostMapping("api/toggleUserStatus")
+	@ResponseBody
+	@Transactional
+	public Integer toggleUserStatus(HttpSession session, Model model, @RequestParam long id, @RequestParam boolean enable){ // activa/desactiva un usuario
+		logger.warn("ENTROOOOOOOOOOO");
+		logger.warn(id);
+		logger.warn(enable);
+		
+		return 1;
 	}
 }

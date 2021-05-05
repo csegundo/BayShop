@@ -61,7 +61,6 @@ _Los componentes del grupo son:_
 
 * **Carlos** - [csegundo](https://github.com/csegundo)
 * **Daniel** - [danielUCM](https://github.com/danielUCM)
-* **Alex** - [alru03](https://github.com/alru03)
 * **Kiko** - [Francg07](https://github.com/Francg07)
 * **fabricio** - [fabricto](https://github.com/fabricto)
 
