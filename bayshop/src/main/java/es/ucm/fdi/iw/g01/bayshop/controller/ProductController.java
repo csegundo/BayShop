@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.ucm.fdi.iw.g01.bayshop.LocalData;
 import es.ucm.fdi.iw.g01.bayshop.model.Product;
 import es.ucm.fdi.iw.g01.bayshop.model.User;
+import es.ucm.fdi.iw.g01.bayshop.model.User.Role;
 
 @Controller
 @RequestMapping("producto")
@@ -68,9 +69,20 @@ public class ProductController {
     @Transactional
     @GetMapping("/{id}")
     public String product_id(HttpSession session, @PathVariable long id, Model model, @RequestParam(required = false) Integer entero) {
+        
+        User requester = (User)session.getAttribute("u");
         Product p = entityManager.find(Product.class, id);
-        List<Product> prod = entityManager.createQuery("select e from Product e").getResultList();
-    
+        List<Product>prod = null;
+        String query= null;
+
+        if (requester.hasRole(Role.USER)) {
+            query = "select p from Product p where status = 0 and id != :idP";
+            prod = entityManager.createQuery(query).setParameter("idP", id).getResultList();  
+        } else {
+            query = "select p from Product p where user_id = :seller and id != :idP";
+            prod = entityManager.createQuery(query).setParameter("seller", p.getUser()).setParameter("idP", id).getResultList();
+        }
+      
         model.addAttribute("p", p);
         model.addAttribute("prod", prod);
         // model.addAttribute("title", "BayShop | " + p.getName());
