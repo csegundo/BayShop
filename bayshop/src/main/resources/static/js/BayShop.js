@@ -62,4 +62,36 @@ $(function(){
             });
         }
     });
+
+    // Ver mensaje en el popup
+    $('body.messages .view-message').on('click', function(){
+        var _id = $(this).parents('tr').data().id;
+        BayShopAPI.template('mensajes/ver', { "id" : _id }, function(response){
+            var popup = CPOPUP.create('Mensaje');
+            popup.html(response);
+
+            popup.find('.bt-close').click(function(){
+                CPOPUP.close(popup);
+            });
+        }, function(error){console.error('POPUP error', error);});
+    });
+
+
+    // Filtrar mensajes
+    $('body.messages select[name="type"]').on('change', function(){
+        var parent = $(this).parents('.messages'),
+            type = $(this).find('option:selected').val();
+        switch(type){
+            case "inbox":
+                parent.find('.msg[data-type=inbox]').show();
+                parent.find('.msg[data-type!=inbox]').hide();
+                break;
+            case "send":
+                parent.find('.msg[data-type=send]').show();
+                parent.find('.msg[data-type!=send]').hide();
+                break;
+            case "all":
+            default: parent.find('.msg').show(); break;
+        }
+    });
 });

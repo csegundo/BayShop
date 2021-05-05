@@ -14,14 +14,17 @@ window.BayShopAPI = {
     delete : function(endpoint, data, onSuccess, onError){
         return this._request('DELETE', endpoint, data, onSuccess, onError);
     },
+    template : function(endpoint, data, onSuccess, onError){
+        return this._request('GET', endpoint, data, onSuccess, onError, true);
+    },
 
-    _request : function(method, endpoint, data = {}, onSuccess, onError){
+    _request : function(method, endpoint, data = {}, onSuccess, onError, isTemplate){
         var url = BayShopAPI._base_url + endpoint;
 
         let ajaxCfg = {
             "url"           : url,
             "type"          : method,
-            "data"          : JSON.stringify(data),
+            "data"          : data,//JSON.stringify(data),
             "dataType"      : "json",
             "headers"       : {
                 'Content-Type': 'application/json; charset=utf-8'
@@ -29,6 +32,13 @@ window.BayShopAPI = {
             "contentType"   : "application/json; charset=utf-8",
             "mimeType"      : "application/json",
         };
+
+        if(isTemplate){
+            ajaxCfg.headers['Content-Type'] = 'text/html;charset=utf-8';
+            ajaxCfg.contentType = 'text/html;charset=utf-8';
+            ajaxCfg.mimeType = 'text/html;charset=utf-8';
+            delete ajaxCfg.dataType;
+        }
 
         if(method != 'GET'){
             ajaxCfg.headers["X-CSRF-TOKEN"] = config.csrf.value;
