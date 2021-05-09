@@ -27,7 +27,7 @@
                     <td th:text="${u.email}"></td>
                     <td th:text="${u.firstName} + ' ' + ${u.lastName}"></td>
                     <td th:text="${u.roles}"></td>
-                    <td th:text="${u.enabled} ? 'Si' : 'No'"></td>
+                    <td class="status" th:text="${u.enabled} ? 'Si' : 'No'"></td>
                     <td th:data-id="${u.id}">
                         <button class="btn btn-primary btn-sm bt-editUser">Editar <i class="fa fa-pencil"></i></button>
                         <button class="btn btn-warning btn-sm bt-disableUser" data-enable="0">Desactivar <i class="fa fa-exclamation"></i></button>
@@ -56,11 +56,11 @@
                     <td th:text="${p.name}"></td>
                     <td th:text="${p.price} + '€'"></td>
                     <td th:text="${p.status}"></td>
-                    <td th:text="${p.enabled} ? 'Si' : 'No'"></td>
+                    <td class="status" th:text="${p.enabled} ? 'Si' : 'No'"></td>
                     <td th:data-id="${p.id}">
                         <button class="btn btn-primary btn-sm bt-editProduct">Editar <i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-warning btn-sm bt-disableProduct">Desactivar <i class="fa fa-exclamation"></i></button>
-                        <button class="btn btn-success btn-sm bt-enableProduct">Activar <i class="fa fa-check"></i></button>
+                        <button class="btn btn-warning btn-sm bt-disableProduct" data-enable="0">Desactivar <i class="fa fa-exclamation"></i></button>
+                        <button class="btn btn-success btn-sm bt-enableProduct" data-enable="1">Activar <i class="fa fa-check"></i></button>
                         <button class="btn btn-danger btn-sm bt-deleteProduct">Eliminar <i class="fa fa-trash-o"></i></button>
                     </td>
                 </tr>

@@ -3,6 +3,17 @@
  */
 
 $(function(){
+    // FUNCION QUE RECIBE UN WRAPPER Y DEVUELVE TODOS LOS DATOS DE UN FORMULARIO
+    function get_bayshop_form_data(wrapper){
+        var _data = {};
+        $.each(wrapper.find('.form-control'), function(i, item){
+            _data[$(item).data().key] = $(item).val(); // type text, number, email, password
+        });
+
+        return _data;
+    }
+
+    
     // LOGIN Y REGISTER
     $('.main-div-auth form .change').click(function(){
         var action  = $(this).data().action,
@@ -97,7 +108,7 @@ $(function(){
         var _id = $(this).parent().data().id, _row = $(this).parents('tr');
 
         if(confirm(`¿Seguro que quieres borrar el usuario con ID: ${_id}?`)){
-            BayShopAPI.delete("admin/api/deleteAccount/" + _id, { "id" : _id }, function(response){
+            BayShopAPI.delete("admin/api/deleteAccount", { "id" : _id }, function(response){
                 console.debug('response ajax', response);
                 _row.remove();
             }, function(error){
@@ -105,14 +116,83 @@ $(function(){
             });
         }
     });
-    $('body.admin table.all-users').on('click', '.bt-disableUser, .enableUser', function(){
+    $('body.admin table.all-users').on('click', '.bt-disableUser, .bt-enableUser', function(){
         var _id = $(this).parent().data().id, _row = $(this).parents('tr'), _enable = $(this).data().enable == 1;
 
         BayShopAPI.post("admin/api/toggleUserStatus", { "enable" : _enable, "id" : _id }, function(response){
             console.debug('response ajax', response);
-            _row.remove();
+            _row.find('td.status').html(_enable ? 'Si' : 'No');
         }, function(error){
             console.error(error);
         });
+    });
+
+    $('body.admin table.all-products .bt-deleteProduct').click(function(){
+        var _id = $(this).parent().data().id, _row = $(this).parents('tr');
+
+        if(confirm(`¿Seguro que quieres borrar el producto con ID: ${_id}?`)){
+            BayShopAPI.delete("admin/api/deleteProduct", { "id" : _id }, function(response){
+                console.debug('response ajax', response);
+                _row.remove();
+            }, function(error){
+                console.error(error);
+            });
+        }
+    });
+    $('body.admin table.all-products').on('click', '.bt-disableProduct, .bt-enableProduct', function(){
+        var _id = $(this).parent().data().id, _row = $(this).parents('tr'), _enable = $(this).data().enable == 1;
+
+        BayShopAPI.post("admin/api/toggleProductStatus", { "enable" : _enable, "id" : _id }, function(response){
+            console.debug('response ajax', response);
+            _row.find('td.status').html(_enable ? 'Si' : 'No');
+        }, function(error){
+            console.error(error);
+        });
+    });
+
+
+    // Editar perfil template
+    $('header nav a[data-action="edit"]').click(function(){
+        BayShopAPI.template('user/edit', {}, function(response){
+            var popup = CPOPUP.create('Editar perfil');
+            popup.html(response);
+
+            popup.find('.bt-close').click(function(){
+                CPOPUP.close(popup);
+            });
+
+            // delete account
+            popup.find('.element.delete').on('click', '.btn-removeAccount', function(){
+                if(confirm('Última oportunidad. ¿Seguro que quieres borrar la cuenta?')){
+                    BayShopAPI.post("user/api/deleteAccount", {}, function(response){
+                        console.debug('RESPONSE DELETE ACCOUNT', response);
+                    }, function(error){console.error('ERROR DELETE ACCOUNT', error);});
+                }
+            });
+
+            // change username
+            popup.find('.element.username').on('click', '.bt-changeUsername', function(){
+                var wp = $(this).parents('.element.username'), data = get_bayshop_form_data(wp);
+                BayShopAPI.post("user/api/changeUsername", data, function(response){
+                    wp.find('.error,.success').hide();
+                    wp.find(`.${response.success ? 'success' : 'error'}`).html(response.message).show();
+                    console.debug('RESPONSE CHANGE USERNAME', response);
+                }, function(error){
+                    popup.find('.element.username .error').html(error).show();
+                });
+            });
+
+            // change password
+            popup.find('.element.password').on('click', '.bt-changePassword', function(){
+                var wp = $(this).parents('.element.password'), data = get_bayshop_form_data(wp);
+                BayShopAPI.post("user/api/changePassword", data, function(response){
+                    wp.find('.error,.success').hide();
+                    wp.find(`.${response.success ? 'success' : 'error'}`).html(response.message).show();
+                    console.debug('RESPONSE CHANGE PASSWORD', response);
+                }, function(error){
+                    popup.find('.element.password .error').html(error).show();
+                });
+            });
+        }, function(error){console.error('POPUP error', error);});
     });
 });

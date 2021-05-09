@@ -25,6 +25,8 @@
                     <a class="nav-link dropdown-toggle" th:href="@{/perfil/{id}(id=${session.u.id})}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mi perfil</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         <a class="dropdown-item" th:href="@{/perfil/{id}(id=${session.u.id})}">Mis datos</a>
+                        <a class="dropdown-item" href="javascript:void(0)" data-action="edit">Editar perfil</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a>
                     </div>
                 </li>
@@ -32,8 +34,8 @@
         </div>
         <th:block th:if="${session.u}">
             <div th:if="${session.rolemoderator} or ${session.roleadmin}" class="actions">
-                <a th:if="${session.roleadmin}" th:href="@{/admin/}" class="btn btn-dark btn-sm">Administrador <i class="fa fa-unlock-alt"></i></a>
-                <a th:if="${session.rolemoderator}" th:href="@{/revisor/}" class="btn btn-dark btn-sm">Validar productos <i class="fa fa-list-alt"></i></i></a>
+                <a th:if="${session.roleadmin}" th:href="@{/admin}" class="btn btn-dark btn-sm">Administrador <i class="fa fa-unlock-alt"></i></a>
+                <a th:if="${session.rolemoderator}" th:href="@{/revisor}" class="btn btn-dark btn-sm">Validar productos <i class="fa fa-list-alt"></i></i></a>
             </div>
         </th:block>
     </nav>

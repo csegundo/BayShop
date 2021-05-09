@@ -28,9 +28,17 @@ header div.actions a{
 body.auth{
     font-family: 'Poppins', sans-serif;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     align-content: center;
+}
+body.auth a{
+    text-decoration: none;
+}
+body.auth .register-href,
+body.auth .login-href{
+    margin-top: 5px;
 }
 .main-div-auth{
     width: 50%;

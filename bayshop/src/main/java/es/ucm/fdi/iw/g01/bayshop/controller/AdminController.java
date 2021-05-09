@@ -1,6 +1,7 @@
 package es.ucm.fdi.iw.g01.bayshop.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
@@ -46,19 +47,18 @@ public class AdminController {
         return "admin";
     }
 
-    @DeleteMapping("/api/deleteAccount/{id}")
+    @DeleteMapping("/api/deleteAccount")
 	@ResponseBody
 	@Transactional
-	public String deleteAccount(HttpSession session, Model model, @PathVariable long id){
+	public String deleteAccount(HttpSession session, Model model, @RequestBody Map<String, String> json){
 		try{
+			Long id = Long.parseLong(json.get("id"));
 			User userSess = (User) session.getAttribute("u");
 
 			if(userSess.hasRole(Role.ADMIN) && id != userSess.getId()){
 				User target = entityManager.find(User.class, id);
 				entityManager.remove(target);
 			}
-			logger.warn("IDDDDDDDDDDDDD");
-			logger.warn(id);
 
 			return "{\"success\":true}";
 		} catch(Exception e){
@@ -69,11 +69,49 @@ public class AdminController {
 	@PostMapping("api/toggleUserStatus")
 	@ResponseBody
 	@Transactional
-	public Integer toggleUserStatus(HttpSession session, Model model, @RequestParam long id, @RequestParam boolean enable){ // activa/desactiva un usuario
-		logger.warn("ENTROOOOOOOOOOO");
-		logger.warn(id);
-		logger.warn(enable);
+	public String toggleUserStatus(HttpSession session, Model model, @RequestBody Map<String, String> json){ // activa/desactiva un usuario
+		Long id = Long.parseLong(json.get("id"));
+		Boolean enable = json.get("enable").equals("true");
+
+		User target = entityManager.find(User.class, id);
+
+		target.setEnabled((byte)(enable ? 1 : 0));
+		entityManager.persist(target);
 		
-		return 1;
+		return "{\"success\":true}";
+	}
+
+	@DeleteMapping("/api/deleteProduct")
+	@ResponseBody
+	@Transactional
+	public String deleteProduct(HttpSession session, Model model, @RequestBody Map<String, String> json){
+		try{
+			Long id = Long.parseLong(json.get("id"));
+			User userSess = (User) session.getAttribute("u");
+
+			if(userSess.hasRole(Role.ADMIN) && id != userSess.getId()){
+				Product target = entityManager.find(Product.class, id);
+				entityManager.remove(target);
+			}
+
+			return "{\"success\":true}";
+		} catch(Exception e){
+			return "{\"success\":false}";
+		}
+	}
+
+	@PostMapping("api/toggleProductStatus")
+	@ResponseBody
+	@Transactional
+	public String toggleProductStatus(HttpSession session, Model model, @RequestBody Map<String, String> json){ // activa/desactiva un producto
+		Long id = Long.parseLong(json.get("id"));
+		Boolean enable = json.get("enable").equals("true");
+
+		Product target = entityManager.find(Product.class, id);
+
+		target.setEnabled(enable ? true : false);
+		entityManager.persist(target);
+		
+		return "{\"success\":true}";
 	}
 }

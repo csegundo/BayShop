@@ -1,2 +1,6 @@
-- ¿Quitar la carpeta .vscode de la raiz del proyecto? No deberia haberse subido, esta en el .gitignore
-- Edicion de mensajes?
+CARLOS:
+    - Change password/change username/delete account ==> da un error al hacer el persist del usuario que está logueado
+    - Imagen en register
+    - Cambiar foto de perfil
+    - WS de mensajes
+    - Editar usuarios/productos en la vista de admin

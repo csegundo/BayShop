@@ -42,7 +42,7 @@ window.BayShopAPI = {
 
         if(method != 'GET'){
             ajaxCfg.data = JSON.stringify(ajaxCfg.data);
-            ajaxCfg.headers["X-CSRF-TOKEN"] = config.csrf.value;
+            ajaxCfg.headers["x-csrf-token"] = config.csrf.value;
         }
 
         if(onSuccess && typeof onSuccess === 'function'){

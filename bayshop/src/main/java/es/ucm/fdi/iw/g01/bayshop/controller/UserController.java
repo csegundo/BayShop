@@ -1,8 +1,10 @@
 package es.ucm.fdi.iw.g01.bayshop.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
@@ -12,14 +14,19 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.ucm.fdi.iw.g01.bayshop.LocalData;
 import es.ucm.fdi.iw.g01.bayshop.model.Product;
@@ -92,22 +99,86 @@ public class UserController {
 		return "redirect:/perfil/{id}";
 	}
 
-	@PostMapping("/passChange/{id}")
-	public String changeUserPass(@PathVariable long id, @ModelAttribute User edited,
-	@RequestParam(required=false) String oldPass,
-	@RequestParam(required=false) String newPass,
-	@RequestParam(required=false) String newPass2){
-		if((!edited.getPassword().equals(this.encodePassword(oldPass))) ||
-		(!newPass.equals(newPass2))){
-			return "redirect:/perfil/{id}";
+	@PostMapping("/api/changePassword")
+	@Transactional
+	@ResponseBody
+	public String changeUserPass(HttpSession session, @RequestBody Map<String, String> json){
+		User userSess = (User) session.getAttribute("u");
+		String oldPass = json.get("oldPass");
+		String newPass = json.get("newPass");
+		String confirm = json.get("confirm");
+
+		if(!passwordMatches(oldPass, userSess.getPassword()) || !newPass.equalsIgnoreCase(confirm)){
+			return "{\"success\":false,\"message\":\"Introduce bien las contraseñas\"}";
 		}
 
-		edited.setPassword(this.encodePassword(newPass));
+		if(passwordMatches(newPass, userSess.getPassword())){
+			return "{\"success\":false,\"message\":\"La nueva contraseña no puede ser igual a la anterior\"}";
+		}
 
-		entityManager.persist(edited);
+		userSess.setPassword(this.encodePassword(newPass));
+		session.removeAttribute("u");
+		session.setAttribute("u", userSess);
+
+		entityManager.persist(userSess);
 		entityManager.flush();
 
-		return "redirect:/perfil/{id}";
+		return "{\"success\":true,\"message\":\"Contraseña cambiada con éxito\"}";
 	}
 
+	@PostMapping("/api/changeUsername")
+	@Transactional
+	@ResponseBody
+	public String changeUsername(HttpSession session, @RequestBody Map<String, String> json){
+		User userSess = (User) session.getAttribute("u");
+		String password = json.get("passwd");
+		String newUsername = json.get("username");
+		Integer exists = entityManager.createNamedQuery("User.hasUsername").setParameter("username", newUsername).getFirstResult();
+
+		if(!passwordMatches(password, userSess.getPassword())){
+			return "{\"success\":false,\"message\":\"Contraseña incorrecta\"}";
+		}
+		if(userSess.getUsername().equalsIgnoreCase(newUsername)){
+			return "{\"success\":false,\"message\":\"El nuevo nombre de usuario no puede ser igual al actual\"}";
+		}
+		if(exists >= 1){
+			return "{\"success\":false,\"message\":\"El nombre de usuario ya existe\"}";
+		}
+
+		userSess.setUsername(newUsername);
+		session.removeAttribute("u");
+		session.setAttribute("u", userSess);
+
+		entityManager.persist(userSess);
+		entityManager.flush();
+
+		return "{\"success\":true,\"message\":\"Nombre de usuario cambiado con éxito\"}";
+	}
+
+	@PostMapping("/api/deleteAccount")
+	@Transactional
+	public String changeUsername(HttpSession session, HttpServletRequest request, HttpServletResponse response){
+		User userSess = (User) session.getAttribute("u");
+		userSess.setEnabled((byte)0);
+
+		entityManager.persist(userSess);
+		entityManager.flush();
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+
+		return "redirect:/";
+	}
+
+	// edit profile template (user session)
+	@GetMapping("/edit")
+	public String editProfile(HttpSession session, Model model) {
+		User userSess = (User) session.getAttribute("u");
+		model.addAttribute("u", userSess);
+
+		return "editProfile";
+	}
+	
 }

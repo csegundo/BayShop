@@ -1,0 +1,73 @@
+<div class="popup-body">
+    <style>
+        .popup-body{
+            width: 650px;
+        }
+        .popup-body .element{
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f3f3f3;
+            margin-bottom: 10px;
+        }
+        .popup-body .element .error,
+        .popup-body .element .success{
+            text-align: center;
+            padding: 5px;
+            margin-bottom: 10px;
+            display: none;
+        }
+        .popup-body .element .error{
+            background-color: #ff6666;
+        }
+        .popup-body .element .success{
+            background-color: #6ad554;
+        }
+        .popup-body .element.delete label{
+            display: block;
+        }
+    </style>
+    <div class="element password">
+        <div class="error"></div>
+        <div class="success"></div>
+        <div class="form-group">
+            <label for="oldPass">Contraseña actual *</label>
+            <input type="password" class="form-control" data-key="oldPass" id="oldPass" placeholder="Escribe tu contraseña actual...">
+        </div>
+        <div class="form-group">
+            <label for="newPass">Nueva contraseña *</label>
+            <input type="password" class="form-control" data-key="newPass" id="newPass" placeholder="Escribe la nueva contraseña...">
+        </div>
+        <div class="form-group">
+            <label for="confirm">Confirma la nueva contraseña *</label>
+            <input type="password" class="form-control" data-key="confirm" id="confirm" placeholder="Escribe de nuevo la nueva contraseña...">
+        </div>
+        <button class="btn btn-sm btn-primary bt-changePassword">Actualizar contraseña <i class="fa fa-floppy-o"></i></button>
+    </div>
+
+    <div class="element username">
+        <div class="error"></div>
+        <div class="success"></div>
+        <div class="form-group">
+            <label for="username">Cambiar nombre de usuario *</label>
+            <input type="text" class="form-control" data-key="username" id="username" placeholder="Escribe el nuevo nombre de usuario...">
+        </div>
+        <div class="form-group">
+            <label for="passwd">Contraseña actual *</label>
+            <input type="password" class="form-control" data-key="passwd" id="passwd" placeholder="Escribe tu contraseña actual...">
+        </div>
+        <button class="btn btn-sm btn-primary bt-changeUsername">Cambiar nombre de usuario <i class="fa fa-pencil"></i></button>
+    </div>
+
+    <div class="element delete">
+        <label>Eliminar mi cuenta</label>
+        <button class="btn btn-danger btn-sm btn-removeAccount">Eliminar cuenta <i class="fa fa-trash"></i></button>
+        <small class="form-text text-muted">¿Estás seguro de que quieres borrar la cuenta? Tu cuenta se desactivará y no podrás iniciar sesión.</small>
+        <small class="form-text text-muted">Cuenta que se borrará: <span th:text="${u.firstName} + ' ' + ${u.lastName} + ' (' + ${u.username} + ')'"></span></small>
+    </div>
+</div>
+
+<!-- footer optional -->
+<div class="popup-actions">
+    <button class="btn btn-primary bt-close">Cerrar <i class="fa fa-times"></i></button>
+</div>
