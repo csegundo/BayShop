@@ -212,7 +212,7 @@ public class UserController {
 	}
 	
 	// GET y POST de imagenes de perfil
-	@GetMapping("/photo/{id}")
+	@GetMapping("/api/photo/{id}")
 	public StreamingResponseBody getPhoto(@PathVariable long id, Model model) throws IOException{
 		File file = localData.getFile("user", Long.toString(id));
 		InputStream in;
@@ -230,10 +230,12 @@ public class UserController {
 		};
 	}
 
-	// TODO ver si hacerlo para forms o para peticiones con la API js
-	@PostMapping("/photo/{id}")
+	@PostMapping("/api/photo/{id}")
 	@ResponseBody
 	public String postPhoto(HttpServletResponse response, @RequestParam("photo") MultipartFile photo, @PathVariable("id") String id, Model model, HttpSession session) throws IOException{
+		logger.warn("--------------");
+		logger.warn(id);
+		logger.warn("--------------");
 		User userSess = (User) session.getAttribute("u");
 		User userParam = entityManager.find(User.class, Long.parseLong(id));
 
@@ -255,6 +257,6 @@ public class UserController {
 			}
 		}
 
-		return "{\"success\":true}";
+		return "{\"success\":true,\"message\":\"Imagen de perfil actualizada con éxito\"}";
 	}
 }

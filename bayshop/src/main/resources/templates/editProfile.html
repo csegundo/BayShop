@@ -67,10 +67,14 @@
     </div>
 
     <div class="element image">
-        <label for="img-profile">Cambiar imagen de perfil *</label>
-        <input type="file" name="photo" id="img-profile" class="form-control" th:data-userid="${u.id}">
-        <small class="form-text text-muted">La anterior será borrada y no podrás recuperarla.</small>
-        <button class="btn btn-sm btn-primary mt-2">Guardar <i class="fa fa-floppy-o"></i></button>
+        <div class="error"></div>
+        <div class="success"></div>
+        <form th:action="@{/user/api/photo/{id}(id=${u.id})}" method="POST" enctype="multipart/form-data" class="upload-user-image">
+            <label for="img-profile">Cambiar imagen de perfil *</label>
+            <input type="file" name="photo" id="img-profile" class="form-control" th:data-userid="${u.id}">
+            <small class="form-text text-muted">TAMAÑO MÁXIMO DE IMAGEN: 1,048576 MB. La anterior será borrada y no podrás recuperarla.</small>
+            <button type="submit" class="btn btn-sm btn-primary mt-2">Guardar <i class="fa fa-floppy-o"></i></button>
+        </form>
     </div>
 </div>
 

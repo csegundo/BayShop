@@ -161,6 +161,38 @@ $(function(){
                 CPOPUP.close(popup);
             });
 
+            // change profile image
+            popup.find('.element.image').on('submit', 'form.upload-user-image', function(event){
+                event.preventDefault();
+                event.stopPropagation();
+                var formData = new FormData(this);
+
+                $.ajax({
+                    type : 'POST',
+                    url : $(this).attr('action'),
+                    data : formData,
+                    cache : false,
+                    contentType : false,
+                    processData : false,
+                    success : function(data){
+                        data = JSON.parse(data);
+                        popup.find('.element .success,.element .error').hide();
+                        popup.find('.element.image input[type=file]').val('');
+                        popup.find('.element.image .success').html(data.message).show();
+                        console.log("success");
+                        console.log(data);
+                    },
+                    error : function(data){
+                        data = JSON.parse(data);
+                        popup.find('.element .success,.element .error').hide();
+                        popup.find('.element.image input[type=file]').val('');
+                        popup.find('.element.image .error').html(data.message).show();
+                        console.log("error");
+                        console.log(data);
+                    }
+                });
+            });
+
             // delete account
             popup.find('.element.delete').on('click', '.btn-removeAccount', function(){
                 if(confirm('Última oportunidad. ¿Seguro que quieres borrar la cuenta?')){
