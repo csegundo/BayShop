@@ -10,7 +10,8 @@
             <img th:src="@{/img/bay_128.png}" alt="web logo">
         </div>
         <div class="col-xs-12 col-md-8 form">
-            <form method="POST" th:action="@{/user/create}" enctype="multipart/form-data">
+            <form method="POST" th:action="@{/user/api/create}" enctype="multipart/form-data">
+                <!-- <form method="POST" th:action="@{/user/api/create}"> -->
                 <div class="form-group">
                     <label for="firstName">Nombre</label>
                     <input type="text" name="firstName" class="form-control" id="firstName">
@@ -50,8 +51,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="username">Imagen de perfil</label>
-                    <input type="file" class="form-control" name="profileImg" id="profileImg">
+                    <label for="profileImg">Imagen de perfil</label>
+                    <input type="file" class="form-control" name="photo" id="profileImg">
                 </div>
                 <button type="submit" class="btn btn-primary">Crear cuenta <i class="fa fa-plus"></i></button>
             </form>

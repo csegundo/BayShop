@@ -65,6 +65,13 @@
         <small class="form-text text-muted">¿Estás seguro de que quieres borrar la cuenta? Tu cuenta se desactivará y no podrás iniciar sesión.</small>
         <small class="form-text text-muted">Cuenta que se borrará: <span th:text="${u.firstName} + ' ' + ${u.lastName} + ' (' + ${u.username} + ')'"></span></small>
     </div>
+
+    <div class="element image">
+        <label for="img-profile">Cambiar imagen de perfil *</label>
+        <input type="file" name="photo" id="img-profile" class="form-control" th:data-userid="${u.id}">
+        <small class="form-text text-muted">La anterior será borrada y no podrás recuperarla.</small>
+        <button class="btn btn-sm btn-primary mt-2">Guardar <i class="fa fa-floppy-o"></i></button>
+    </div>
 </div>
 
 <!-- footer optional -->

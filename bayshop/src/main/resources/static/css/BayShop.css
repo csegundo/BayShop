@@ -19,8 +19,15 @@ header div.actions a{
 
 /* UTILS */
 .btn{
+    margin: 3px 0;
     padding: 2px 4px;
     font-size: 13px;
+}
+
+header .miniprofile-data .profile-img,
+header .profile-img{
+    width: 30px;
+    border-radius: 50%;
 }
 
 

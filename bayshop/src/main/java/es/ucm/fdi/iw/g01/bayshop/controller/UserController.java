@@ -1,5 +1,13 @@
 package es.ucm.fdi.iw.g01.bayshop.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +34,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.ucm.fdi.iw.g01.bayshop.LocalData;
 import es.ucm.fdi.iw.g01.bayshop.model.Product;
 import es.ucm.fdi.iw.g01.bayshop.model.User;
+import es.ucm.fdi.iw.g01.bayshop.model.User.Role;
 
 @Controller()
 @RequestMapping("/user")
@@ -71,9 +83,14 @@ public class UserController {
 	}
 
     // Metodos de los <form> que son mas especificos de cada Controller
-    @PostMapping("/create")
+    @PostMapping("/api/create")
     @Transactional
-    public String create(@ModelAttribute User newUser, @RequestParam(required=false) String pass2, Model model, HttpSession session){
+    public String create(@ModelAttribute User newUser, @RequestParam(required=false) String pass2, Model model, HttpSession session, @RequestParam("photo") MultipartFile photo){
+		logger.warn("ENTROOOOOOO");
+		logger.warn(newUser.getUsername());
+		logger.warn(pass2);
+		logger.warn("----------");
+
 		if(!newUser.getPassword().equals(pass2)){
 			return "redirect:/register";
 		}
@@ -85,6 +102,19 @@ public class UserController {
 
 		entityManager.persist(newUser);
 		entityManager.flush();
+
+		File img = localData.getFile("user", Long.toString(newUser.getId()));
+
+		if(photo.isEmpty()){
+			logger.warn("REGISTER IMAGE EMPTY");
+		} else{
+			try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(img))){
+				byte[] bytes = photo.getBytes();
+				stream.write(bytes);
+			} catch (Exception e) {
+				logger.warn("ERROR UPLOADING REGISTER IMAGE");
+			}
+		}
 
         return "redirect:/login";
     }
@@ -181,4 +211,50 @@ public class UserController {
 		return "editProfile";
 	}
 	
+	// GET y POST de imagenes de perfil
+	@GetMapping("/photo/{id}")
+	public StreamingResponseBody getPhoto(@PathVariable long id, Model model) throws IOException{
+		File file = localData.getFile("user", Long.toString(id));
+		InputStream in;
+
+		if (file.exists()) {
+			in = new BufferedInputStream(new FileInputStream(file));
+		} else {
+			in = new BufferedInputStream(getClass().getClassLoader().getResourceAsStream("static/img/default-user.png"));
+		}
+		return new StreamingResponseBody() {
+			@Override
+			public void writeTo(OutputStream os) throws IOException {
+				FileCopyUtils.copy(in, os);
+			}
+		};
+	}
+
+	// TODO ver si hacerlo para forms o para peticiones con la API js
+	@PostMapping("/photo/{id}")
+	@ResponseBody
+	public String postPhoto(HttpServletResponse response, @RequestParam("photo") MultipartFile photo, @PathVariable("id") String id, Model model, HttpSession session) throws IOException{
+		User userSess = (User) session.getAttribute("u");
+		User userParam = entityManager.find(User.class, Long.parseLong(id));
+
+		if(userSess.getId() != userParam.getId() && !userSess.hasRole(Role.ADMIN)){
+			return "{\"success\":false,\"message\":\"No tienes permiso para realizar esta acción\"}";
+		}
+
+		File img = localData.getFile("user", id);
+
+		if(photo.isEmpty()){
+			logger.warn("UPDATE IMAGE EMPTY");
+		} else{
+			try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(img))){
+				byte[] bytes = photo.getBytes();
+				stream.write(bytes);
+			} catch (Exception e) {
+				logger.warn("ERROR UPLOADING UPDATE IMAGE");
+				return "{\"success\":false,\"message\":\"Error al actualizar la imagen\"}";
+			}
+		}
+
+		return "{\"success\":true}";
+	}
 }
