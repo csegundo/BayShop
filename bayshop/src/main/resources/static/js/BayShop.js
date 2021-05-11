@@ -13,6 +13,16 @@ $(function(){
         return _data;
     }
 
+    // SEND MESSAGE
+    $('body.create-message .bt-send').click(function(){
+        var dest = $('body.create-message select#dest option:selected').val(), msg = $('body.create-message textarea#msg').val();
+        BayShopAPI.post("mensajes/api/new", { "dest" : dest, "msg" : msg }, function(response){
+            console.debug('MENSAJE ENVIADO', response);
+            window.location.href = "/mensajes";
+        }, function(error){
+            console.error('ERROR INTERNO AL ENVIAR MENSAJE');
+        });
+    });
     
     // LOGIN Y REGISTER
     $('.main-div-auth form .change').click(function(){

@@ -2,20 +2,27 @@ package es.ucm.fdi.iw.g01.bayshop.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,6 +37,9 @@ public class MessageController {
 
     @Autowired
 	private EntityManager entityManager;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @GetMapping(value = { "/", "" })
     public String allMessages(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
@@ -79,7 +89,12 @@ public class MessageController {
 
     @PostMapping("/api/new")
     @Transactional
-    public String createMessage(HttpSession session, Model model, @RequestParam long dest, @RequestParam String msg) {
+    @ResponseBody
+    // public String createMessage(HttpSession session, Model model, @RequestParam long dest, @RequestParam String msg) {
+    public String createMessage(HttpSession session, Model model, @RequestBody Map<String, String> jsonParam) {
+        long dest = Long.parseLong(jsonParam.get("dest"));
+        String msg = jsonParam.get("msg");
+
         long userSess   = (long) ((User) session.getAttribute("u")).getId();
         User sender     = entityManager.find(User.class, userSess);
         User receiver   = entityManager.find(User.class, dest);
@@ -92,7 +107,19 @@ public class MessageController {
 
         entityManager.persist(message);
 
-        return "redirect:/mensajes";
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode rootNode = mapper.createObjectNode();
+        rootNode.put("text", sender.getUsername() + " envia mensaje a " + receiver.getUsername());
+        String json = "";
+        try {
+            json = mapper.writeValueAsString(rootNode);
+        } catch (Exception e) {
+            return "{\"success\":false,\"message\":\"Mensaje enviado pero no recibido con WS\"}";
+        }
+        messagingTemplate.convertAndSend("/user/" + receiver.getUsername() + "/queue/updates", json);
+
+        // return "redirect:/mensajes";
+        return "{\"success\":true,\"message\":\"Mensaje enviado con exito\"}";
     }
 
     @DeleteMapping("/api/delete/{id}")
