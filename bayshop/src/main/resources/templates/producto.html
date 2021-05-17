@@ -11,7 +11,7 @@
     <div class="row main-div p-5 product-details">
         <div class="col-md-6">
             <!-- <div>Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div> -->
-            <img class="img-fluid" th:src="@{/img/bay_512.png}" alt="Imagen Producto">
+            <img class="img-fluid" th:src="@{/producto/api/photo/{id}(id=${p.id})}" alt="Imagen Producto">
         </div>
         <div class="col-md-6 p-4">
             <h1 th:text="${p.name}"></h1>
@@ -24,7 +24,7 @@
             <!-- <p>Fecha</p> -->
 
             <div>
-                <a th:href="@{/compra/{id}(id=${p.id})}" class="btn btn-primary buy-product">Comprar <i class="fa fa-shopping-cart"></i></a>
+                <a th:if="${session.user}" th:href="@{/compra/{id}(id=${p.id})}" class="btn btn-primary buy-product">Comprar <i class="fa fa-shopping-cart"></i></a>
                 <a th:if="${session.roleadmin} or ${session.rolemoderator}" th:href="@{/revisor/validar/{id}(id=${p.id})}" class="btn btn-success">Validar <i class="fa fa-check"></i></a>
                 <a th:if="${session.roleadmin} or ${session.rolemoderator}" th:href="@{/revisor/rechazar/{id}(id=${p.id})}" class="btn btn-danger">Rechazar <i class="fa fa-times"></i></a>
             </div>
@@ -38,10 +38,10 @@
             <h4>Otros Productos del Vendedor</h4>
         </div>
 
-        <div class="row m-5">
+        <div id="otrosProductos" class="row m-5">
             <div class="col-sm-3 col-lg-2 m-2 text-center" th:each="p: ${prod}">
                 <a th:href="@{/producto/{id}(id=${p.id})}">
-                    <img class="img-fluid my-3" th:src="@{/img/bay_512.png}" alt="Imagen Producto">
+                    <img class="img-fluid my-3" th:src="@{/producto/api/photo/{id}(id=${p.id})}" alt="Imagen Producto">
                 </a>
                 <h3 th:text="${p.price} + ' €'"></h3>
                 <p th:text="${p.name}"></p>

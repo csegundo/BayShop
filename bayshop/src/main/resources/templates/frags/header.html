@@ -38,7 +38,7 @@
         <th:block th:if="${session.u}">
             <div th:if="${session.rolemoderator} or ${session.roleadmin}" class="actions">
                 <a th:if="${session.roleadmin}" th:href="@{/admin}" class="btn btn-dark btn-sm">Administrador <i class="fa fa-unlock-alt"></i></a>
-                <a th:if="${session.rolemoderator}" th:href="@{/revisor}" class="btn btn-dark btn-sm">Validar productos <i class="fa fa-list-alt"></i></i></a>
+                <a th:if="${session.rolemoderator}" th:href="@{/revisor/}" class="btn btn-dark btn-sm">Validar productos <i class="fa fa-list-alt"></i></i></a>
             </div>
         </th:block>
     </nav>

@@ -59,8 +59,10 @@
                     <div th:if="${userCompras == null or userCompras.isEmpty()}">Sin compras</div>
                     <div th:unless="${userCompras == null or userCompras.isEmpty()}" th:each="uC: ${userCompras}">
                         <div class="p-2">
-                            <div class="card">
-                                <a href="/producto/id"><img th:src="@{/img/bay_32.png}" width="130" height="160"></a>
+                            <div class="card text-center">
+                                <a th:href="@{/producto/{id}(id=${uC.id})}">
+                                    <img th:src="@{/producto/api/photo/{id}(id=${uC.id})}" width="130" height="160" alt="Imagen Producto">
+                                </a>
                             </div>
                         </div>
                         <div class="p-2">
@@ -87,8 +89,10 @@
                     <div th:if="${userProd == null or userProd.isEmpty()}">Sin productos</div>
                     <div th:unless="${userProd == null or userProd.isEmpty()}" th:each="uP: ${userProd}">
                         <div class="p-2">
-                            <div class="card">
-                                <a href="/producto/id"><img th:src="@{/img/bay_32.png}" width="130" height="160"></a>
+                            <div class="card text-center">
+                                <a th:href="@{/producto/{id}(id=${uP.id})}">
+                                    <img th:src="@{/producto/api/photo/{id}(id=${uP.id})}" width="130" height="160" alt="Imagen Producto">
+                                </a>
                             </div>
                         </div>
                         <div class="p-2">

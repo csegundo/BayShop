@@ -1,5 +1,14 @@
 package es.ucm.fdi.iw.g01.bayshop.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,16 +22,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import es.ucm.fdi.iw.g01.bayshop.LocalData;
 import es.ucm.fdi.iw.g01.bayshop.model.Product;
 import es.ucm.fdi.iw.g01.bayshop.model.User;
+import es.ucm.fdi.iw.g01.bayshop.model.Product.ProductStatus;
 import es.ucm.fdi.iw.g01.bayshop.model.User.Role;
 
 @Controller
@@ -49,10 +62,35 @@ public class ProductController {
 
     @Transactional
     @PostMapping("/create")
-    public String createProduct(@ModelAttribute Product newProduct, Model model, HttpSession session){
+    public String createProduct(@ModelAttribute Product newProduct, Model model, HttpSession session, @RequestParam("photos") MultipartFile photos){
         logger.warn("NUEVO PRODUCTO");
+        logger.warn(newProduct);
         
-        // entityManager.persist(newProduct);
+        User requester = (User)session.getAttribute("u");
+
+        // creationDAte, stattus=1, enable=true
+
+        newProduct.setEnabled(true);
+        newProduct.setStatus(ProductStatus.PENDING);
+        newProduct.setUser(requester);
+        newProduct.setCreationDate(LocalDateTime.now());
+
+        entityManager.persist(newProduct);
+        entityManager.flush();
+
+        String path = "product/" + newProduct.getId();
+		File img = localData.getFile(path, Long.toString(newProduct.getId()));
+
+		if(photos.isEmpty()){
+			logger.warn("REGISTER IMAGE EMPTY");
+		} else{
+			try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(img))){
+				byte[] bytes = photos.getBytes();
+				stream.write(bytes);
+			} catch (Exception e) {
+				logger.warn("ERROR UPLOADING REGISTER IMAGE");
+			}
+		}
 
         return "redirect:/index";
     }
@@ -62,8 +100,6 @@ public class ProductController {
         model.addAttribute("title", "BayShop | Crear producto");
         return "productoCrear";
     }
-
-
 
 
     @Transactional
@@ -90,5 +126,40 @@ public class ProductController {
 
         return "producto";
     }
+
+
+    // GET porduct photo
+	@GetMapping("/api/photo/{id}")
+	public StreamingResponseBody getPhoto(@PathVariable long id, Model model) throws IOException{
+		
+        String path = "product/" + id;
+
+        logger.warn("GET  IMAAAGEEEEEE");
+        logger.warn(path);
+
+        File file = localData.getFile(path, Long.toString(id));
+		InputStream in;
+
+		if (file.exists()) {
+			in = new BufferedInputStream(new FileInputStream(file));
+		} else {
+			in = new BufferedInputStream(getClass().getClassLoader().getResourceAsStream("static/img/default-camiseta.png"));
+		}
+		return new StreamingResponseBody() {
+			@Override
+			public void writeTo(OutputStream os) throws IOException {
+				FileCopyUtils.copy(in, os);
+			}
+		};
+	}
+
+
+    /*
+    @GetMapping("/api/photos/{id}")
+	public StreamingResponseBody getPhotos(@PathVariable long id, Model model) throws IOException{
+        
+     
+	}
+    */
 
 }

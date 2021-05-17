@@ -63,7 +63,7 @@
             <div class="col-xs-12 col-md-1 none"></div>
             <div class="col-xs-12 col-md-5 product">
                 <div class="product-img">
-                    <img src="https://i.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" alt="product_image" class="img-fluid img-thumbnail">
+                    <img th:src="@{/producto/api/photo/{id}(id=${p.id})}" alt="Imagen Producto" class="img-fluid img-thumbnail">
                 </div>
             </div>
         </div>
