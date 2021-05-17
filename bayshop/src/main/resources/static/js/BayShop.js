@@ -13,6 +13,26 @@ $(function(){
         return _data;
     }
 
+    // FUNCION QUE SE LLAMA DESDE LOS WS PARA ACTUALIZAR LA TABLA
+    let _ws_notifyMessage = function(messageObj){
+        var _table = $('body.messages table.all-user-messages tbody');
+
+        if(_table.length > 0){
+            _table.prepend(`
+            <tr class="msg" data-id="${messageObj.id}" data-type="inbox">
+                <td>${messageObj.sender}</td>
+                <td>${messageObj.receiver}</td>
+                <td>${messageObj.date}</td>
+                <td>${messageObj.msg}</td>
+                <td>
+                    <div class="btn btn-light view-message"><i class="fa fa-eye"></i></div>
+                    <div class="btn btn-light delete-message"><i class="fa fa-trash"></i></div>
+                </td>
+            </tr>
+            `);
+        }
+    };
+
     // SEND MESSAGE
     $('body.create-message .bt-send').click(function(){
         var dest = $('body.create-message select#dest option:selected').val(), msg = $('body.create-message textarea#msg').val();
@@ -71,8 +91,9 @@ $(function(){
 
 
     // Ver mensaje en el popup
-    $('body.messages .view-message').on('click', function(){
+    $('body.messages table.all-user-messages tbody').on('click', '.view-message', function(){
         var _id = $(this).parents('tr').data().id;
+        $(this).parents('tr').find('.status').html('Si');
         BayShopAPI.template('mensajes/ver', { "id" : _id }, function(response){
             var popup = CPOPUP.create('Mensaje');
             popup.html(response);

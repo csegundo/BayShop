@@ -11,8 +11,35 @@ const ws = {
 	/**
 	 * Default action when message is received. 
 	 */
-	receive: (text) => {
-		console.log(text);
+	receive: (messageObj) => {
+		console.log(messageObj);
+
+		if(messageObj.type && messageObj.type == "message"){
+			// if(_ws_notifyMessage && typeof _ws_notifyMessage === 'function'){
+			// 	_ws_notifyMessage(messageObj); // BayShop.js
+			// }
+			var _table = $('body.messages table.all-user-messages tbody');
+
+			if(_table.length > 0){
+				var alert = $(`<div class="slide-alert success">Has recibido un mensaje</div>`);
+				$('body').append(alert);
+				$(alert).animate({ opacity : '0' }, 3000, null, function(){ $(alert).remove(); });
+
+				_table.prepend(`
+				<tr class="msg" data-id="${messageObj.id}" data-type="inbox">
+					<td>${messageObj.sender}</td>
+					<td>${messageObj.receiver}</td>
+					<td>${messageObj.date}</td>
+					<td>No</td>
+					<td>${messageObj.msg}</td>
+					<td>
+						<div class="btn btn-light view-message"><i class="fa fa-eye"></i></div>
+						<div class="btn btn-light delete-message"><i class="fa fa-trash"></i></div>
+					</td>
+				</tr>
+				`);
+			}
+		}
 	},
 	
 	headers: {'X-CSRF-TOKEN' : config.csrf.value},

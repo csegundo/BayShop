@@ -109,7 +109,14 @@ public class MessageController {
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode rootNode = mapper.createObjectNode();
-        rootNode.put("text", sender.getUsername() + " envia mensaje a " + receiver.getUsername());
+        rootNode.put("text", sender.getUsername() + " envia mensaje a " + receiver.getUsername()); // para debug
+        rootNode.put("type", "message");
+        rootNode.put("msg", msg);
+        rootNode.put("sender", sender.getFirstName());
+        rootNode.put("receiver", receiver.getFirstName());
+        rootNode.put("date", message.getDateSent().toString());
+        rootNode.put("id", message.getId());
+
         String json = "";
         try {
             json = mapper.writeValueAsString(rootNode);

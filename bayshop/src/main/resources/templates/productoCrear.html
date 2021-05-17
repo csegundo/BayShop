@@ -8,11 +8,11 @@
 
     <div class="container">
         <div class="row main-div">
-            <div class="col-xs-12 col-md-8 form">
-                <form method="POST" th:action="@{/producto/create}">
+            <div class="col form">
+                <form method="POST" th:action="@{/producto/create}" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="exampleInputImagen">Imagen</label>
-                        <input type="file" class="form-control-file" id="exampleInputImage" placeholder="Image">
+                        <input type="file" name="photos" class="form-control-file" id="exampleInputImage" multiple>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputTitle">Nombre</label>
