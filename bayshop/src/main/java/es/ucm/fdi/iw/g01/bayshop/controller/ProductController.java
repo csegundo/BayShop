@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
@@ -111,6 +110,7 @@ public class ProductController {
         List<Product>prod = null;
         String query= null;
 
+        // Mostar sugerencias de Otros Productos u Otros Productos del vendedor en función del ROL
         if (requester.hasRole(Role.USER)) {
             query = "select p from Product p where status = 0 and id != :idP";
             prod = entityManager.createQuery(query).setParameter("idP", id).getResultList();  
@@ -118,7 +118,7 @@ public class ProductController {
             query = "select p from Product p where user_id = :seller and id != :idP";
             prod = entityManager.createQuery(query).setParameter("seller", p.getUser()).setParameter("idP", id).getResultList();
         }
-      
+
         model.addAttribute("p", p);
         model.addAttribute("prod", prod);
         // model.addAttribute("title", "BayShop | " + p.getName());
@@ -127,15 +127,28 @@ public class ProductController {
         return "producto";
     }
 
+    
+    
+    @Transactional
+    @GetMapping("/delete/{id}")
+    public String rechazar(HttpSession session, Model model, @PathVariable long id, @RequestParam(required = false) Integer entero) {
+        
+        User requester = (User)session.getAttribute("u");
+        Product p = entityManager.find(Product.class, id);
+
+        if(requester.hasRole(Role.ADMIN) || requester.hasRole(Role.MODERATOR) || requester.getId() == p.getUser().getId()){
+            p.setEnabled(false);
+        }
+    
+        return "redirect:/";
+    }
+
 
     // GET porduct photo
 	@GetMapping("/api/photo/{id}")
 	public StreamingResponseBody getPhoto(@PathVariable long id, Model model) throws IOException{
 		
         String path = "product/" + id;
-
-        logger.warn("GET  IMAAAGEEEEEE");
-        logger.warn(path);
 
         File file = localData.getFile(path, Long.toString(id));
 		InputStream in;

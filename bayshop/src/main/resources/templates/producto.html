@@ -9,24 +9,28 @@
     <header th:replace="frags/header.html"></header>
 
     <div class="row main-div p-5 product-details">
-        <div class="col-md-6">
+        <div id="imgProducto" class="col-md-6 text-center">
             <!-- <div>Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div> -->
             <img class="img-fluid" th:src="@{/producto/api/photo/{id}(id=${p.id})}" alt="Imagen Producto">
         </div>
         <div class="col-md-6 p-4">
-            <h1 th:text="${p.name}"></h1>
-            <p class="seller" th:text="'Vendedor: ' + ${p.user.getFirstName()}"></p>
-            <p th:text="'Marca: ' + ${p.brand}"></p>
-            <p th:text="'Talla: ' + ${p.size}"></p>
-            <p th:text="'Fecha de subida: ' + ${p.creationDate}"></p>
-            <p th:text="'Descripción: ' + ${p.description}"></p>
+            <h2 th:text="${p.name}"></h2>
+            <h5> Vendedor:
+                <a th:href="@{/perfil/{id}(id=${p.user.id})}" th:text="''+ ${p.user.getFirstName()}"></a>
+            </h5>
+            <h5 th:text="'Marca: ' + ${p.brand}"></h5>
+            <h5 th:text="'Talla: ' + ${p.size}"></h5>
+            <h5>Fecha de subida:</h5>
+            <p th:text="${p.creationDate}"></p>
+            <h5>Descripción:</h5>
+            <p th:text="${p.description}"></p>
             <h3 class="mb-4" th:text="'Precio: ' + ${p.price} + ' €'"></h3>
-            <!-- <p>Fecha</p> -->
-
+            
             <div>
-                <a th:if="${session.user}" th:href="@{/compra/{id}(id=${p.id})}" class="btn btn-primary buy-product">Comprar <i class="fa fa-shopping-cart"></i></a>
+                <a th:if="${session.u.hasRole('USER')} and (${p.user.id != session.u.id})" th:href="@{/compra/{id}(id=${p.id})}" class="btn btn-primary buy-product">Comprar <i class="fa fa-shopping-cart"></i></a>
                 <a th:if="${session.roleadmin} or ${session.rolemoderator}" th:href="@{/revisor/validar/{id}(id=${p.id})}" class="btn btn-success">Validar <i class="fa fa-check"></i></a>
                 <a th:if="${session.roleadmin} or ${session.rolemoderator}" th:href="@{/revisor/rechazar/{id}(id=${p.id})}" class="btn btn-danger">Rechazar <i class="fa fa-times"></i></a>
+                <a th:if="${session.roleadmin} or ${session.rolemoderator} or (${p.user.id == session.u.id})" th:href="@{/producto/delete/{id}(id=${p.id})}" class="btn btn-warning">Eliminar <i class="fa fa-exclamation"></i></a>
             </div>
         </div>
     </div>

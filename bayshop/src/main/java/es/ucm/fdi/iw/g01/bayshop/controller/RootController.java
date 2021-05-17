@@ -49,8 +49,8 @@ public class RootController {
 
     @GetMapping(value = { "/", "", "/home", "/index" })
     public String index(HttpSession session, Model model, @RequestParam(required = false) Integer entero){
-        //List<Product> prod = entityManager.createQuery("select p from Product p where status = 0").getResultList();
-        List<Product> prod = entityManager.createQuery("select p from Product p").getResultList();
+        
+        List<Product> prod = entityManager.createQuery("select p from Product p where status = 0 and enabled = TRUE").getResultList();
         model.addAttribute("prod", prod);
         model.addAttribute("revisar", false);
         model.addAttribute("title", "BayShop | Todos los productos");

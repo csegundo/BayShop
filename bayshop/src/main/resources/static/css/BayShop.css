@@ -233,3 +233,8 @@ textarea.form-field{
     max-width: 100%;
     height: 200px;
 }
+
+#imgProducto .img-fluid{
+    max-width: 100%;
+    height: 500px;
+}
