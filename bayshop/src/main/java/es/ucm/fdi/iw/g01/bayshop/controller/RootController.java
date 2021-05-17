@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +41,7 @@ import es.ucm.fdi.iw.g01.bayshop.model.Product.ProductStatus;
 // Vistas principales de nuestra aplicacion
 @Controller
 public class RootController {
+    
     private static Logger logger = LogManager.getLogger(RootController.class);
 
     @Autowired
@@ -93,10 +95,16 @@ public class RootController {
     public String profile(HttpSession session, Model model, @PathVariable long id) {
 		User actual = entityManager.find(User.class, id);
         long idSession = ((User)session.getAttribute("u")).getId();
-        // Faltarían los where para coger los del usuario concreto
-        List<Product> userProd = entityManager.createQuery("select p from Product p where status = 0").getResultList();
-        List<Product> userCompras = entityManager.createQuery("select p from Product p where status = 0").getResultList();
         
+        String queryUserProd = "select p from Product p where status = 0 and USER_ID = :userId";
+        List<Product> userProd = entityManager.createQuery(queryUserProd).setParameter("userId", id).getResultList();
+
+        // Consulta que no funciona y no sé por qué, es como se debe hacer
+        //String queryUserCompras = "select p from Product p JOIN Sale ON Product.SALE_ID = Sale.ID where status = 0 and USER_ID = :userId";
+        // Consulta a modo de placeholder
+        String queryUserCompras = "select p from Product p where status = 0 and USER_ID = :userId";
+        List<Product> userCompras = entityManager.createQuery(queryUserCompras).setParameter("userId", idSession).getResultList();
+
         if(id == idSession){
             model.addAttribute("title", "BayShop | Mi perfil");
         }else{
