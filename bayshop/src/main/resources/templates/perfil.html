@@ -6,110 +6,129 @@
 <body class="profile">
     <header th:replace="frags/header.html"></header>
 
-    <div class="d-flex justify-content-center mt-3 mb-2" id="Titulo">
-        <h3>Perfil de <span th:text=${user.username}></span></h3>
-    </div>
+    <div class="container">
+        <div class="d-flex justify-content-center mt-3 mb-2" id="Titulo">
+            <h3>Perfil de <span th:text=${user.username}></span></h3>
+        </div>
+    
+        <div class="row my-5 main-info">
+            <div class="col-6 ta-c">
+                <img th:src="@{/user/api/photo/{id}(id=${user.id})}" alt="user-profile_image" class="profile-img">
+            </div>
+    
+            <div class="col-6 user-info">
+                <span class="ds-b fs-15"><b>Nombre de usuario:</b></span>
+                <span class="ds-b mb-2"><span th:text="${user.username}"></span></span>
 
-    <!--
-    <div class="d-flex justify-content-around mb-2" th:if="(${session.u.id} eq ${user.id})">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Cambiar nombre de usuario</h5>
-                <form th:action="@{/user/userNameChange/{id}(id=${user.id})}" method="POST">
-                    <div class="form-group">
-                        <input #required name="newName" id="newName" type="text" class="form-control" placeholder="Introduce tu nuevo nombre de usuario">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </form>
+                <span class="ds-b fs-15"><b>Nombre:</b></span>
+                <span class="ds-b mb-2"><span th:text="${user.firstName}"></span></span>
+
+                <span class="ds-b fs-15"><b>Apellidos:</b></span>
+                <span class="ds-b mb-2"><span th:text="${user.lastName}"></span></span>
             </div>
         </div>
-
-        <div class="card" th:if="(${session.u.id} eq ${user.id})">
-            <div class="card-body">
-                <h5 class="card-title"><u>Cambiar contraseña</u></h5>
-                <form th:action="@{/user/passChange/{id}(id=${user.id})}" method="POST">
-                    <div class="form-group">
-                        <label>Introduce tu contraseña actual</label>
-                        <input #required name="oldPass" id="oldPass" type="password" class="form-control" placeholder="Contraseña actual">
-                        <label>Introduce tu nueva contraseña</label>
-                        <input #required name="newPass" id="newPass" type="password" class="form-control" placeholder="Contraseña nueva">
-                        <label>Confirma tu nueva contraseña</label>
-                        <input #required name="newPass2" id="newPass2" type="password" class="form-control" placeholder="Confirmar contraseña">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Cambiar contraseña</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="card" th:if="(${session.u.id} eq ${user.id})">
-            <div class="card-body">
-                <h5 class="card-title"><u>Borrar cuenta</u></h5>
-                <form th:action="@{/user/deleteAccount/{id}(id=${user.id})}" method="POST">
-                    <button type="submit" class="btn btn-primary">Borrar cuenta</button>
-                </form>
-            </div>
-        </div>
-
-    </div>
-    -->
-    <div class="d-flex justify-content-around mb-2">
-        <div class="card" th:if="(${session.u.id} eq ${user.id})">
-            <div class="card-body">
-                <h5 class="card-title"><u>Tus compras</u></h5>
-                <div class="d-flex align-items-start flex-column">
-                    <div th:if="${userCompras == null or userCompras.isEmpty()}">Sin compras</div>
-                    <div th:unless="${userCompras == null or userCompras.isEmpty()}" th:each="uC: ${userCompras}">
-                        <div class="p-2">
-                            <div class="card text-center">
-                                <a th:href="@{/producto/{id}(id=${uC.id})}">
-                                    <img th:src="@{/producto/api/photo/{id}(id=${uC.id})}" width="130" height="160" alt="Imagen Producto">
-                                </a>
-                            </div>
+    
+        <!--
+        <div class="d-flex justify-content-around mb-2" th:if="(${session.u.id} eq ${user.id})">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Cambiar nombre de usuario</h5>
+                    <form th:action="@{/user/userNameChange/{id}(id=${user.id})}" method="POST">
+                        <div class="form-group">
+                            <input #required name="newName" id="newName" type="text" class="form-control" placeholder="Introduce tu nuevo nombre de usuario">
                         </div>
-                        <div class="p-2">
-                            <div class="card">
-                                <div>
-                                    <p th:text="${uC.description}"></p>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+            </div>
+    
+            <div class="card" th:if="(${session.u.id} eq ${user.id})">
+                <div class="card-body">
+                    <h5 class="card-title"><u>Cambiar contraseña</u></h5>
+                    <form th:action="@{/user/passChange/{id}(id=${user.id})}" method="POST">
+                        <div class="form-group">
+                            <label>Introduce tu contraseña actual</label>
+                            <input #required name="oldPass" id="oldPass" type="password" class="form-control" placeholder="Contraseña actual">
+                            <label>Introduce tu nueva contraseña</label>
+                            <input #required name="newPass" id="newPass" type="password" class="form-control" placeholder="Contraseña nueva">
+                            <label>Confirma tu nueva contraseña</label>
+                            <input #required name="newPass2" id="newPass2" type="password" class="form-control" placeholder="Confirmar contraseña">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cambiar contraseña</button>
+                    </form>
+                </div>
+            </div>
+    
+            <div class="card" th:if="(${session.u.id} eq ${user.id})">
+                <div class="card-body">
+                    <h5 class="card-title"><u>Borrar cuenta</u></h5>
+                    <form th:action="@{/user/deleteAccount/{id}(id=${user.id})}" method="POST">
+                        <button type="submit" class="btn btn-primary">Borrar cuenta</button>
+                    </form>
+                </div>
+            </div>
+    
+        </div>
+        -->
+        <div class="d-flex justify-content-around mb-2">
+            <div class="card" th:if="(${session.u.id} eq ${user.id})">
+                <div class="card-body">
+                    <h5 class="card-title"><u>Tus compras</u></h5>
+                    <div class="d-flex align-items-start flex-column">
+                        <div th:if="${userCompras == null or userCompras.isEmpty()}">Sin compras</div>
+                        <div th:unless="${userCompras == null or userCompras.isEmpty()}" th:each="uC: ${userCompras}">
+                            <div class="p-2">
+                                <div class="card text-center">
+                                    <a th:href="@{/producto/{id}(id=${uC.id})}">
+                                        <img th:src="@{/producto/api/photo/{id}(id=${uC.id})}" width="130" height="160" alt="Imagen Producto">
+                                    </a>
                                 </div>
-                                <div>
-                                    <p th:text="${uC.price}"></p>
+                            </div>
+                            <div class="p-2">
+                                <div class="card">
+                                    <div>
+                                        <p th:text="${uC.description}"></p>
+                                    </div>
+                                    <div>
+                                        <p th:text="${uC.price}"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+    
             </div>
-
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title" th:if="(${session.u.id} eq ${user.id})"><u>Tus productos</u></h5>
-                <h5 class="card-title" th:unless="(${session.u.id} eq ${user.id})"><u>Productos de <div th:text="${user.username}"></div></u></h5>
-                <div class="d-flex align-items-start flex-column">
-                    <div th:if="${userProd == null or userProd.isEmpty()}">Sin productos</div>
-                    <div th:unless="${userProd == null or userProd.isEmpty()}" th:each="uP: ${userProd}">
-                        <div class="p-2">
-                            <div class="card text-center">
-                                <a th:href="@{/producto/{id}(id=${uP.id})}">
-                                    <img th:src="@{/producto/api/photo/{id}(id=${uP.id})}" width="130" height="160" alt="Imagen Producto">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="p-2">
-                            <div class="card">
-                                <div>
-                                    <p th:text="${uP.description}"></p>
+    
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:if="(${session.u.id} eq ${user.id})"><u>Tus productos</u></h5>
+                    <h5 class="card-title" th:unless="(${session.u.id} eq ${user.id})"><u>Productos de <div th:text="${user.username}"></div></u></h5>
+                    <div class="d-flex align-items-start flex-column">
+                        <div th:if="${userProd == null or userProd.isEmpty()}">Sin productos</div>
+                        <div th:unless="${userProd == null or userProd.isEmpty()}" th:each="uP: ${userProd}">
+                            <div class="p-2">
+                                <div class="card text-center">
+                                    <a th:href="@{/producto/{id}(id=${uP.id})}">
+                                        <img th:src="@{/producto/api/photo/{id}(id=${uP.id})}" width="130" height="160" alt="Imagen Producto">
+                                    </a>
                                 </div>
-                                <div>
-                                    <p th:text="${uP.price}"></p>
+                            </div>
+                            <div class="p-2">
+                                <div class="card">
+                                    <div>
+                                        <p th:text="${uP.description}"></p>
+                                    </div>
+                                    <div>
+                                        <p th:text="${uP.price}"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+    
             </div>
-
         </div>
     </div>
 </body>
