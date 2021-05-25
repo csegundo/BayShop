@@ -37,7 +37,7 @@
                     <div class="nav-link">Baypoints: <span th:text="${session.u.baypoints}"></span></div>
                 </li>
                 <li class="nav-item" th:if="${session.u}">
-                    <div class="nav-link">Dinero: 0€</div>
+                    <div class="nav-link">Dinero: <span th:text="${session.u.dinero}"></span>€</div>
                 </li>
             </ul>
         </div>

@@ -1,5 +1,7 @@
 package es.ucm.fdi.iw.g01.bayshop.controller;
 
+import java.math.BigDecimal;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -99,6 +101,7 @@ public class UserController {
 		newUser.setEnabled((byte)1);
 		newUser.setRoles("USER"); // register normal solo USER normales
 		newUser.setBaypoints(0);
+		newUser.setDinero(new BigDecimal(0));
 
 		entityManager.persist(newUser);
 		entityManager.flush();

@@ -5,34 +5,34 @@
 --
 
 -- Usuario de ejemplo con username = b y contraseña = aa  
-INSERT INTO user(enabled,username,password,roles,first_name,last_name, email, baypoints) VALUES (
+INSERT INTO user(enabled,username,password,roles,first_name,last_name, email, baypoints, dinero) VALUES (
 	1, 'a', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'ADMIN',
-	'Abundio', 'Ejémplez', 'abundio@gmail.com', 1
+	'Abundio', 'Ejémplez', 'abundio@gmail.com', 1, 100
 );
 
 -- Otro usuario de ejemplo con username = b y contraseña = aa  
-INSERT INTO user(enabled,username,password,roles,first_name,last_name, email, baypoints) VALUES (
+INSERT INTO user(enabled,username,password,roles,first_name,last_name, email, baypoints, dinero) VALUES (
 	1, 'b', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'USER',
-	'Berta', 'Muéstrez', 'berta@gmail.com', 2
+	'Berta', 'Muéstrez', 'berta@gmail.com', 2, 30
 );
 
-INSERT INTO user (enabled,username,password,roles,first_name,last_name, email, baypoints) VALUES (
+INSERT INTO user (enabled,username,password,roles,first_name,last_name, email, baypoints, dinero) VALUES (
 	1,'peri', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'MODERATOR,ADMIN,USER',
-	'Pedro', 'Garcia', 'pericoLoko@hotmail.com', 3
+	'Pedro', 'Garcia', 'pericoLoko@hotmail.com', 3, 0
 );
 
 
-INSERT INTO user (enabled,username,password,roles,first_name,last_name, email, baypoints) VALUES (
+INSERT INTO user (enabled,username,password,roles,first_name,last_name, email, baypoints, dinero) VALUES (
 	1,'revisor', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'MODERATOR',
-	'Revi', 'sador', 'revisorBayshop@hotmail.com', 0
+	'Revi', 'sador', 'revisorBayshop@hotmail.com', 0, 20
 );
 
 

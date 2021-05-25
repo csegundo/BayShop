@@ -1,5 +1,7 @@
 package es.ucm.fdi.iw.g01.bayshop.model;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -77,6 +79,7 @@ public class User implements Transferable<User.Transfer> {
 	private String lastName;
 
     private int baypoints;
+	private BigDecimal dinero;
 
     @OneToMany
     @JoinColumn(name = "user_id")
