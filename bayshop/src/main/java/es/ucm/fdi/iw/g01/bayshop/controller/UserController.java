@@ -120,7 +120,11 @@ public class UserController {
     }
 
 	@PostMapping("/userNameChange/{id}")
-	public String changeUserName(@PathVariable long id, @ModelAttribute User edited, @RequestParam(required=false) String newName){
+	public String changeUserName(HttpSession session, @PathVariable long id, @ModelAttribute User edited, @RequestParam(required=false) String newName){
+		long idSession = ((User)session.getAttribute("u")).getId();
+		User editor = entityManager.find(User.class, idSession);
+		if(editor.getRoles().contains("ADMIN")) return "/home";
+		
 		edited.setUsername(newName);
 
 		entityManager.persist(edited);
