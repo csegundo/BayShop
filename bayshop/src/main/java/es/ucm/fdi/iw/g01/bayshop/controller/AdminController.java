@@ -100,6 +100,20 @@ public class AdminController {
 		}
 	}
 
+	@PostMapping("/api/updateRoles")
+	@ResponseBody
+	@Transactional
+	public String updateRolesUser(HttpSession session, Model model, @RequestBody Map<String, String> json){
+		String roles = json.get("roles");
+		User user = entityManager.find(User.class, Long.parseLong(json.get("user")));
+
+		user.setRoles(roles);
+		entityManager.persist(user);
+
+		return "{\"success\":true}";
+	}
+
+
 	@PostMapping("api/toggleProductStatus")
 	@ResponseBody
 	@Transactional

@@ -147,6 +147,38 @@ $(function(){
             });
         }
     });
+    $('body.admin table.all-users .bt-editUser').click(function(){
+        var _id = $(this).parent().data().id;
+        BayShopAPI.template('user/edit/' + _id, {}, function(response){
+            var popup = CPOPUP.create('Editar perfil');
+
+            popup.html(response);
+            popup.find('.bt-close').click(function(){
+                CPOPUP.close(popup);
+            });
+
+            popup.find('.bt-updateUsername').click(function(){
+                var _id = $(this).data().id, _username = $(this).parents('.set-username-user').find('input').val();
+                BayShopAPI.post("user/userNameChange/" + _id, { "username" : _username }, function(response){
+                    console.debug('RESPONSE UPDATE USER USERNAME', response);
+                    CPOPUP.close(popup);
+                });
+            });
+            popup.find('.bt-saveRoles').click(function(){
+                var _roles = [];
+                $.each(popup.find('.set-user-roles .role'), function(i, item){
+                    if($(item).is(':checked')){
+                        _roles.push($(item).val());
+                    }
+                });
+
+                BayShopAPI.post("admin/api/updateRoles", { "roles" : _roles.join(','), "user" : _id }, function(response){
+                    console.debug('RESPONSE UPDATE USER ROLES', response);
+                    CPOPUP.close(popup);
+                });
+            });
+        });
+    });
     $('body.admin table.all-users').on('click', '.bt-disableUser, .bt-enableUser', function(){
         var _id = $(this).parent().data().id, _row = $(this).parents('tr'), _enable = $(this).data().enable == 1;
 

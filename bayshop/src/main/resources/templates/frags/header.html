@@ -19,7 +19,7 @@
                     <a class="nav-link" th:href="@{/producto/crear}">Nuevo Producto<span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item" th:if="${session.u}">
-                    <a class="nav-link" th:href="@{/mensajes}">Mis mensajes <span class="font-italic" style="font-size: 10px;" th:if="${session.unread}">(<span th:text="${session.unread}"></span>)</span><span class="sr-only"></span></a>
+                    <a class="nav-link" th:href="@{/mensajes}">Mis mensajes <span class="font-italic msg-user-unread" style="font-size: 10px;" th:if="${session.unread}">(<span th:text="${session.unread}"></span>)</span><span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item dropdown" th:if="${session.u}">
                     <a class="nav-link dropdown-toggle" th:href="@{/perfil/{id}(id=${session.u.id})}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
@@ -29,12 +29,10 @@
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         <a class="dropdown-item" th:href="@{/perfil/{id}(id=${session.u.id})}">Mis datos</a>
                         <a class="dropdown-item" href="javascript:void(0)" data-action="edit">Editar perfil</a>
+                        <a class="dropdown-item" href="javascript:void(0)">Baypoints <span th:text="${session.baypoints}"></span></a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a>
                     </div>
-                </li>
-                <li class="nav-item" th:if="${session.u}">
-                    <div class="nav-link">Baypoints: <span th:text="${session.u.baypoints}"></span></div>
                 </li>
                 <li class="nav-item" th:if="${session.u}">
                     <div class="nav-link">Dinero: <span th:text="${session.u.dinero}"></span>€</div>

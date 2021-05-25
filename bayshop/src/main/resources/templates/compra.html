@@ -21,16 +21,16 @@
                 <h5>Mis puntos:</h5>
                 <div class="item actual">
                     <span class="info-item">Tienes:</span>
-                    <input type="hidden" data-key="baypoints" th:value="${session.u.baypoints}">
-                    <span class="description"><span th:text="${session.u.baypoints}" class="baypoints">1650</span> BayPoints</span>
+                    <input type="hidden" data-key="baypoints" th:value="${session.baypoints}">
+                    <span class="description"><span th:text="${session.baypoints}" class="baypoints">1650</span> BayPoints</span>
                 </div>
                 <div class="item purchase">
                     <span class="info-item">En esta compra quiero gastar:</span>
-                    <input type="number" min="0" th:max="${session.u.baypoints}" class="form-control input-sm" value="0" data-key="baypoints_selector">
+                    <input type="number" min="0" th:max="${session.baypoints}" class="form-control input-sm" value="0" data-key="baypoints_selector">
                 </div>
                 <div class="item final">
                     <span class="info-item">Mis puntos restantes:</span>
-                    <span class="description"><span th:text="${session.u.baypoints}" class="baypoints">1650</span> BayPoints</span>
+                    <span class="description"><span th:text="${session.baypoints}" class="baypoints">1650</span> BayPoints</span>
                 </div>
 
                 <div class="separator"></div>

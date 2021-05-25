@@ -1,5 +1,3 @@
 CARLOS:
-    - Change password/change username/delete account ==> da un error al hacer el persist del usuario que está logueado
-    - Overflow vertical de los popups
-    - WS de mensajes
-    - Editar usuarios/productos en la vista de admin
+    - Boton enviar mensaje dentro del producto
+    - Gastar Baypoints

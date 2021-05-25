@@ -25,6 +25,11 @@
 
                 <span class="ds-b fs-15"><b>Apellidos:</b></span>
                 <span class="ds-b mb-2"><span th:text="${user.lastName}"></span></span>
+
+                <div th:if="${session.u.id} == ${user.id}">
+                    <span class="ds-b fs-15"><b>Baypoints totales para gastar:</b></span>
+                    <span class="ds-b mb-2"><span th:text="${session.baypoints}"></span> (<span th:text="${session.baypoints} / 100"></span> €)</span>
+                </div>
             </div>
         </div>
     

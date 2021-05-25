@@ -147,19 +147,27 @@ public class RootController {
         Product product = entityManager.find(Product.class, p);
         list.add(product);
 
+        // repartir Baypoints a ambas partes
+        buyer.setBaypoints(buyer.getBaypoints() + ((int) Math.round(0.2 * product.getPrice().intValue()) * 50));
+        seller.setBaypoints(seller.getBaypoints() + ((int) Math.round(0.2 * product.getPrice().intValue()) * 50));
+
         sale.setBuyer(buyer);
         sale.setSeller(seller);
         sale.setProducts(list);
         sale.setTimestamp(LocalDateTime.now());
+
         // persist
         entityManager.persist(sale);
+        entityManager.persist(buyer);
+        entityManager.persist(seller);
         entityManager.flush();
+
+        session.setAttribute("baypoints", buyer.getBaypoints());
 
         product.setStatus(ProductStatus.SOLD);
         product.setSale(sale);
         entityManager.persist(product);
 
         return "redirect:/";
-        // return "redirect:/compra/3"; // solo de prueba con propositos de debuguear
     }
 }

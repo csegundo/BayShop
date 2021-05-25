@@ -123,27 +123,35 @@ public class UserController {
     }
 
 	@PostMapping("/userNameChange/{id}")
-	public String changeUserName(HttpSession session, @PathVariable long id, @ModelAttribute User edited, @RequestParam(required=false) String newName){
-		long idSession = ((User)session.getAttribute("u")).getId();
-		User editor = entityManager.find(User.class, idSession);
-		if(editor.getRoles().contains("ADMIN")) return "/home";
-		
-		edited.setUsername(newName);
+	@Transactional
+	@ResponseBody
+	public String changeUserName(HttpSession session, @PathVariable long id, @RequestBody Map<String, String> json){
+		User userSess = (User) session.getAttribute("u");
+		User user = entityManager.find(User.class, id);
 
-		entityManager.persist(edited);
-		entityManager.flush();
+		// Permisos para cambiar nombre de usuario
+		if(userSess.getId() == id || userSess.hasRole(Role.ADMIN)){
+			user.setUsername(json.get("username"));
 
-		return "redirect:/perfil/{id}";
+			entityManager.persist(user);
+
+			return "{\"success\":true,\"message\":\"Nombre de usuario cambiado con exito\"}";
+		} else{
+			return "{\"success\":false,\"message\":\"No tienes permiso para cambiar el nombre de usuario\"}";
+		}
 	}
 
 	@PostMapping("/api/changePassword")
 	@Transactional
 	@ResponseBody
 	public String changeUserPass(HttpSession session, @RequestBody Map<String, String> json){
-		User userSess = (User) session.getAttribute("u");
+		User userSess = entityManager.find(User.class, ((User) session.getAttribute("u")).getId());
 		String oldPass = json.get("oldPass");
 		String newPass = json.get("newPass");
 		String confirm = json.get("confirm");
+		logger.warn("-------------------------- ");
+		logger.warn(passwordMatches(oldPass, userSess.getPassword()));
+		logger.warn("-------------------------- ");
 
 		if(!passwordMatches(oldPass, userSess.getPassword()) || !newPass.equalsIgnoreCase(confirm)){
 			return "{\"success\":false,\"message\":\"Introduce bien las contraseñas\"}";
@@ -167,7 +175,7 @@ public class UserController {
 	@Transactional
 	@ResponseBody
 	public String changeUsername(HttpSession session, @RequestBody Map<String, String> json){
-		User userSess = (User) session.getAttribute("u");
+		User userSess = entityManager.find(User.class, ((User) session.getAttribute("u")).getId());
 		String password = json.get("passwd");
 		String newUsername = json.get("username");
 		Integer exists = entityManager.createNamedQuery("User.hasUsername").setParameter("username", newUsername).getFirstResult();
@@ -217,7 +225,22 @@ public class UserController {
 
 		return "editProfile";
 	}
-	
+
+	// edit profile template (cualquier usuario)
+	@GetMapping("/edit/{id}")
+	public String editUserProfile(HttpSession session, Model model, @PathVariable long id) {
+		User userSess = (User) session.getAttribute("u");
+
+		if(id == userSess.getId() || userSess.hasRole(Role.ADMIN)){
+			User user = id != userSess.getId() ? entityManager.find(User.class, id) : userSess;
+			model.addAttribute("user", user);
+		} else{
+			model.addAttribute("user", userSess);
+		}
+
+		return "editUserProfile";
+	}
+
 	// GET y POST de imagenes de perfil
 	@GetMapping("/api/photo/{id}")
 	public StreamingResponseBody getPhoto(@PathVariable long id, Model model) throws IOException{

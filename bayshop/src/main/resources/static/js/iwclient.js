@@ -15,9 +15,9 @@ const ws = {
 		console.log(messageObj);
 
 		if(messageObj.type && messageObj.type == "message"){
-			// if(_ws_notifyMessage && typeof _ws_notifyMessage === 'function'){
-			// 	_ws_notifyMessage(messageObj); // BayShop.js
-			// }
+			var _msg_unread = $('header .msg-user-unread span');
+			_msg_unread.html(parseInt(_msg_unread.html()) + 1);
+
 			var _table = $('body.messages table.all-user-messages tbody');
 
 			if(_table.length > 0){

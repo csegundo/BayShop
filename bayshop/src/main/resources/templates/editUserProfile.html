@@ -1,0 +1,46 @@
+<div class="popup-body">
+    <style>
+        .popup-body{
+            width: 650px;
+        }
+
+        .popup-body .set-user-roles ul{
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <div class="set-user-roles">
+        <span><b>Establecer roles al usuario:</b></span>
+        <ul>
+            <li>
+                <input type="checkbox" class="role user" value="USER" th:checked="${user.hasRole('USER')}">
+                <span>Usuario</span>
+            </li>
+            <li>
+                <input type="checkbox" class="role admin" value="ADMIN" th:checked="${user.hasRole('ADMIN')}">
+                <span>Administrador</span>
+            </li>
+            <li>
+                <input type="checkbox" class="role moderator" value="MODERATOR" th:checked="${user.hasRole('MODERATOR')}">
+                <span>Revisor</span>
+            </li>
+        </ul>
+        <div style="text-align: right;">
+            <button class="btn btn-info bt-saveRoles">Actualizar roles</button>
+        </div>
+    </div>
+
+    <div class="set-username-user mt-2">
+        <label for="username">Cambiar nombre de usuario de <span th:text="${user.username}"></span>:</label>
+        <input type="text" th:value="${user.username}" class="form-control">
+        <div style="text-align: right;">
+            <button class="btn btn-info bt-updateUsername" th:data-id="${user.id}">Actualizar</button>
+        </div>
+    </div>
+</div>
+
+<!-- footer optional -->
+<div class="popup-actions">
+    <button class="btn btn-primary bt-close">Cerrar <i class="fa fa-times"></i></button>
+</div>
