@@ -26,11 +26,11 @@
             <p th:text="${p.description}"></p>
             <h3 class="mb-4" th:text="'Precio: ' + ${p.price} + ' €'"></h3>
             
-            <div>
-                <a th:if="${p.user.id != session.u.id}" th:href="@{/compra/{id}(id=${p.id})}" class="btn btn-primary buy-product">Comprar <i class="fa fa-shopping-cart"></i></a>
-                <a th:if="${session.roleadmin} or ${session.rolemoderator}" th:href="@{/revisor/validar/{id}(id=${p.id})}" class="btn btn-success">Validar <i class="fa fa-check"></i></a>
-                <a th:if="${session.roleadmin} or ${session.rolemoderator}" th:href="@{/revisor/rechazar/{id}(id=${p.id})}" class="btn btn-danger">Rechazar <i class="fa fa-times"></i></a>
-                <a th:if="${session.roleadmin} or ${session.rolemoderator} or (${p.user.id == session.u.id})" th:href="@{/producto/delete/{id}(id=${p.id})}" class="btn btn-warning">Eliminar <i class="fa fa-exclamation"></i></a>
+            <div th:data-id="${p.id}">
+                <a th:if="${p.user.id != session.u.id} and ${session.u.hasRole('USER')}" th:href="@{/compra/{id}(id=${p.id})}" class="btn btn-primary buy-product">Comprar <i class="fa fa-shopping-cart"></i></a>
+                <button th:if="${session.roleadmin} or ${session.rolemoderator}" class="btn btn-success bt-validateProduct" data-enable="1">Validar <i class="fa fa-check"></i></button>
+                <button th:if="${session.roleadmin} or ${session.rolemoderator}" class="btn btn-warning bt-rejectProduct" data-enable="0">Rechazar <i class="fa fa-times"></i></button>
+                <a th:if="${session.roleadmin} or ${session.rolemoderator} or (${p.user.id == session.u.id})" th:href="@{/producto/delete/{id}(id=${p.id})}" class="btn btn-danger">Eliminar <i class="fa fa-exclamation"></i></a>
             </div>
         </div>
     </div>

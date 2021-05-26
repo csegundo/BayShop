@@ -3,6 +3,7 @@ package es.ucm.fdi.iw.g01.bayshop.controller;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,8 +21,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.g01.bayshop.model.Product;
 import es.ucm.fdi.iw.g01.bayshop.model.User;
@@ -48,7 +51,7 @@ public class ReviewerController {
         return "index";
     }
 
-
+    /*
     @Transactional
     @GetMapping("/rechazar/{id}")
     public String rechazar(HttpSession session, Model model, @PathVariable long id, @RequestParam(required = false) Integer entero) {
@@ -69,6 +72,22 @@ public class ReviewerController {
 
         return "redirect:/revisor/";
     }
+    */
+
+	@PostMapping("/api/toggleProductValidation")
+	@ResponseBody
+	@Transactional
+	public String toggleProductValidation(HttpSession session, Model model, @RequestBody Map<String, String> json){ // valida/rechaza un producto
+		Long id = Long.parseLong(json.get("id"));
+		Boolean validated = json.get("enable").equals("true");
+		Product target = entityManager.find(Product.class, id);
+
+		target.setStatus(validated ? ProductStatus.ACCEPTED : ProductStatus.REJECT);
+		entityManager.persist(target);
+		
+		return "{\"success\":true}";
+	}
+
 
 
 }

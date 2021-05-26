@@ -290,4 +290,15 @@ $(function(){
             });
         }, function(error){console.error('POPUP error', error);});
     });
+
+
+    $('body.producto').on('click', '.bt-validateProduct, .bt-rejectProduct', function(){
+        var _id = $(this).parent().data().id, _enable = $(this).data().enable == 1;
+        BayShopAPI.post("revisor/api/toggleProductValidation", { "enable" : _enable, "id" : _id }, function(response){
+            console.debug('response ajax', response);
+        }, function(error){
+            console.error(error);
+        });
+    });
+
 });
