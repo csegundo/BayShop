@@ -1,10 +1,13 @@
 package es.ucm.fdi.iw.g01.bayshop.controller;
 
 import java.util.Date;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.net.URLDecoder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -142,6 +146,7 @@ public class RootController {
         User buyer  = entityManager.find(User.class, b);
         User seller = entityManager.find(User.class, s);
         Sale sale   = new Sale();
+        String redirect = "/";
 
         List<Product> list = new ArrayList<>();
         Product product = entityManager.find(Product.class, p);
@@ -151,6 +156,17 @@ public class RootController {
         buyer.setBaypoints(buyer.getBaypoints() + ((int) Math.round(0.2 * product.getPrice().intValue()) * 50));
         seller.setBaypoints(seller.getBaypoints() + ((int) Math.round(0.2 * product.getPrice().intValue()) * 50));
 
+        // añadir y quitar dinero
+        if(buyer.getDinero().doubleValue() < product.getPrice().doubleValue()){
+            // no tiene dinero suficiente => se le deja a 0 y se simula un pago
+            buyer.setDinero(new BigDecimal(0));
+            redirect += "pasarela/" + String.valueOf(product.getPrice().doubleValue() - buyer.getDinero().doubleValue());
+        } else{
+            buyer.setDinero(new BigDecimal(buyer.getDinero().doubleValue() - product.getPrice().doubleValue(), MathContext.DECIMAL64));
+        }
+
+        seller.setDinero(new BigDecimal(seller.getDinero().doubleValue() + product.getPrice().doubleValue(), MathContext.DECIMAL64));
+
         sale.setBuyer(buyer);
         sale.setSeller(seller);
         sale.setProducts(list);
@@ -158,16 +174,36 @@ public class RootController {
 
         // persist
         entityManager.persist(sale);
+        entityManager.flush();
         entityManager.persist(buyer);
+        entityManager.flush();
         entityManager.persist(seller);
         entityManager.flush();
 
         session.setAttribute("baypoints", buyer.getBaypoints());
+        session.setAttribute("dinero", buyer.getDinero());
 
         product.setStatus(ProductStatus.SOLD);
         product.setSale(sale);
         entityManager.persist(product);
 
+        return "redirect:" + redirect;
+    }
+
+    // Simula una interfaz de pago para cuando quieres comprar algo y no tienes el dinero suficiente
+    @GetMapping("/pasarela/{price}")
+    public String pasarelaPago(Model model, @PathVariable Double price){
+        model.addAttribute("title", "BayShop | Pasarela de pago");
+        model.addAttribute("price", price);
+        return "pasarela";
+    }
+
+    @PostMapping("/retirarDinero")
+    @Transactional
+    public String retirarDinero(HttpSession session, @RequestParam String money){
+        User actual = (User) session.getAttribute("u");
+        actual.setDinero(new BigDecimal(actual.getDinero().doubleValue() - Double.parseDouble(money), MathContext.DECIMAL64));
+        session.setAttribute("dinero", actual.getDinero());
         return "redirect:/";
     }
 }

@@ -53,6 +53,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		session.setAttribute("u", u);
 
 		session.setAttribute("baypoints", u.getBaypoints());
+		session.setAttribute("dinero", u.getDinero());
 		
 		long unread = entityManager.createNamedQuery("Message.countUnread", Long.class)
 		        .setParameter("userId", u.getId())

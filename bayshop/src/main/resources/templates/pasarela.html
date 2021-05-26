@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="frags/head.html">
+    <!-- Resto de recursos especificos de cada pagina -->
+</head>
+<body>
+    <header th:replace="frags/header.html"></header>
+    
+    <style>
+        .main{
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 50%;
+        }
+    </style>
+    <div class="main">
+        <span>Pasarela de pago de BayShop para el cobro de <span th:text="${price}">0</span>€.</span>
+        <a href="/" class="btn btn-primary">Pulsa para continuar</a>
+    </div>
+</body>
+</html>

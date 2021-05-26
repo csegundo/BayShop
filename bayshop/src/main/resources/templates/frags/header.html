@@ -35,7 +35,7 @@
                     </div>
                 </li>
                 <li class="nav-item" th:if="${session.u}">
-                    <div class="nav-link">Dinero: <span th:text="${session.u.dinero}"></span>€</div>
+                    <div class="nav-link"><i class="fa fa-money"></i> <span th:text="${session.dinero}"></span>€</div>
                 </li>
             </ul>
         </div>
