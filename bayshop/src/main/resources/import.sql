@@ -44,12 +44,20 @@ INSERT INTO MESSAGE VALUES(4,NULL,'2020-03-23 10:48:20.971000','probando 4',1,3)
 INSERT INTO MESSAGE VALUES(5,NULL,'2020-03-23 10:48:22.926000','probando 5',1,3);
 
 
+INSERT INTO SALE VALUES(1,'2020-06-23 10:48:11.074000',2,1, NULL);
+INSERT INTO SALE VALUES(2,'2020-06-23 10:48:11.074000',2,1, NULL);
+
+
 --Productos de ejemplo
-INSERT INTO PRODUCT (enabled, user_id, name, description, creation_date, price, size, brand, status, categories) VALUES 
-	(1, 1, 'Camiseta chula', 'La vendo porque me queda grande', '2020-03-23 10:48:22.926000', 23.45, 'XL', 'Adidas', 0, 'Camiseta'),
-	(1, 1, 'Camiseta corta', 'La vendo porque me queda grande', '2020-03-24 10:48:22.926000', 15.25, 'XL', 'Reebok', 0, 'Camiseta'),
-	(1, 2, 'Camiseta fina', 'La vendo porque me queda pequeña', '2020-03-25 10:48:22.926000', 18.25, 'XS', 'Adidas', 0, 'Camiseta'),
-	(1, 2, 'Albornoz azul', 'Lo vendo porque me queda grande', '2020-03-26 10:48:22.926000', 24.50, 'XL', 'Adidas', 1, 'Albornoz'),
-	(1, 2, 'Abrigo Calentito', 'Lo vendo porque me queda grande', '2020-03-27 10:48:22.926000', 48.50, 'XL', 'Nike', 1, 'Abrigo'),
-	(1, 2, 'Chandal gris', 'Lo vendo porque me queda grande', '2020-03-29 10:48:22.926000', 34.50, 'XL', 'Adidas', 1, 'Chandal'),
-	(1, 2, 'Gorra plana', 'La vendo porque me queda pequeña', '2020-03-29 10:48:22.926000', 14.50, 'XL', 'P&B', 1, 'Gorra');
+INSERT INTO PRODUCT (enabled, user_id, name, description, creation_date, price, size, brand, status, categories, sale_id) VALUES 
+	(1, 1, 'Camiseta chula', 'La vendo porque me queda grande', '2020-03-23 10:48:22.926000', 23.45, 'XL', 'Adidas', 0, 'Camiseta', NULL),
+	(1, 1, 'Camiseta corta', 'La vendo porque me queda grande', '2020-03-24 10:48:22.926000', 15.25, 'XL', 'Reebok', 0, 'Camiseta', NULL),
+	(1, 2, 'Camiseta fina', 'La vendo porque me queda pequeña', '2020-03-25 10:48:22.926000', 18.25, 'XS', 'Adidas', 0, 'Camiseta', NULL),
+	(1, 2, 'Albornoz azul', 'Lo vendo porque me queda grande', '2020-03-26 10:48:22.926000', 24.50, 'XL', 'Adidas', 1, 'Albornoz', NULL),
+	(1, 2, 'Abrigo Calentito', 'Lo vendo porque me queda grande', '2020-03-27 10:48:22.926000', 48.50, 'XL', 'Nike', 1, 'Abrigo', NULL),
+	(1, 2, 'Chandal gris', 'Lo vendo porque me queda grande', '2020-03-29 10:48:22.926000', 34.50, 'XL', 'Adidas', 1, 'Chandal', NULL),
+	(1, 2, 'Gorra plana', 'La vendo porque me queda pequeña', '2020-03-29 10:48:22.926000', 14.50, 'XL', 'P&B', 1, 'Gorra', NULL),
+	(1, 2, 'Gorra azul', 'La vendo, es bonita per me queda  grande', '2020-03-29 10:48:22.926000', 16.50, 'XL', 'Nike', 3, 'Gorra',1),
+	(1, 2, 'Gorra roja', 'Ahora que viene el verano te viene bien', '2020-03-29 10:48:22.926000', 14.50, 'XL', 'H&M', 3, 'Gorra',2);
+
+

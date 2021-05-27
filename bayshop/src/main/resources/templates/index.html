@@ -18,16 +18,19 @@
             </form>
         </div>
         <div class="col-sm-4 col-lg-3 p-4 text-center" th:each="p: ${prod}">
-            <a th:href="@{/producto/{id}(id=${p.id})}">
-                <img class="img-fluid py-4" th:src="@{/producto/api/photo/{id}(id=${p.id})}" alt="Imagen Producto">
-            </a>
-            <h3 th:text="${p.price} + ' €'"></h3>
-            <h5 class="p-2" th:text="${p.name}"></h5>
-            <a th:href="@{/producto/{id}(id=${p.id})}" class="btn btn-primary mb-2 bayshop-product">Ver Producto <i class="fa fa-eye"></i></a>
-            <div th:data-id="${p.id}" th:if="(${session.rolemoderator} or ${session.roleadmin}) and ${revisar} eq true">
-                <button class="btn btn-success bt-validateProduct" data-enable="1" style="width: 70px;"><i class="fa fa-check"></i></button>
-                <button class="btn btn-danger bt-rejectProduct" data-enable="0" style="width: 70px;"><i class="fa fa-times"></i></button>
+            <div th:data-id="${p.id}" class="producto">
+                <a th:href="@{/producto/{id}(id=${p.id})}">
+                    <img class="img-fluid py-4" th:src="@{/producto/api/photo/{id}(id=${p.id})}" alt="Imagen Producto">
+                </a>
+                <h3 th:text="${p.price} + ' €'"></h3>
+                <h5 class="p-2" th:text="${p.name}"></h5>
+                <a th:href="@{/producto/{id}(id=${p.id})}" class="btn btn-primary mb-2 bayshop-product">Ver Producto <i class="fa fa-eye"></i></a>
+                <div th:data-id="${p.id}" th:if="(${session.rolemoderator} or ${session.roleadmin}) and ${revisar} eq true">
+                    <button class="btn btn-success bt-validateProduct" data-enable="1" style="width: 70px;"><i class="fa fa-check"></i></button>
+                    <button class="btn btn-danger bt-rejectProduct" data-enable="0" style="width: 70px;"><i class="fa fa-times"></i></button>
+                </div>
             </div>
+            
         </div>
     </div>
 

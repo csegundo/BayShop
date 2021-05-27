@@ -292,9 +292,18 @@ $(function(){
     });
 
 
-    $('body.producto').on('click', '.bt-validateProduct, .bt-rejectProduct', function(){
+    $('body .bt-validateProduct, body .bt-rejectProduct').click (function(){
         var _id = $(this).parent().data().id, _enable = $(this).data().enable == 1;
+        var _element = $(this), _page = $(this).data().page;
         BayShopAPI.post("revisor/api/toggleProductValidation", { "enable" : _enable, "id" : _id }, function(response){
+            
+            if(_page){
+                var wp = _element.parent();
+                wp.find('.bt-validateProduct').remove();
+                wp.find('.bt-rejectProduct').remove();
+            }else{
+                $('.producto[data-id="' + _id + '"]').parent().remove();
+            }
             console.debug('response ajax', response);
         }, function(error){
             console.error(error);

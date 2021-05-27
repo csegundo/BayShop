@@ -21,7 +21,7 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private LocalDateTime timestamp;
+    private LocalDateTime saleDate;
 
     @OneToMany
     @JoinColumn(name = "sale_id")

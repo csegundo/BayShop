@@ -51,34 +51,13 @@ public class ReviewerController {
         return "index";
     }
 
-    /*
-    @Transactional
-    @GetMapping("/rechazar/{id}")
-    public String rechazar(HttpSession session, Model model, @PathVariable long id, @RequestParam(required = false) Integer entero) {
-        
-        Product target = entityManager.find(Product.class, id);
-        target.setStatus(ProductStatus.REJECT);
-
-        return "redirect:/revisor/";
-    }
-
-
-    @Transactional
-    @GetMapping("/validar/{id}")
-    public String validar(HttpSession session, Model model, @PathVariable long id, @RequestParam(required = false) Integer entero) {
-
-        Product target = entityManager.find(Product.class, id);
-        target.setStatus(ProductStatus.ACCEPTED);
-
-        return "redirect:/revisor/";
-    }
-    */
-
+    
 	@PostMapping("/api/toggleProductValidation")
 	@ResponseBody
 	@Transactional
 	public String toggleProductValidation(HttpSession session, Model model, @RequestBody Map<String, String> json){ // valida/rechaza un producto
-		Long id = Long.parseLong(json.get("id"));
+		
+        Long id = Long.parseLong(json.get("id"));
 		Boolean validated = json.get("enable").equals("true");
 		Product target = entityManager.find(Product.class, id);
 

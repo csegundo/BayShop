@@ -170,7 +170,7 @@ public class RootController {
         sale.setBuyer(buyer);
         sale.setSeller(seller);
         sale.setProducts(list);
-        sale.setTimestamp(LocalDateTime.now());
+        sale.setSaleDate(LocalDateTime.now());
 
         // persist
         entityManager.persist(sale);
