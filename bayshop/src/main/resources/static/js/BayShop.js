@@ -44,6 +44,22 @@ $(function(){
         });
     });
     
+    // SEND MESSAGE FROM PRODCUT
+    $('body.product .bt-send').click(function(){
+        var msg = $('body.product textarea#msg').val();
+        var dest = $(this).parent().parent().data().id;
+        BayShopAPI.post("mensajes/api/new", { "dest" : dest, "msg" : msg }, function(response){
+            console.debug('MENSAJE ENVIADO', response);
+            var alert = $(`<div class="slide-alert success">El mensaje se envío correctamente</div>`);
+			$('body').append(alert);
+			$(alert).animate({ opacity : '0' }, 6000, null, function(){ $(alert).remove(); });
+            $('body.product textarea#msg').val("");
+        }, function(error){
+            console.error('ERROR INTERNO AL ENVIAR MENSAJE');
+        });
+    });
+        
+
     // LOGIN Y REGISTER
     $('.main-div-auth form .change').click(function(){
         var action  = $(this).data().action,
@@ -291,7 +307,7 @@ $(function(){
         }, function(error){console.error('POPUP error', error);});
     });
 
-
+    // Validate Product para Index.html y producto.html
     $('body .bt-validateProduct, body .bt-rejectProduct').click (function(){
         var _id = $(this).parent().data().id, _enable = $(this).data().enable == 1;
         var _element = $(this), _page = $(this).data().page;
