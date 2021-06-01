@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head th:replace="frags/head.html">
-    <!-- Resto de recursos especificos de cada pagina -->
 </head>
+
 <body class="profile">
     <header th:replace="frags/header.html"></header>
 
@@ -10,12 +11,12 @@
         <div class="d-flex justify-content-center mt-3 mb-2" id="Titulo">
             <h3>Perfil de <span th:text=${user.username}></span></h3>
         </div>
-    
+
         <div class="row my-5 main-info">
             <div class="col-6 ta-c">
                 <img th:src="@{/user/api/photo/{id}(id=${user.id})}" alt="user-profile_image" class="profile-img">
             </div>
-    
+
             <div class="col-6 user-info">
                 <span class="ds-b fs-15"><b>Nombre de usuario:</b></span>
                 <span class="ds-b mb-2"><span th:text="${user.username}"></span></span>
@@ -32,57 +33,22 @@
                 </div>
 
                 <div th:if="${session.u.id} == ${user.id}">
-                    <span class="ds-b fs-15"><b>Sacar dinero</b> (máximo <span th:text="${user.dinero}"></span>€)</span>
+                    <span class="ds-b fs-15"><b>Sacar dinero</b> (máximo <span th:text="${session.dinero}"></span>€)</span>
                     <form th:action="@{/retirarDinero}" method="POST">
                         <input type="number" step="0.01" class="form-control" name="money" min="1" th:max="${user.dinero}">
                         <button type="submit" class="btn btn-primary">Sacar dinero</button>
                     </form>
                 </div>
+                <div th:if="${session.u.id} == ${user.id}" style="margin-top: 10px;">
+                    <span class="ds-b fs-15"><b>Meter dinero</b></span>
+                    <form th:action="@{/meterDinero}" method="POST">
+                        <input type="number" step="0.01" class="form-control" name="insert" min="1">
+                        <button type="submit" class="btn btn-primary">Meter dinero</button>
+                    </form>
+                </div>
             </div>
         </div>
-    
-        <!--
-        <div class="d-flex justify-content-around mb-2" th:if="(${session.u.id} eq ${user.id})">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Cambiar nombre de usuario</h5>
-                    <form th:action="@{/user/userNameChange/{id}(id=${user.id})}" method="POST">
-                        <div class="form-group">
-                            <input #required name="newName" id="newName" type="text" class="form-control" placeholder="Introduce tu nuevo nombre de usuario">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-                    </form>
-                </div>
-            </div>
-    
-            <div class="card" th:if="(${session.u.id} eq ${user.id})">
-                <div class="card-body">
-                    <h5 class="card-title"><u>Cambiar contraseña</u></h5>
-                    <form th:action="@{/user/passChange/{id}(id=${user.id})}" method="POST">
-                        <div class="form-group">
-                            <label>Introduce tu contraseña actual</label>
-                            <input #required name="oldPass" id="oldPass" type="password" class="form-control" placeholder="Contraseña actual">
-                            <label>Introduce tu nueva contraseña</label>
-                            <input #required name="newPass" id="newPass" type="password" class="form-control" placeholder="Contraseña nueva">
-                            <label>Confirma tu nueva contraseña</label>
-                            <input #required name="newPass2" id="newPass2" type="password" class="form-control" placeholder="Confirmar contraseña">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Cambiar contraseña</button>
-                    </form>
-                </div>
-            </div>
-    
-            <div class="card" th:if="(${session.u.id} eq ${user.id})">
-                <div class="card-body">
-                    <h5 class="card-title"><u>Borrar cuenta</u></h5>
-                    <form th:action="@{/user/deleteAccount/{id}(id=${user.id})}" method="POST">
-                        <button type="submit" class="btn btn-primary">Borrar cuenta</button>
-                    </form>
-                </div>
-            </div>
-    
-        </div>
-        -->
+
         <div class="d-flex justify-content-around mb-2">
             <div class="card" th:if="(${session.u.id} eq ${user.id})">
                 <div class="card-body">
@@ -110,9 +76,9 @@
                         </div>
                     </div>
                 </div>
-    
+
             </div>
-    
+
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title" th:if="(${session.u.id} eq ${user.id})"><u>Tus productos</u></h5>
@@ -135,14 +101,18 @@
                                     <div>
                                         <p th:text="${uP.price}"></p>
                                     </div>
+                                    <div th:if="(${session.u.id} eq ${user.id})">
+                                        <p th:text="${uP.status}"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-    
+
             </div>
         </div>
     </div>
 </body>
+
 </html>

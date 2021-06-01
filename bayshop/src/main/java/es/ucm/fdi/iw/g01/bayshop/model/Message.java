@@ -11,9 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.AllArgsConstructor;
@@ -32,8 +29,6 @@ import lombok.AllArgsConstructor;
 })
 @Data
 public class Message implements Transferable<Message.Transfer> {
-	
-	private static Logger log = LogManager.getLogger(Message.class);	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

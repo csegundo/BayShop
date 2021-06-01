@@ -16,14 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,8 +41,6 @@ import lombok.AllArgsConstructor;
         @NamedQuery(name="User.hasUsername", query="SELECT COUNT(u) FROM User u WHERE u.username = :username")
 })
 public class User implements Transferable<User.Transfer> {
-
-	private static Logger log = LogManager.getLogger(User.class);	
 
 	public static enum Role {
 		USER,			// used for logged-in, non-priviledged users

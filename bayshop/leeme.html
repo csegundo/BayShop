@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -8,15 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="src/main/resources/static/css/bootstrap.min.css">
 
     <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" />
-
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -34,7 +28,6 @@
 
     <title>BayShop - Leeme</title>
 </head>
-
 <body>
     <div class="container">
         <h1>Descripción</h1>
@@ -49,18 +42,19 @@
         <ul>
             <li>Vista login y register: <a href="http://localhost:8080/login">aquí</a> y <a href="http://localhost:8080/register">aquí</a> respectivamente</li>
             <li>Vista principal de todos los productos: <a href="http://localhost:8080/">aquí</a></li>
-            <li>Vista detallada de un producto: <a href="http://localhost:8080/producto/id">aquí</a></li>
+            <li>Vista detallada de un producto: <a href="http://localhost:8080/producto/1">aquí</a></li>
             <li>Vista del revisor de contenido: <a href="http://localhost:8080/revisor/">aquí</a></li>
             <li>Vista del administrador: <a href="http://localhost:8080/admin/">aquí</a></li>
             <li>Vista para crear un producto: <a href="http://localhost:8080/producto/crear">aquí</a></li>
-            <li>Vista perfil de un usuario: <a href="http://localhost:8080/perfil/id">aquí</a></li>
+            <li>Vista perfil de un usuario: <a href="http://localhost:8080/perfil/1">aquí</a></li>
+            <li>Vista crear mensaje: <a href="http://localhost:8080/mensajes/nuevo">aquí</a></li>
             <li>Vista principal de todos los mensajes: <a href="http://localhost:8080/mensajes/">aquí</a></li>
-            <li>Vista detallada de un mensaje: <a href="http://localhost:8080/mensajes/idU/">aquí</a></li>
-            <li>Vista detallada del resumen de tu compra: <a href="http://localhost:8080/compra/">aquí</a></li>
+            <li>Vista detallada de un mensaje: Se abre desde <a href="http://localhost:8080/mensajes/">/mensajes</a> cuando se hace click sobre <i class="fa fa-eye"></i> (popup)</li>
+            <li>Vista detallada del resumen de tu compra: <a href="http://localhost:8080/compra/1">aquí</a></li>
         </ul>
 
         <h1>Base de datos</h1>
-        <p>Hemos usado <a href="https://app.sqldbm.com/">SqlDBM</a> para general el siguiente esquema:</p>
+        <p>Hemos usado <a href="https://app.sqldbm.com/">SqlDBM</a> para generar el siguiente esquema:</p>
         <img src="src/main/resources/static/img/bayshop_schema_db.png" style="margin-bottom: 10px;" alt="schema_img">
 
         <h1>Recursos usados</h1>
@@ -91,24 +85,47 @@
             <li>Acceso a la página detalle de un producto y acción de click a comprar el producto</li>
             <li>Acceso a la página de resumen de compra y click en comprar para confirmar la compra</li>
         </ul>
-		
-        <h1>Montaje de proyecto</h1>
-        <p>Acceder a la carpeta bayshop y ejecutar mvn spring-boot:run</p>
 
-		<h1>Usuarios</h1>
-		<ul>
-            <li>username: a pass: a rol: admin</li>
-            <li>username: b pass: a rol: user</li>
-            <li>username: peri pass: a rol: moderator, admin, user</li>
-            <li>username: revisor pass: a rol: moderator</li>
-		</ul>
-		
-		<h1>Cosas que no funcionan</h1>
-		<ul>
-            <li>Consulta de compras: la consulta de las propias compras da error (comentada de momento)</li>
-			<li>Faltan las imágenes: no se han probado aún</li>
-        </ul>
+        <h1>Montaje de proyecto</h1>
+        <p>Acceder a la carpeta bayshop y ejecutar: <code>mvn spring-boot:run</code></p>
+
+        <h1>Usuarios</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Roles</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>a</td>
+                    <td>aa</td>
+                    <td>USER,ADMIN,MODERATOR</td>
+                </tr>
+                <tr>
+                    <td>b</td>
+                    <td>aa</td>
+                    <td>USER,ADMIN</td>
+                </tr>
+                <tr>
+                    <td>c</td>
+                    <td>aa</td>
+                    <td>USER,MODERATOR</td>
+                </tr>
+                <tr>
+                    <td>d</td>
+                    <td>aa</td>
+                    <td>USER</td>
+                </tr>
+                <tr>
+                    <td>e</td>
+                    <td>aa</td>
+                    <td>USER</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
-
 </html>

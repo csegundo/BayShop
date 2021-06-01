@@ -18,7 +18,6 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -47,27 +46,13 @@ public class ProductController {
 	
 	@Autowired
 	private LocalData localData;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-    // @PostMapping("/create")
-    // @Transactional
-    // public String createProduct(HttpServletResponse response, @ModelAttribute User newProduct, Model model, HttpSession session){
-    //     logger.debug("NUEVO PRODUCTO");
-    //     return "index";
-    // }
 
 
     @Transactional
     @PostMapping("/create")
     public String createProduct(@ModelAttribute Product newProduct, Model model, HttpSession session, @RequestParam("photos") MultipartFile photos){
-        logger.warn("NUEVO PRODUCTO");
-        logger.warn(newProduct);
         
         User requester = (User)session.getAttribute("u");
-
-        // creationDAte, stattus=1, enable=true
 
         newProduct.setEnabled(true);
         newProduct.setStatus(ProductStatus.PENDING);
@@ -121,13 +106,12 @@ public class ProductController {
 
         model.addAttribute("p", p);
         model.addAttribute("prod", prod);
-        // model.addAttribute("title", "BayShop | " + p.getName());
         model.addAttribute("title", "BayShop | Producto " + p.getId());
+        model.addAttribute("canBuy", p.getStatus() == ProductStatus.ACCEPTED);
 
         return "producto";
     }
 
-    
     
     @Transactional
     @GetMapping("/delete/{id}")
@@ -166,13 +150,5 @@ public class ProductController {
 		};
 	}
 
-
-    /*
-    @GetMapping("/api/photos/{id}")
-	public StreamingResponseBody getPhotos(@PathVariable long id, Model model) throws IOException{
-        
-     
-	}
-    */
 
 }

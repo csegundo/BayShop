@@ -2,7 +2,6 @@
 <html lang="es">
 
 <head th:replace="frags/head.html">
-    <!-- Resto de recursos especificos de cada pagina -->
 </head>
 
 <body class="product">
@@ -10,7 +9,6 @@
 
     <div class="row main-div p-5 product-details">
         <div id="imgProducto" class="col-md-7 text-center">
-            <!-- <div>Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div> -->
             <img class="img-fluid" th:src="@{/producto/api/photo/{id}(id=${p.id})}" alt="Imagen Producto">
         </div>
         <div class="col-md-5 p-3">
@@ -25,9 +23,9 @@
             <h5>Descripción:</h5>
             <p th:text="${p.description}"></p>
             <h3 class="" th:text="'Precio: ' + ${p.price} + ' €'"></h3>
-            
+
             <div th:data-id="${p.id}" class="my-3">
-                <a th:if="${p.user.id != session.u.id}" th:href="@{/compra/{id}(id=${p.id})}" class="btn btn-primary buy-product">Comprar <i class="fa fa-shopping-cart"></i></a>
+                <a th:if="${p.user.id != session.u.id} and ${canBuy}" th:href="@{/compra/{id}(id=${p.id})}" class="btn btn-primary buy-product">Comprar <i class="fa fa-shopping-cart"></i></a>
                 <button th:if="${session.roleadmin} or ${session.rolemoderator}" class="btn btn-success bt-validateProduct" data-page="p" data-enable="1">Validar <i class="fa fa-check"></i></button>
                 <button th:if="${session.roleadmin} or ${session.rolemoderator}" class="btn btn-warning bt-rejectProduct" data-page="p" data-enable="0">Rechazar <i class="fa fa-times"></i></button>
                 <a th:if="${session.roleadmin} or ${session.rolemoderator} or (${p.user.id == session.u.id})" th:href="@{/producto/delete/{id}(id=${p.id})}" class="btn btn-danger">Eliminar <i class="fa fa-exclamation"></i></a>

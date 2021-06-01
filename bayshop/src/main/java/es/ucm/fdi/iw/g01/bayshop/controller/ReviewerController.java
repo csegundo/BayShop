@@ -1,25 +1,18 @@
 package es.ucm.fdi.iw.g01.bayshop.controller;
 
-import java.util.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.persistence.EntityManager;
 
-import org.apache.commons.logging.Log;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-// import org.hibernate.annotations.common.util.impl.Log.logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.g01.bayshop.model.Product;
-import es.ucm.fdi.iw.g01.bayshop.model.User;
 import es.ucm.fdi.iw.g01.bayshop.model.Product.ProductStatus;
 
 
@@ -39,7 +31,6 @@ public class ReviewerController {
     @Autowired
     private EntityManager entityManager;
 
-    // Metodos de los <form> que son mas especificos de cada Controller
     @GetMapping("/")
     public String revisor(HttpSession session, Model model, @RequestParam(required = false) Integer entero){
         

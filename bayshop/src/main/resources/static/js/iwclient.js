@@ -1,31 +1,33 @@
 /**
  * WebSocket API, which only works once initialized
  */
-const ws = {		
+const ws = {
 
-	/**
-	 * Number of retries if connection fails
-	 */
-	retries: 3,
-		
-	/**
-	 * Default action when message is received. 
-	 */
-	receive: (messageObj) => {
-		console.log(messageObj);
+    /**
+     * Number of retries if connection fails
+     */
+    retries: 3,
 
-		if(messageObj.type && messageObj.type == "message"){
-			var _msg_unread = $('header .msg-user-unread span');
-			_msg_unread.html(parseInt(_msg_unread.html()) + 1);
+    /**
+     * Default action when message is received. 
+     */
+    receive: (messageObj) => {
+        console.log(messageObj);
 
-			var _table = $('body.messages table.all-user-messages tbody');
+        if (messageObj.type && messageObj.type == "message") {
+            __unread++;
+            $('header nav .msg-user-unread').html('(' + __unread + ')');
+            var _msg_unread = $('header .msg-user-unread span');
+            _msg_unread.html(parseInt(_msg_unread.html()) + 1);
 
-			if(_table.length > 0){
-				var alert = $(`<div class="slide-alert success">Has recibido un mensaje</div>`);
-				$('body').append(alert);
-				$(alert).animate({ opacity : '0' }, 3000, null, function(){ $(alert).remove(); });
+            var _table = $('body.messages table.all-user-messages tbody');
 
-				_table.prepend(`
+            if (_table.length > 0) {
+                var alert = $(`<div class="slide-alert success">Has recibido un mensaje</div>`);
+                $('body').append(alert);
+                $(alert).animate({ opacity: '0' }, 3000, null, function() { $(alert).remove(); });
+
+                _table.prepend(`
 				<tr class="msg" data-id="${messageObj.id}" data-type="inbox">
 					<td>${messageObj.sender}</td>
 					<td>${messageObj.receiver}</td>
@@ -38,85 +40,84 @@ const ws = {
 					</td>
 				</tr>
 				`);
-			}
-		}
-	},
-	
-	headers: {'X-CSRF-TOKEN' : config.csrf.value},
-	
-	/**
-	 * Attempts to establish communication with the specified
-	 * web-socket endpoint. If successfull, will call 
-	 */
-	initialize: (endpoint, subs = []) => {
-		try {
-			ws.stompClient = Stomp.client(endpoint);
-			ws.stompClient.reconnect_delay = 2000;
-			// only works on modified stomp.js, not on original from mantainer's site
-			ws.stompClient.reconnect_callback = () => ws.retries -- > 0;
-			ws.stompClient.connect(ws.headers, () => {
-		        ws.connected = true;
-		        console.log('Connected to ', endpoint, ' - subscribing...');		        
-		        while (subs.length != 0) {
-		        	ws.subscribe(subs.pop())
-		        }
-		    });			
-			console.log("Connected to WS '" + endpoint + "'")
-		} catch (e) {
-			console.log("Error, connection to WS '" + endpoint + "' FAILED: ", e);
-		}
-	},
-	
-	subscribe: (sub) => {
-        try {
-	        ws.stompClient.subscribe(sub, 
-	        		(m) => ws.receive(JSON.parse(m.body))); 	// falla si no recibe JSON!
-        	console.log("Hopefully subscribed to " + sub);
-        } catch (e) {
-        	console.log("Error, could not subscribe to " + sub);
+            }
         }
-	}
-} 
+    },
+
+    headers: { 'X-CSRF-TOKEN': config.csrf.value },
+
+    /**
+     * Attempts to establish communication with the specified
+     * web-socket endpoint. If successfull, will call 
+     */
+    initialize: (endpoint, subs = []) => {
+        try {
+            ws.stompClient = Stomp.client(endpoint);
+            ws.stompClient.reconnect_delay = 2000;
+            // only works on modified stomp.js, not on original from mantainer's site
+            ws.stompClient.reconnect_callback = () => ws.retries-- > 0;
+            ws.stompClient.connect(ws.headers, () => {
+                ws.connected = true;
+                console.log('Connected to ', endpoint, ' - subscribing...');
+                while (subs.length != 0) {
+                    ws.subscribe(subs.pop())
+                }
+            });
+            console.log("Connected to WS '" + endpoint + "'")
+        } catch (e) {
+            console.log("Error, connection to WS '" + endpoint + "' FAILED: ", e);
+        }
+    },
+
+    subscribe: (sub) => {
+        try {
+            ws.stompClient.subscribe(sub,
+                (m) => ws.receive(JSON.parse(m.body))); // falla si no recibe JSON!
+            console.log("Hopefully subscribed to " + sub);
+        } catch (e) {
+            console.log("Error, could not subscribe to " + sub);
+        }
+    }
+}
 
 /**
  * Sends an ajax request using fetch
  */
 //envía json, espera json de vuelta; lanza error si status != 200
 function go(url, method, data = {}) {
-  let params = {
-    method: method, // POST, GET, POST, PUT, DELETE, etc.
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    },
-    body: JSON.stringify(data)
-  };
-  if (method === "GET") {
-	  delete params.body;
-  } else {
-      params.headers["X-CSRF-TOKEN"] = config.csrf.value; 
-  }  
-  console.log("sending", url, params)
-  return fetch(url, params)
-  	.then(response => {
-	    if (response.ok) {
-	        return response.json(); // esto lo recibes con then(d => ...)
-	    } else {
-	    	throw response.text();  // esto lo recibes con catch(d => ...)
-	    }
-  	})
+    let params = {
+        method: method, // POST, GET, POST, PUT, DELETE, etc.
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(data)
+    };
+    if (method === "GET") {
+        delete params.body;
+    } else {
+        params.headers["X-CSRF-TOKEN"] = config.csrf.value;
+    }
+    console.log("sending", url, params)
+    return fetch(url, params)
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // esto lo recibes con then(d => ...)
+            } else {
+                throw response.text(); // esto lo recibes con catch(d => ...)
+            }
+        })
 }
 
 /**
  * Actions to perform once the page is fully loaded
  */
 document.addEventListener("DOMContentLoaded", () => {
-	if (config.socketUrl) {
-		let subs = config.admin ? 
-				["/topic/admin", "/user/queue/updates"] : ["/user/queue/updates"]
-		ws.initialize(config.socketUrl, subs);
-	}
-	
-	// add your after-page-loaded JS code here; or even better, call 
-	// 	 document.addEventListener("DOMContentLoaded", () => { /* your-code-here */ });
-	//   (assuming you do not care about order-of-execution, all such handlers will be called correctly)
+    if (config.socketUrl) {
+        let subs = config.admin ? ["/topic/admin", "/user/queue/updates"] : ["/user/queue/updates"]
+        ws.initialize(config.socketUrl, subs);
+    }
+
+    // add your after-page-loaded JS code here; or even better, call 
+    // 	 document.addEventListener("DOMContentLoaded", () => { /* your-code-here */ });
+    //   (assuming you do not care about order-of-execution, all such handlers will be called correctly)
 });

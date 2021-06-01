@@ -4,13 +4,27 @@
 
         <h4>Detalles del error</h4>
         <table class="errTable">
-            <tr><td>Date<td th:text="${timestamp}">
-            <tr><td>Path<td th:text="${path}">
-            <tr><td>Error<td th:text="${error}">
-            <tr><td>Status<td th:text="${status}">
-            <tr><td>Mensaje<td th:text="${message}">
-            <tr><td>Excepción<td th:text="${exception}">
-            <tr><td>Traza<td><pre th:text="${trace}">
+            <tr>
+                <td>Date
+                    <td th:text="${timestamp}">
+                        <tr>
+                            <td>Path
+                                <td th:text="${path}">
+                                    <tr>
+                                        <td>Error
+                                            <td th:text="${error}">
+                                                <tr>
+                                                    <td>Status
+                                                        <td th:text="${status}">
+                                                            <tr>
+                                                                <td>Mensaje
+                                                                    <td th:text="${message}">
+                                                                        <tr>
+                                                                            <td>Excepción
+                                                                                <td th:text="${exception}">
+                                                                                    <tr>
+                                                                                        <td>Traza
+                                                                                            <td><pre th:text="${trace}">
         </table>
         
         <h4>Variables definidas en parámetros</h4>

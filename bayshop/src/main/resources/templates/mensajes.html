@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head th:replace="frags/head.html">
-    <!-- Resto de recursos especificos de cada pagina -->
 </head>
+
 <body class="messages">
     <header th:replace="frags/header.html"></header>
-    
+
     <div class="container">
         <div class="m-actions my-3">
             <a class="btn btn-primary" th:href="@{/mensajes/nuevo}">Nuevo mensaje <i class="fa fa-envelope-o"></i></a>
@@ -44,10 +45,13 @@
                     <td th:text="${m.dateSent}"></td>
                     <td class="status" th:text="${m.dateRead} ? 'Si' : 'No'"></td>
                     <td th:text="${m.text}"></td>
-                    <td><div class="btn btn-light view-message"><i class="fa fa-eye"></i></div></td>
+                    <td>
+                        <div class="btn btn-light view-message"><i class="fa fa-eye"></i></div>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </body>
+
 </html>

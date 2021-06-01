@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head th:replace="frags/head.html">
-    <!-- Resto de recursos especificos de cada pagina -->
 </head>
+
 <body class="auth">
     <div class="row main-div-auth">
         <div class="col-xs-12 col-md-4 web-logo">
-            <!-- <div>Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div> -->
             <img th:src="@{/img/bay_128.png}" alt="web logo">
         </div>
         <div class="col-xs-12 col-md-8 form">
             <form method="POST" th:action="@{/user/api/create}" enctype="multipart/form-data">
-                <!-- <form method="POST" th:action="@{/user/api/create}"> -->
                 <div class="form-group">
                     <label for="firstName">Nombre</label>
                     <input type="text" name="firstName" class="form-control" id="firstName">
@@ -62,4 +61,5 @@
         <span>¿Ya tienes cuenta? Puedes iniciar sesión <a th:href="@{/login}">pulsando aquí</a>.</span>
     </div>
 </body>
+
 </html>

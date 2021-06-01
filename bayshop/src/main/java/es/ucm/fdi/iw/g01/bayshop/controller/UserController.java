@@ -10,7 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -22,7 +21,6 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -42,7 +40,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.ucm.fdi.iw.g01.bayshop.LocalData;
-import es.ucm.fdi.iw.g01.bayshop.model.Product;
 import es.ucm.fdi.iw.g01.bayshop.model.User;
 import es.ucm.fdi.iw.g01.bayshop.model.User.Role;
 
@@ -88,11 +85,9 @@ public class UserController {
     @PostMapping("/api/create")
     @Transactional
     public String create(@ModelAttribute User newUser, @RequestParam(required=false) String pass2, Model model, HttpSession session, @RequestParam("photo") MultipartFile photo){
-		logger.warn("ENTROOOOOOO");
 		logger.warn(newUser.getUsername());
 		logger.warn(pass2);
-		logger.warn("----------");
-
+	
 		if(!newUser.getPassword().equals(pass2)){
 			return "redirect:/register";
 		}
@@ -263,9 +258,6 @@ public class UserController {
 	@PostMapping("/api/photo/{id}")
 	@ResponseBody
 	public String postPhoto(HttpServletResponse response, @RequestParam("photo") MultipartFile photo, @PathVariable("id") String id, Model model, HttpSession session) throws IOException{
-		logger.warn("--------------");
-		logger.warn(id);
-		logger.warn("--------------");
 		User userSess = (User) session.getAttribute("u");
 		User userParam = entityManager.find(User.class, Long.parseLong(id));
 

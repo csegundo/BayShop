@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head th:replace="frags/head.html">
-    <!-- Resto de recursos especificos de cada pagina -->
 </head>
+
 <body>
     <header th:replace="frags/header.html"></header>
 
@@ -38,7 +39,7 @@
                 <h5>Descuento:</h5>
                 <div class="item discount">
                     <span class="info-item">Con <span class="baypoints_">0</span> BayPoints ahorras</span>
-                    <span class="description"><span class="discount-price">0</span> €</span>
+                    <span class="description"><span class="discount-price">0</span> cents. €</span>
                 </div>
 
                 <div class="separator"></div>
@@ -52,11 +53,10 @@
                 <div class="separator"></div>
 
                 <form th:action="@{/compra}" method="POST">
-                    <!-- inputs de prueba -->
                     <input type="hidden" name="seller" th:value="${p.user.id}">
                     <input type="hidden" name="buyer" th:value="${session.u.id}">
                     <input type="hidden" name="product" th:value="${p.id}">
-                    <!---->
+                    <input type="hidden" name="points" value="0" data-type="hidden_points">
                     <button type="submit" class="btn btn-primary btn-sm">Comprar <i class="fa fa-shopping-cart"></i></button>
                 </form>
             </div>
@@ -69,4 +69,5 @@
         </div>
     </div>
 </body>
+
 </html>

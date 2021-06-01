@@ -39,6 +39,7 @@
 			admin: [[${session.u != null && session.roleadmin} ? true : false]],
 			userId: [[${session.u != null} ? ${session.u.id} : -1]]
 		};
+        var __unread = [[${session.unread}]];
 	</script>
     <script th:src="@{/js/stomp.js}"></script>
     <script th:src="@{/js/simple-datatables-2.1.10.min.js}"></script>

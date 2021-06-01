@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -44,10 +43,8 @@ public class MessageController {
     @GetMapping(value = { "/", "" })
     public String allMessages(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
         User userSess = (User) session.getAttribute("u");
-        // List<Message> messages = entityManager.createNamedQuery("Message.all").setParameter("uid", userSess.getId()).getResultList();
         List<Message> send = entityManager.createNamedQuery("Message.send").setParameter("uid", userSess.getId()).getResultList();
         List<Message> inbox = entityManager.createNamedQuery("Message.inbox").setParameter("uid", userSess.getId()).getResultList();
-        // model.addAttribute("all", messages);
         model.addAttribute("send", send);
         model.addAttribute("inbox", inbox);
         model.addAttribute("title", "BayShop | Todos los mensajes");
@@ -58,14 +55,13 @@ public class MessageController {
     @Transactional
     public String viewMessage(HttpSession session, Model model, @RequestParam long id) {
         long userSess = ((User) session.getAttribute("u")).getId();
-        logger.warn("ENTROOOOOOOOOOOOO");
-        logger.warn(id);
 
         // El usuario es el que envia o recibe
         Message message = entityManager.find(Message.class, id);
         if(message != null && (message.getSender().getId() == userSess || message.getRecipient().getId() == userSess)){
             // Si no tiene fecha de lectura entonces se le pone SOLO si es el que recibe
             if(message.getDateRead() == null && message.getRecipient().getId() == userSess){
+                session.setAttribute("unread", ((long) ((long)session.getAttribute("unread")) - 1));
                 message.setDateRead(LocalDateTime.now());
                 entityManager.persist(message);
             }
@@ -90,7 +86,6 @@ public class MessageController {
     @PostMapping("/api/new")
     @Transactional
     @ResponseBody
-    // public String createMessage(HttpSession session, Model model, @RequestParam long dest, @RequestParam String msg) {
     public String createMessage(HttpSession session, Model model, @RequestBody Map<String, String> jsonParam) {
         long dest = Long.parseLong(jsonParam.get("dest"));
         String msg = jsonParam.get("msg");
@@ -125,7 +120,6 @@ public class MessageController {
         }
         messagingTemplate.convertAndSend("/user/" + receiver.getUsername() + "/queue/updates", json);
 
-        // return "redirect:/mensajes";
         return "{\"success\":true,\"message\":\"Mensaje enviado con exito\"}";
     }
 
@@ -133,8 +127,6 @@ public class MessageController {
     @Transactional
     @ResponseBody
     public String deleteMessage(HttpSession session, Model model, @PathVariable long id){
-        logger.warn("ENTROOOOOOOOOOOOO");
-        logger.warn(id);
         long userSess = ((User) session.getAttribute("u")).getId();
         Message message = entityManager.find(Message.class, id);
 

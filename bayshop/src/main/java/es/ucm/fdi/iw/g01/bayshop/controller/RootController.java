@@ -1,14 +1,10 @@
 package es.ucm.fdi.iw.g01.bayshop.controller;
 
-import java.util.Date;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.net.URLDecoder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,11 +12,8 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.persistence.EntityManager;
 
-import org.apache.commons.logging.Log;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-// import org.hibernate.annotations.common.util.impl.Log_.logger;
-// import org.hibernate.annotations.common.util.impl.Log.logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,14 +21,9 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.g01.bayshop.model.Product;
 import es.ucm.fdi.iw.g01.bayshop.model.Sale;
@@ -94,19 +82,21 @@ public class RootController {
         return "register";
     }
     
-
+    
     @GetMapping("/perfil/{id}")
     public String profile(HttpSession session, Model model, @PathVariable long id) {
 		User actual = entityManager.find(User.class, id);
         long idSession = ((User)session.getAttribute("u")).getId();
         
-        String queryUserProd = "select p from Product p where status = 0 and USER_ID = :userId";
+        String queryUserProd = "";
+        if(actual.getId() == idSession){
+            queryUserProd = "select p from Product p where USER_ID = :userId";
+        } else{
+            queryUserProd = "select p from Product p where status = 0 and USER_ID = :userId";
+        }
         List<Product> userProd = entityManager.createQuery(queryUserProd).setParameter("userId", id).getResultList();
-
-        // Consulta que no funciona y no sé por qué, es como se debe hacer
-        //String queryUserCompras = "select p from Product p JOIN Sale ON Product.SALE_ID = Sale.ID where status = 0 and USER_ID = :userId";
-        // Consulta a modo de placeholder
-        String queryUserCompras = "select p from Product p where status = 0 and USER_ID = :userId";
+        
+        String queryUserCompras = "select p from Product p JOIN Sale s ON p.sale.id=s.id where p.status=3 and s.buyer.id=:userId";
         List<Product> userCompras = entityManager.createQuery(queryUserCompras).setParameter("userId", idSession).getResultList();
 
         if(id == idSession){
@@ -120,11 +110,6 @@ public class RootController {
         return "perfil";
     }
 
-    // @GetMapping("/mensajes/idU/idP")
-    // public String message(HttpSession session, Model model, @RequestParam(required = false) Integer entero) {
-    //     model.addAttribute("title", "BayShop | Mensaje <ID>");
-    //     return "mensaje";
-    // }
 
     @GetMapping("/compra/{id}")
     public String buy(HttpSession session, Model model, @PathVariable long id) {
@@ -141,7 +126,8 @@ public class RootController {
     public String buyProduct(HttpSession session, Model model,
         @RequestParam(value="buyer", required=true) long b,
         @RequestParam(value="seller", required=true) long s,
-        @RequestParam(value="product", required=true) long p
+        @RequestParam(value="product", required=true) long p,
+        @RequestParam(value="points", required=true) int points
     ){
         User buyer  = entityManager.find(User.class, b);
         User seller = entityManager.find(User.class, s);
@@ -152,17 +138,27 @@ public class RootController {
         Product product = entityManager.find(Product.class, p);
         list.add(product);
 
+        if(product.getStatus() != ProductStatus.ACCEPTED){
+            return "redirect:/";
+        }
+        
         // repartir Baypoints a ambas partes
         buyer.setBaypoints(buyer.getBaypoints() + ((int) Math.round(0.2 * product.getPrice().intValue()) * 50));
         seller.setBaypoints(seller.getBaypoints() + ((int) Math.round(0.2 * product.getPrice().intValue()) * 50));
 
+        // Descuento por BayPoints => 100 puntos == 1euro
+        buyer.setBaypoints(buyer.getBaypoints() - points);
+        session.setAttribute("baypoints", buyer.getBaypoints());
+
+        BigDecimal _precioFinal = new BigDecimal(product.getPrice().doubleValue() - new BigDecimal(points / 100).doubleValue(), MathContext.DECIMAL64);
+
         // añadir y quitar dinero
-        if(buyer.getDinero().doubleValue() < product.getPrice().doubleValue()){
+        if(buyer.getDinero().doubleValue() < _precioFinal.doubleValue()){
             // no tiene dinero suficiente => se le deja a 0 y se simula un pago
             buyer.setDinero(new BigDecimal(0));
             redirect += "pasarela/" + String.valueOf(product.getPrice().doubleValue() - buyer.getDinero().doubleValue());
         } else{
-            buyer.setDinero(new BigDecimal(buyer.getDinero().doubleValue() - product.getPrice().doubleValue(), MathContext.DECIMAL64));
+            buyer.setDinero(new BigDecimal(buyer.getDinero().doubleValue() - _precioFinal.doubleValue(), MathContext.DECIMAL64));
         }
 
         seller.setDinero(new BigDecimal(seller.getDinero().doubleValue() + product.getPrice().doubleValue(), MathContext.DECIMAL64));
@@ -202,8 +198,35 @@ public class RootController {
     @Transactional
     public String retirarDinero(HttpSession session, @RequestParam String money){
         User actual = (User) session.getAttribute("u");
+        actual = entityManager.find(User.class, actual.getId());
+        logger.warn("El usuario de la sesion va a retira dinerito");
+        logger.warn(money);
+
+        if(actual.getDinero().doubleValue() < Long.parseLong(money)){
+            return "redirect:/";
+        }
+    
         actual.setDinero(new BigDecimal(actual.getDinero().doubleValue() - Double.parseDouble(money), MathContext.DECIMAL64));
         session.setAttribute("dinero", actual.getDinero());
+
+        entityManager.persist(actual);
+        
+        return "redirect:/";
+    }
+
+    @PostMapping("/meterDinero")
+    @Transactional
+    public String meterDinero(HttpSession session, @RequestParam String insert){
+        User actual = (User) session.getAttribute("u");
+        actual = entityManager.find(User.class, actual.getId());
+        logger.warn("El usuario de la sesion va a ingresar dinerito");
+        logger.warn(insert);
+
+        actual.setDinero(new BigDecimal(actual.getDinero().doubleValue() + Double.parseDouble(insert), MathContext.DECIMAL64));
+        session.setAttribute("dinero", actual.getDinero());
+
+        entityManager.persist(actual);
+        
         return "redirect:/";
     }
 }
